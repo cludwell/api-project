@@ -1,5 +1,5 @@
 'use strict';
-const {Model} = require('sequelize');
+const {Model, Validator} = require('sequelize');
 const bcrypt = require('bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -34,38 +34,41 @@ module.exports = (sequelize, DataTypes) => {
     static async signup({ username, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({username, email, hashedPassword});
+      console.log(`signup being hit`)
       return await User.scope('currentUser').findByPk(user.id)
     }
   }
-  User.init({
-    username: {
-      type: DataTypes.STRING,
+
+  User.init(
+    {
+      username: {
+        type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           len: [4, 30],
-          isNotEmail(val) {
-            if (validator.isEmail(val)) throw new Error(`Cannot be an email`)
+          isNotEmail(value) {
+            if (Validator.isEmail(value)) {
+              throw new Error("Cannot be an email.");
+            }
           }
         }
-    },
-    email: {
-      type: DataTypes.STRING,
+      },
+      email: {
+        type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           len: [3, 256],
           isEmail: true
         }
-    },
-    hashedPassword: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false,
-      validate: {
-        len: [60,60]
+      },
+      hashedPassword: {
+        type: DataTypes.STRING.BINARY,
+        allowNull: false,
+        validate: {
+          len: [60, 60]
+        }
       }
-    }
-  }, {
+    }, {
     sequelize,
     modelName: 'User',
     defaultScope: {
