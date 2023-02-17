@@ -71,6 +71,14 @@ app.use((err, _req, res, _next) => {
     });
   });
 
+
+  // Temporary Root Route
+  app.get('/', async (req, res) =>{
+
+    res.status(200).json({message: 'Temp Message, site is up and functional'})
+  })
+
+  
   //resource not found error-handler
   app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");
