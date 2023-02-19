@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
     static associate(models) {
-      // define association here
+      User.hasMany(models.Spot, {foreignKey: 'ownerId'})
+      User.belongsToMany(models.Spot, {through: 'Bookings'})
+      User.belongsToMany(models.Spot, {through: 'Reviews'})
     }
     static getCurrentUserById(id) {
       return User.scope("currentUser").findByPk(id);
