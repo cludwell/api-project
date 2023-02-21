@@ -14,9 +14,17 @@ module.exports = (sequelize, DataTypes) => {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
     static associate(models) {
-      User.hasMany(models.Spot, {foreignKey: 'ownerId'})
+      User.hasMany(models.Spot, {
+        foreignKey: 'ownerId',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
       User.belongsToMany(models.Spot, {through: 'Bookings'})
-      User.belongsToMany(models.Spot, {through: 'Reviews'})
+      User.belongsToMany(models.Spot, {
+        through: 'Reviews',
+        onDelete: 'CASCADE',
+        hooks: true
+      })
     }
     static getCurrentUserById(id) {
       return User.scope("currentUser").findByPk(id);

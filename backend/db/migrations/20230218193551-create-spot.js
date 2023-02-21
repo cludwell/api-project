@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      owerId: {
+      ownerId: {
         type: Sequelize.INTEGER,
         references: {model: 'Users'},
-        onDelete: 'CASCADE'//will this break on multiple references?
+        onDelete: 'CASCADE'
       },
       address: {
         type: Sequelize.STRING
