@@ -29,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     startDate: {
       type: DataTypes.DATE,
       allowNull: false,
-      validate: {
-        isAfter: new Date()
-      }
     },
     endDate: {
       type: DataTypes.DATE,
