@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Spot, SpotImage } = require('../../db/models');
+const { User, Spot, SpotImage, Review } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -26,17 +26,24 @@ router.get('/:id', async (req, res) => {
         //     {model: User}]
     })
     let spotImagesData = await SpotImage.findAll({
-        where: {spotId: req.params.id}
+        where: {spotId: req.params.id},
+        attributes: ['id', 'url', 'preview']
     })
     let spotOwner = await User.findAll({
         where: {
             id: spot.ownerId
-        }
+        },
+        attributes: ['id', 'firstName', 'lastName']
     })
-    // spot = JSON.stringify(spot)
-    spot.SpotImages = spotImagesData
-    spot.Owner = spotOwner
-    res.status(200).json(spot)
+    let spotReviews = await Review.findAll({
+        where
+    })
+    let payload = {}
+    for (let key in spot.dataValues) payload[key] = spot[key]
+
+    payload.SpotImages = spotImagesData
+    payload.Owner = spotOwner
+    res.status(200).json(payload)
 })
 
 //get a list of all spots
