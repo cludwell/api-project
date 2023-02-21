@@ -21,29 +21,33 @@ router.post('/', async (req, res, next) => {
 
 //look up spot by id
 router.get('/:id', async (req, res) => {
-    let spot = await Spot.findByPk(req.params.id, {
-        // include: [{model: SpotImage},
-        //     {model: User}]
-    })
+
+    let spot = await Spot.findByPk(req.params.id)
     let spotImagesData = await SpotImage.findAll({
         where: {spotId: req.params.id},
         attributes: ['id', 'url', 'preview']
     })
-    let spotOwner = await User.findAll({
-        where: {
-            id: spot.ownerId
-        },
+    let spotOwner = await User.findOne({
+        where: {id: spot.ownerId},
         attributes: ['id', 'firstName', 'lastName']
     })
     let spotReviews = await Review.findAll({
-        where
+        where: {spotId: req.params.id},
     })
     let payload = {}
+    let reviewTotal = spotReviews.reduce((acc,next, ind, arr) => acc + next["stars"], 0)
     for (let key in spot.dataValues) payload[key] = spot[key]
-
+    let sum = spot
+    payload.numReviews = spotReviews.length
+    payload.avgStarRating = reviewTotal / spotReviews.length
     payload.SpotImages = spotImagesData
     payload.Owner = spotOwner
-    res.status(200).json(payload)
+
+    if (spot.ownerId) res.status(200).json(payload)
+    else res.status(404).json({
+      "message": "Spot couldn't be found",
+      "statusCode": 404
+    })
 })
 
 //get a list of all spots
@@ -84,4 +88,11 @@ router.get('/', async (req, res, next) => {
     res.status(200).json({Spots: spotsData})
 })
 
+router.use((_req, _res, next) => {
+    const err = new Error("The requested resource couldn't be found.");
+    err.title = "Resource Not Found";
+    err.errors = { message: "The requested resource couldn't be found." };
+    err.status = 404;
+    next(err);
+  });
 module.exports = router;
