@@ -10,11 +10,11 @@ const {sequelize, Op} = require('sequelize')
 router.get('/', async (req, res, next) => {
     let {page, size} = req.query, pagination = {};
 
-    !size || parseInt(size) <= 0 ? size = 20
-    : size = parseInt(size)
+    size = !size || parseInt(size) <= 0 ? size = 20
+    : parseInt(size)
 
-    !page || parseInt(page) <= 0 ? page = 1
-    : page = parseInt(page)
+    page = !page || parseInt(page) <= 0 ? page = 1
+    : parseInt(page)
 
     if (page >=1 && size >= 1){
       pagination.limit = size;
