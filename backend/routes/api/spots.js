@@ -73,6 +73,7 @@ router.get('/', async (req, res, next) => {
         ...pagination
     })
 
+    //lazy loading associated model data
     for (let spot of spotsData) {
         let spotsReviews = await Review.findAll({
             where: {spotId: spot["id"]}
@@ -87,7 +88,6 @@ router.get('/', async (req, res, next) => {
         payload.previewImage = previewImageData.url
         Spots.push(payload)
     }
-// missing a way to lazy load the spotImage.url as previewImage
     res.status(200).json({Spots: Spots})
 })
 
