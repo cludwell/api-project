@@ -1,10 +1,10 @@
-const { validationResult } = require('express-validator');
+const { validationResult, check } = require('express-validator');
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
-
+  
   if (!validationErrors.isEmpty()) {
     const errors = {};
     validationErrors
@@ -20,6 +20,23 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
+// const validateSpotCreation = [
+//   check('address')
+//     .exists({checkFalsy: true})
+//     .withMessage("Street address is required"),
+//   check('city')
+//     .exists({checkFalsy: true})
+//     .withMessage('City is required'),
+//   check('state')
+//     .exists({checkFalsy: true})
+//     .withMessage('State is required'),
+//   check('country')
+//     .exists({checkFalsy: true})
+//     .withMessage('Country is required'),
+//   check('lat')
+//     .exists({checkFalsy: true})
+//     .
+// ]
 module.exports = {
   handleValidationErrors
 };

@@ -1,13 +1,10 @@
 const express = require('express')
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, SpotImage, Review } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 const {sequelize, Op} = require('sequelize');
-const spot = require('../../db/models/spot');
-const user = require('../../db/models/user');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
@@ -24,10 +21,10 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 //     res.cookie('XSRF-TOKEN', req.csrfToken())
 // })
 
-router.use([setTokenCookie, restoreUser])
+// router.use([setTokenCookie, restoreUser])
 
 //post a spot
-router.post('/', requireAuth, async (req, res, next) => {
+router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
     const {ownerId, address, city, state, country, lat, lng, name, description, price} = req.body
 
@@ -61,7 +58,7 @@ router.post('/', requireAuth, async (req, res, next) => {
         price
     })
 
-    res.status(200).json(newSpot)
+    res.status(201).json(newSpot)
 })
 
 
@@ -161,7 +158,6 @@ router.get('/', async (req, res, next) => {
         "statusCode": 400,
         errors
     })
-    
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
