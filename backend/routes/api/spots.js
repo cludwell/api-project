@@ -11,10 +11,18 @@ const user = require('../../db/models/user');
 
 //post a spot
 router.post('/', async (req, res, next) => {
-
+    if (!req.user.id) res.status(400).json({message: 'Please sign in to post a spot'})
+    res.cookie('XSRF-TOKEN', req.csrfToken)
     let newSpot = await Spot.create({
-        id: user.id,
-        ...req.body
+        ownerId: req.user.id,
+        address,
+        city,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
     })
     res.status(200).json(newSpot)
 })
@@ -24,6 +32,10 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 
     let spot = await Spot.findByPk(req.params.id)
+    if (!spot) res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+    })
     let spotImagesData = await SpotImage.findAll({
         where: {spotId: req.params.id},
         attributes: ['id', 'url', 'preview']
@@ -113,4 +125,5 @@ router.use((err, _req, _res, next) => {
     err.status = 404;
     next(err);
   });
+
 module.exports = router;
