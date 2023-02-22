@@ -49,27 +49,42 @@ router.get('/:id', async (req, res, next) => {
 
 //get a list of all spots
 router.get('/', async (req, res, next) => {
-    let {page, size} = req.query, pagination = {};
+    let {page, size} = req.query, pagination = {};let where = {}
 
-    let query = {
-        where: {},
-        // include:[],
-        ...pagination
-    }
-
-    size = !size || parseInt(size) <= 0 ? size = 20
+    size = !size || parseInt(size) <= 0 || parseInt(size) > 20 ? size = 20
     : parseInt(size)
 
-    page = !page || parseInt(page) <= 0 ? page = 1
+    page = !page || parseInt(page) <= 0 ? page = 0
+    : parseInt(page) > 10 ? 10
     : parseInt(page)
 
     if (page >=1 && size >= 1){
-      pagination.limit = size;
-      pagination.offset = size * (page - 1)
+        pagination.limit = size;
+        pagination.offset = size * (page - 1)
     }
 
+    //accepting query parameters
+    if (req.query.minPrice >= 0) {
+        where.price = { [Op.gte]: req.query.minPrice }
+    }
+    if (req.query.maxPrice >= 0) {
+        where.price = { [Op.lte]: req.query.maxPrice }
+    }
+    if (req.query.minLat) {
+        where.lat = { [Op.gte]: req.query.minLat }
+    }
+    if (req.query.maxLat) {
+        where.lat = { [Op.lte]: req.query.maxLat }
+    }
+    if (req.query.minLng) {
+        where.lng = { [Op.gte]: req.query.maxPrice }
+    }
+    if (req.query.maxLng) {
+        where.lng = { [Op.lte]: req.query.maxPrice }
+    }
     let Spots = []
     const spotsData = await Spot.findAll( {
+        where,
         ...pagination
     })
 
@@ -88,7 +103,7 @@ router.get('/', async (req, res, next) => {
         payload.previewImage = previewImageData.url
         Spots.push(payload)
     }
-    res.status(200).json({Spots: Spots})
+    res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
 router.use((err, _req, _res, next) => {
