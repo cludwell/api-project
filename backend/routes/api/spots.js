@@ -64,7 +64,6 @@ router.get('/:id', async (req, res, next) => {
     let payload = {}
     let reviewTotal = spotReviews.reduce((acc,next, ind, arr) => acc + next["stars"], 0)
     for (let key in spot.dataValues) payload[key] = spot[key]
-
     payload.numReviews = spotReviews.length
     payload.avgStarRating = reviewTotal / spotReviews.length
     payload.SpotImages = spotImagesData
@@ -95,16 +94,22 @@ router.get('/', async (req, res, next) => {
     //accepting query parameters
     if (minPrice >= 0) where.price = { [Op.gte]: minPrice }
     if (minPrice < 0) errors.push("Minimum price must be greater than or equal to 0")
+
     if (maxPrice >= 0) where.price = { [Op.lte]: maxPrice }
     if (maxPrice < 0) errors.push("Maximum price must be greater than or equal to 0")
+
     if (minLat <= 180 || minLat >= 180 ) where.lat = { [Op.gte]: minLat }
-    if (minLat > 180 || minLat < -180 || maxLat < minLat) errors.push("Minimum latitude is invalid")
+    if (minLat > 180 || minLat < -180 || maxLat <= minLat) errors.push("Minimum latitude is invalid")
+
     if (maxLat <= 180 || maxLat >= -180) where.lat = { [Op.lte]: maxLat }
-    if (maxLat > 180 || maxLat < -180 || maxLat < minLat) errors.push("Maximum latitude is invalid")
+    if (maxLat > 180 || maxLat < -180 || maxLat <= minLat) errors.push("Maximum latitude is invalid")
+
     if (minLng <= 180 || minLng >= -180) where.lng = { [Op.gte]: maxPrice }
-    if (minLng > 180 || minLng < -180 || minLng > maxLng) errors.push("Minimum longitude is invalid")
+    if (minLng > 180 || minLng < -180 || minLng >= maxLng) errors.push("Minimum longitude is invalid")
+
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
-    if (maxLng > 180 || maxLng < -180 || maxLng < minLng) errors.push("Minimum longitude is invalid")
+    if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.push("Minimum longitude is invalid")
+    
 
     let Spots = []
     const spotsData = await Spot.findAll( {
