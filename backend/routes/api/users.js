@@ -33,42 +33,42 @@ router.post('/', validateSignup, async (req, res) => {
     const user = await User.signup({ email, username, password, firstName, lastName});
     let token = await setTokenCookie(res, user);
 
-    if (!firstName) errors.firstName = 'First Name is required'
-    if (!lastName) errors.lastName ='Last Name is required'
+    // if (!firstName) errors.firstName = 'First Name is required'
+    // if (!lastName) errors.lastName ='Last Name is required'
 
-    //conditionfor if user email exists
-    const userEmail = await User.findOne({
-      where: {email: email}
-    })
-    const userUsername = await User.findOne({
-      where: {username: username}
-    })
+    // //conditionfor if user email exists
+    // const userEmail = await User.findOne({
+    //   where: {email: email}
+    // })
+    // const userUsername = await User.findOne({
+    //   where: {username: username}
+    // })
 
-    if (userEmail && !errors && !userUsername) {
-      let error = new Error('User already exists with the specified email')
-      error.message = "User already exists"
-      error.statusCode = 403
-      error.errors = {
-        email: 'User with that email already exists'
-      }
-      res.json(error)
-    }
+    // if (userEmail && !errors && !userUsername) {
+    //   let error = new Error('User already exists with the specified email')
+    //   error.message = "User already exists"
+    //   error.statusCode = 403
+    //   error.errors = {
+    //     email: 'User with that email already exists'
+    //   }
+    //   res.json(error)
+    // }
 
-    //condition for if user username exists
+    // //condition for if user username exists
 
-    if (userUsername && !errors && !userEmail) {
-      let error = new Error('User already exists with the specified username')
-      error.message = "User already exists"
-      error.statusCode = 403
-      error.errors = {
-        username: 'User with that username already exists'
-      }
-    }
+    // if (userUsername && !errors && !userEmail) {
+    //   let error = new Error('User already exists with the specified username')
+    //   error.message = "User already exists"
+    //   error.statusCode = 403
+    //   error.errors = {
+    //     username: 'User with that username already exists'
+    //   }
+    // }
 
-    if (errors && userEmail || userUsername) {
+    // if (errors && userEmail || userUsername) {
 
-      res.status(400).json()
-    }
+    //   res.status(400).json()
+    // }
     res.json({
       email: email,
       password: password,

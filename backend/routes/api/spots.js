@@ -23,6 +23,30 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 // router.use([setTokenCookie, restoreUser])
 
+//get all spots of the current user
+router.get('current', [restoreUser, requireAuth], async (req, res) => {
+    let mySpots = await Spot.findAll({
+        where: {ownerId: req.user.id}
+    })
+    let Spots = []
+    for (let spot of mySpots) {
+    let spotReviews = await Review.findAll({
+        where: {spotId: spot["id"]}
+    })
+    let previewImageData = await SpotImage.findOne({
+        where: {spotId: spot["id"]}
+    })
+    let payload = {}
+    let reviewTotal = spotReviews.reduce((acc,next) => acc + next["stars"], 0)
+    for (let key in spot.dataValues) payload[key] = spot[key]
+    payload.numReviews = spotReviews.length
+    payload.avgStarRating = reviewTotal / spotReviews.length
+    payload.SpotImages = spotImagesData
+
+    }
+    res.status(200).json({Spots: Spots})
+})
+
 //post a spot
 router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
@@ -146,7 +170,7 @@ router.get('/', async (req, res, next) => {
             where: {spotId: spot["id"]}
         })
         let payload = {}
-        let reviewTotal = spotsReviews.reduce((acc,next, ind, arr) => acc + next["stars"], 0)
+        let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
         payload.avgRating = reviewTotal / spotsReviews.length
         payload.previewImage = previewImageData.url
