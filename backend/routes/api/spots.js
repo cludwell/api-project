@@ -42,6 +42,12 @@ router.post('/', requireAuth, async (req, res, next) => {
     if (!description) errors.push('Description is required')
     if (!price) errors.push('Price per day is required')
 
+    if (errors.length > 0) res.status(400).json({
+        "message": "Validation Error",
+        "statusCode": 400,
+        errors
+    })
+
     let newSpot = await Spot.create({
         ownerId: req.user.id,
         address,
@@ -150,11 +156,12 @@ router.get('/', async (req, res, next) => {
         Spots.push(payload)
     }
 
-    if (errors.length) res.status(400).json({
+    if (errors.length > 0) res.status(400).json({
         "message": "Validation Error",
         "statusCode": 400,
-        "errors": errors
+        errors
     })
+    
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
