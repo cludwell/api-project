@@ -18,6 +18,19 @@ router.get('/:spotId', async (req, res, next) =>{
     let spotReviews = await Review.findAll({
         where: {spotId: req.params.spotId}
     })
+    let spot = await Spot.findByPk(req.params.spotId)
+    if (!spot) {
+        let error = {
+            'Error Response': "Couldn't find a Spot with the specified id",
+            'Status Code': 404,
+            'Headers': { 'Content-Type': 'application/json'},
+            'Body': {
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            }
+        }
+        res.json(error)
+    }
     for (let review of spotReviews) {
         let payload = {}
         let user = await User.findOne({
