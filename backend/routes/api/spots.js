@@ -69,20 +69,26 @@ router.get('/', async (req, res, next) => {
     }
 
     let Spots = []
-    const spotsData = await Spot.findAll()
-    const payload = [];
-    spotsData.forEach(spotEle => {
-        let url = spotEle.getSpotImages({
-            attributes: ['url']
-        })
-
-    });
-// missing a way to lazy load the spotImage.url as previewImage
-    const spotImageDate = await SpotImage.findAll({
+    const spotsData = await Spot.findAll( {
+        ...pagination
     })
 
-
-    res.status(200).json({Spots: spotsData})
+    for (let spot of spotsData) {
+        let spotsReviews = await Review.findAll({
+            where: {spotId: spot["id"]}
+        })
+        let previewImageData = await SpotImage.findOne({
+            where: {spotId: spot["id"]}
+        })
+        let payload = {}
+        let reviewTotal = spotsReviews.reduce((acc,next, ind, arr) => acc + next["stars"], 0)
+        for (let key in spot.dataValues) payload[key] = spot[key]
+        payload.avgRating = reviewTotal / spotsReviews.length
+        payload.previewImage = previewImageData.url
+        Spots.push(payload)
+    }
+// missing a way to lazy load the spotImage.url as previewImage
+    res.status(200).json({Spots: Spots})
 })
 
 router.use((err, _req, _res, next) => {
