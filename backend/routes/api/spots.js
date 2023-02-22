@@ -11,26 +11,42 @@ const user = require('../../db/models/user');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
+// router.use(
+//     // configs the app to use the cookies
+//   csrf({
+//     cookie: true
+//   })
+// );
 
-router.use(
-    // configs the app to use the cookies
-  csrf({
-    cookie: true
-  })
-);
+// router.use((req, res, next)=> {
+//     res.cookie('XSRF-TOKEN', req.csrfToken())
+// })
 
-router.use((req, res, next)=> {
-    res.cookie('XSRF-TOKEN', req.csrfToken())
-})
+router.use([setTokenCookie, restoreUser])
+
 //post a spot
-router.post('/', async (req, res, next) => {
-    if (!req.user.id) res.status(400).json({message: 'Please sign in to post a spot'})
+router.post('/', requireAuth, async (req, res, next) => {
+    if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
+    const {ownerId, address, city, state, country, lat, lng, name, description, price} = req.body
+
+    const errors = []
+    if (!address) errors.push("Street address is required")
+    if (!city) errors.push('City is required')
+    if (!state) errors.push('State is required')
+    if (!country) errors.push('Country is required')
+    if (!lat) errors.push('Latitude is not valid')
+    if (!lng) errors.push('Longitude is not valid')
+    if (!name || name.length > 50) errors.push('Name must be less than 50 characters')
+    if (!description) errors.push('Description is required')
+    if (!price) errors.push('Price per day is required')
 
     let newSpot = await Spot.create({
         ownerId: req.user.id,
         address,
         city,
+        state,
         country,
         lat,
         lng,
@@ -38,6 +54,7 @@ router.post('/', async (req, res, next) => {
         description,
         price
     })
+
     res.status(200).json(newSpot)
 })
 
@@ -109,7 +126,7 @@ router.get('/', async (req, res, next) => {
 
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
     if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.push("Minimum longitude is invalid")
-    
+
 
     let Spots = []
     const spotsData = await Spot.findAll( {
@@ -132,6 +149,7 @@ router.get('/', async (req, res, next) => {
         payload.previewImage = previewImageData.url
         Spots.push(payload)
     }
+
     if (errors.length) res.status(400).json({
         "message": "Validation Error",
         "statusCode": 400,
