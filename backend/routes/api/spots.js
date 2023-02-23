@@ -23,32 +23,52 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 // router.use([setTokenCookie, restoreUser])
 
+//Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', restoreUser, async (req, res) => {
+    let spot = await Spot.findByPk(req.params.spotId)
+    let {spotId, url, preview} = req.body
+    if (!spot) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404,
+            errors
+        })
+    }
+    let spotImage = await SpotImage.create({
+        spotId, url, preview
+    })
+    let payload = {url, preview}
+    res.status(200).json(payload)
+})
+
 //get all spots of the current user
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/current', restoreUser, async (req, res) => {
     let mySpots = await Spot.findAll({
         where: {ownerId: req.user.id}
     })
     let Spots = []
+
     for (let spot of mySpots) {
-    let spotReviews = await Review.findAll({
-        where: {spotId: spot["id"]}
-    })
-    let previewImageData = await SpotImage.findOne({
-        where: {spotId: spot["id"]}
-    })
-    let payload = {}
-    let reviewTotal = spotReviews.reduce((acc,next) => acc + next["stars"], 0)
-    for (let key in spot.dataValues) payload[key] = spot[key]
-    payload.numReviews = spotReviews.length
-    payload.avgStarRating = reviewTotal / spotReviews.length
-    payload.SpotImages = spotImagesData
-    Spots.push(payload)
+        let spotReviews = await Review.findAll({
+            where: {spotId: spot["id"]}
+        })
+        let previewImageData = await SpotImage.findOne({
+            where: {spotId: spot["id"]},
+            attributes: ['url']
+        })
+        let payload = {}, url = {}
+        // for (let key in previewImageData) url[key] = previewImageData[key]
+        for (let key in spot.dataValues) payload[key] = spot[key]
+        let reviewTotal = spotReviews.reduce((acc,next) => acc + next["stars"], 0)
+        payload.avgRating = reviewTotal / spotReviews.length
+        payload.previewImage = previewImageData
+        Spots.push(payload)
     }
     res.status(200).json({Spots: Spots})
 })
 
 //edit a spot
-router.put('/:spotId', requireAuth, async (req, res, next) => {
+router.put('/:spotId', restoreUser, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {address, city, state, country, lat, lng, name, description, price} = req.body
     let errors = {}
@@ -217,7 +237,7 @@ router.get('/', async (req, res, next) => {
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
         payload.avgRating = reviewTotal / spotsReviews.length
-        payload.previewImage = previewImageData.url
+        // payload.previewImage = previewImageData.url
         Spots.push(payload)
     }
 
