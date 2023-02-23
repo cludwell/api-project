@@ -51,18 +51,18 @@ router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
     const {ownerId, address, city, state, country, lat, lng, name, description, price} = req.body
 
-    const errors = []
-    if (!address) errors.push("Street address is required")
-    if (!city) errors.push('City is required')
-    if (!state) errors.push('State is required')
-    if (!country) errors.push('Country is required')
-    if (!lat) errors.push('Latitude is not valid')
-    if (!lng) errors.push('Longitude is not valid')
-    if (!name || name.length > 50) errors.push('Name must be less than 50 characters')
-    if (!description) errors.push('Description is required')
-    if (!price) errors.push('Price per day is required')
+    const errors = {}
+    if (!address) errors.address = "Street address is required";
+    if (!city) errors.city = 'City is required';
+    if (!state) errors.state = 'State is required';
+    if (!country) errors.country = 'Country is required';
+    if (!lat) errors.lat = 'Latitude is not valid';
+    if (!lng) errors.lng = 'Longitude is not valid';
+    if (!name || name.length > 50) errors.name = 'Name must be less than 50 characters';
+    if (!description) errors.description = 'Description is required';
+    if (!price) errors.price = 'Price per day is required';
 
-    if (errors.length > 0) res.status(400).json({
+    if (Object.keys(errors).length > 0) res.status(400).json({
         "message": "Validation Error",
         "statusCode": 400,
         errors
