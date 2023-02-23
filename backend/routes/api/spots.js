@@ -42,7 +42,6 @@ router.get('current', [restoreUser, requireAuth], async (req, res) => {
     payload.numReviews = spotReviews.length
     payload.avgStarRating = reviewTotal / spotReviews.length
     payload.SpotImages = spotImagesData
-
     }
     res.status(200).json({Spots: Spots})
 })

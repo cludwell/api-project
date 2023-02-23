@@ -6,9 +6,9 @@ const bcrypt = require('bcryptjs')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     toSafeObject() {
-      const { id, username, email } = this;
+      const { id, username, email, firstName, lastName } = this;
       // context will be the User instance
-      return { id, username, email };
+      return { id, username, email, firstName, lastName };
     }
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       })
-      User.belongsToMany(models.Spot, {through: 'Bookings'})
+      User.belongsToMany(models.Spot, {
+        through: 'Bookings',
+        onDelete: 'CASCADE',
+        hooks: true
+    })
       User.belongsToMany(models.Spot, {
         through: 'Reviews',
         onDelete: 'CASCADE',
@@ -103,10 +107,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     scopes: {
       currentUser: {
-        attributes: { exclude: ['hashedPassword']}
+        attributes: { exclude: ['hashedPassword', 'createdAt', 'updatedAt']}
       },
       loginUser: {
-        attributes: { include: ['id', 'firstName', 'lastName', 'email', 'username'], exclude: ['hashedPassword']}
+        attributes: {}
       }
     }
   });
