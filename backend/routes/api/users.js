@@ -26,10 +26,40 @@ const validateSignup = [
     handleValidationErrors
   ];
 
+
+//sign in
+router.post('/login', async (req, res, next) => {
+
+  const { credential, password } = req.body
+  const userLogin = await User.login({credential, password})
+
+  const credentialError = {
+  title: 'Validation error',
+  message: 'Validation error',
+  statusCode: 400,
+  errors: {}
+}
+
+  if (!password) credentialError.errors.password = 'Password is required'
+  if (!credential) credentialError.errors.credential = 'Email or username is required'
+
+  if(!credential || !password) {
+    res.status(400).json(credentialError)
+  }
+  if (!userLogin && credential && password) {
+    const error = new Error('Invalid credentials')
+    error.message = 'Invalid credentials'
+    error.statusCode = 401
+    res.status(401).json(error)
+  }
+
+  res.status(200).json(userLogin)
+})
+
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
     const errors = {}
-    const { email, password, username, firstName, lastName} = req.body;
+    const { email, password, username, firstName, lastName } = req.body;
     const user = await User.signup({ email, username, password, firstName, lastName});
     let token = await setTokenCookie(res, user);
 
