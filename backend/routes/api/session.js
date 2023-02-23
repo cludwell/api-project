@@ -21,16 +21,12 @@ const validateLogin = [
     handleValidationErrors
   ];
 
-//sign in
-// router.post('/login', async (req, res, next) => {
+  
 
-//   const { credential, password } = req.body
-//   const userLogin = await User.login({credential, password})
-
-
-
-//   res.status(200).json(userLogin)
-// })
+  //Get the Current User
+router.get('/', restoreUser, async (req, res) => {
+  if (req.user) res.status(200).json({user: req.user})
+})
 
 // Log in
 router.post(

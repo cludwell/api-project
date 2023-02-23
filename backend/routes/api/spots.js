@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -22,6 +22,15 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 // })
 
 // router.use([setTokenCookie, restoreUser])
+
+//Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', restoreUser, async (req,res) => {
+    let bookings = await Booking.findAll({
+        
+    })
+
+    res.status(200).json()
+})
 
 //Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', restoreUser, async (req, res) => {
@@ -50,15 +59,18 @@ router.post('/:spotId/reviews', restoreUser, async (req, res) => {
             "message": "User already has a review for this spot",
             "statusCode": 403
           })
+    } else {
+        let spotReview = Review.create({
+            spotId: req.params.spotId,
+            userId: req.user.id,
+            review,
+            stars
+        })
+        let created = await Review.findOne({
+            where: {userId: req.user.id, spotId: spot.id}
+        })
+        res.json(created)
     }
-    let spotReview = Review.create({
-        spotId: req.params.spotId,
-        userId: req.user.id,
-        review,
-        stars
-    })
-
-    res.json(spotReview)
 })
 
 //Get all Reviews by a Spot's id
