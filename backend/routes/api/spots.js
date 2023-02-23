@@ -46,10 +46,51 @@ router.get('current', [restoreUser, requireAuth], async (req, res) => {
     res.status(200).json({Spots: Spots})
 })
 
-//delete a spot
-router.delete('/:spotId', [restoreUser, requireAuth], async (req, res, next) => {
-    
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+    let spot = await Spot.findByPk(req.params.spotId)
+    let {address, city, state, country, lat, lng, name, description, price} = req.body
+    let errors = {}
+    if (address) spot.address = address
+    else errors.address ='Street address is required'
+    if (city) spot.city = city
+    else errors.city = 'City is required'
+    if (state) spot.state = state
+    else errors.state = 'State is required'
+    if (country) spot.country = country
+    else errors.country = 'Country is required'
+    if (lat) spot.lat = lat
+    else errors.lat = 'Latitude is not valid'
+    if (lng) spot.lng = lng
+    else errors.lng = 'Longitude is not valid'
+    if (name) spot.name = name
+    else 'Name must be less than 50 characters'
+    if (description) spot.description = description
+    else errors.description = 'Description is required'
+    if (price) spot.price = price
+    else errors.price = 'Price per day is required'
+
+    if (Object.keys(errors) > 0) {
+        let err = {}
+        err.title = 'Body Validation Error'
+        err.errors = errors
+        err.statusCode = 404
+        res.status(404).json(err)
+    }
+    await spot.save()
+    res.status(200).json(spot)
 })
+
+//delete a spot
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    let spot = await Spot.findByPk(req.params.spotId)
+    console.log(spot)
+    if (!spot) {
+        res.status(404).json({message: "Spot not be found", statusCode: 404})
+    }
+    await spot.destroy({where: {id: req.params.spotId}});
+    res.status(200).json({message: 'Successfully Deleted', statusCode: 200});
+})
+
 //post a spot
 router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
