@@ -24,7 +24,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 // router.use([setTokenCookie, restoreUser])
 
 //get all spots of the current user
-router.get('current', [restoreUser, requireAuth], async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
     let mySpots = await Spot.findAll({
         where: {ownerId: req.user.id}
     })
@@ -42,67 +42,58 @@ router.get('current', [restoreUser, requireAuth], async (req, res) => {
     payload.numReviews = spotReviews.length
     payload.avgStarRating = reviewTotal / spotReviews.length
     payload.SpotImages = spotImagesData
+    Spots.push(payload)
     }
     res.status(200).json({Spots: Spots})
 })
 
+//edit a spot
 router.put('/:spotId', requireAuth, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
-    // let {address, city, state, country, lat, lng, name, description, price} = req.body
-    // let errors = {}
+    let {address, city, state, country, lat, lng, name, description, price} = req.body
+    let errors = {}
 
-    // if (address) spot.address = address
-    // else errors.address ='Street address is required'
+    if (!spot) {
+        res.status(404).json({message: "Spot cannot be found", statusCode: 404})
+    }
 
-    // if (city) spot.city = city
-    // else errors.city = 'City is required'
+    if (!address) errors.address ='Street address is required'
+    if (!city) errors.city = 'City is required'
+    if (!state) errors.state = 'State is required'
+    if (!country) errors.country = 'Country is required'
+    if (!lat) errors.lat = 'Latitude is not valid'
+    if (!lng) errors.lng = 'Longitude is not valid'
+    if (!name) errors.name ='Name must be less than 50 characters'
+    if (!description) errors.description = 'Description is required'
+    if (!price) errors.price = 'Price per day is required'
+    console.log(Object.keys(errors))
 
-    // if (state) spot.state = state
-    // else errors.state = 'State is required'
+    if (Object.keys(errors).length) {
+        res.status(404).json({
+            "message": "Body Validation Error",
+            "statusCode": 404,
+            errors
+        })
+    }
 
-    // if (country) spot.country = country
-    // else errors.country = 'Country is required'
+    spot.set({address, city, state, country, lat, lng, name, description, price})
 
-    // if (lat) spot.lat = lat
-    // else errors.lat = 'Latitude is not valid'
-
-    // if (lng) spot.lng = lng
-    // else errors.lng = 'Longitude is not valid'
-
-    // if (name) spot.name = name
-    // else 'Name must be less than 50 characters'
-
-    // if (description) spot.description = description
-    // else errors.description = 'Description is required'
-
-    // if (price) spot.price = price
-    // else errors.price = 'Price per day is required'
-
-    // if (Object.keys(errors) > 0) {
-    //     let err = {}
-    //     err.title = 'Body Validation Error'
-    //     err.errors = errors
-    //     err.statusCode = 404
-    //     res.status(404).json(err)
-    // }
-
-    // await spot.save()
+    await spot.save()
     res.status(200).json(spot)
 })
 
 //delete a spot
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
-    console.log(spot)
     if (!spot) {
-        res.status(404).json({message: "Spot not be found", statusCode: 404})
+        res.status(404).json({message: "Spot cannot be found", statusCode: 404})
     }
     await spot.destroy({where: {id: req.params.spotId}});
     res.status(200).json({message: 'Successfully Deleted', statusCode: 200});
 })
 
 //post a spot
-router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
+router.post('/', requireAuth, async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
     const {ownerId, address, city, state, country, lat, lng, name, description, price} = req.body
 
@@ -238,10 +229,11 @@ router.get('/', async (req, res, next) => {
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
+//error handling middleware, might be making more problems than it is solving
 router.use((err, _req, _res, next) => {
     const error = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";
-    err.errors = { message: "The requested resource couldn't be found." };
+    // err.errors = { message: "The requested resource couldn't be found." };
     err.status = 404;
     next(err);
   });
