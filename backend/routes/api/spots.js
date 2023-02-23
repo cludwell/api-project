@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { User, Spot, SpotImage, Review } = require('../../db/models');
+const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -23,22 +23,98 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 // router.use([setTokenCookie, restoreUser])
 
+//Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', restoreUser, async (req, res) => {
+    let spot = await Spot.findByPk(req.params.spotId)
+    let {stars, review} = req.body, errors = {}
+
+    if (!spot) res.status(404).json({
+        "message": "Spot couldn't be found",
+        "statusCode": 404
+      })
+    if (!stars || stars < 0 || stars > 5) errors.stars ="Stars must be an integer from 1 to 5"
+    if (!review) errors.review = "Review text is required"
+    if (Object.keys(errors).length) {
+        res.status(400).json(    {
+            "message": "Validation error",
+            "statusCode": 400,
+             errors
+          })
+    }
+    let userReviewed = await Review.findOne({
+        where: {userId: req.user.id, spotId: spot.id}
+    })
+    console.log(userReviewed)
+    if(userReviewed) {
+        res.status(403).json({
+            "message": "User already has a review for this spot",
+            "statusCode": 403
+          })
+    }
+    let spotReview = Review.create({
+        spotId: req.params.spotId,
+        userId: req.user.id,
+        review,
+        stars
+    })
+
+    res.json(spotReview)
+})
+
+//Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async (req, res) => {
+    let spotReviews = await Review.findAll({
+        where: {spotId: req.params.spotId}
+    })
+    let spot = await Spot.findByPk(req.params.spotId)
+    if (!spot) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    let spotReviewPayload = []
+    for (let review of spotReviews) {
+        let reviewPayload = {}
+        let userId = review.userId
+        let user = await User.findOne({
+            where: {id: review.userId},
+            attributes: ['id', 'firstName', 'lastName']
+        })
+        let reviewImages = await ReviewImage.findAll({
+            where: {reviewId: review["id"]},
+            attributes: ['id', 'url']
+        })
+        for (let key in review.dataValues) reviewPayload[key] = review[key]
+        reviewPayload.User = user
+        reviewPayload.ReviewImages = reviewImages
+        spotReviewPayload.push(reviewPayload)
+        console.log(user)
+    }
+    res.status(200).json(spotReviewPayload)
+})
+
 //Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', restoreUser, async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {spotId, url, preview} = req.body
-    if (!spot) {
+    if (!spot || !req.user || req.user.id !== spot.ownerId) {
         res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404,
-            errors
         })
     }
     let spotImage = await SpotImage.create({
         spotId, url, preview
     })
-    let payload = {url, preview}
-    res.status(200).json(payload)
+
+    let payload = {
+        id: spotImage.id,
+        url: url,
+        preview: preview
+    }
+    res.status(200).json(spot)
 })
 
 //get all spots of the current user
