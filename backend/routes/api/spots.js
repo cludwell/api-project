@@ -46,6 +46,10 @@ router.get('current', [restoreUser, requireAuth], async (req, res) => {
     res.status(200).json({Spots: Spots})
 })
 
+//delete a spot
+router.delete('/:spotId', [restoreUser, requireAuth], async (req, res, next) => {
+    
+})
 //post a spot
 router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
@@ -83,7 +87,6 @@ router.post('/', [restoreUser, requireAuth], async (req, res, next) => {
 
     res.status(201).json(newSpot)
 })
-
 
 //look up spot by id
 router.get('/:id', async (req, res, next) => {
