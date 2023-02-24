@@ -217,7 +217,7 @@ router.get('/current', restoreUser, async (req, res) => {
         for (let key in spot.dataValues) payload[key] = spot[key]
         let reviewTotal = spotReviews.reduce((acc,next) => acc + next["stars"], 0)
         payload.avgRating = reviewTotal / spotReviews.length
-        payload.previewImage = previewImageData
+        payload.previewImage = previewImageData["url"]
         Spots.push(payload)
     }
     res.status(200).json({Spots: Spots})
