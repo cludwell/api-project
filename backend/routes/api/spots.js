@@ -45,12 +45,47 @@ router.get('/:spotId/bookings', restoreUser, async (req,res) => {
 router.post('/:spotId/bookings', restoreUser, async (req, res) => {
     let {startDate, endDate} = req.body
     let spot = await Spot.findByPk(req.params.spotId)
+    if (!spot) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+
+    if (Date.parse(endDate) <= Date.parse(startDate)) {
+        res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+              "endDate": "endDate cannot be on or before startDate"
+            }
+          })
+    }
     let bookings = await Booking.findAll({
-        where: {spotId: spot.id}
+        where: {spotId: spot.id},
+        attributes: ['startDate', 'endDate']
     })
 
-    
-    res.status(200).json(bookings)
+    let bookingsArray = [], errors = {}
+    for (let book of bookings) {
+        bookingsArray.push([Date.parse(book.startDate), Date.parse(book.endDate)])
+    }
+    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+
+    let startingConflicts = bookingsArray.sort((a,b) => a[0] - b[0]).filter(ele=>
+        (ele[0] <= parsedStart && parsedStart <= ele[1]))
+    let endingConflicts = bookingsArray.sort((a,b) => a[0] - b[0]).filter(ele=>
+        (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+    if (startingConflicts.length) {
+        errors.startDate = "Start date conflicts with an existing booking"
+    }
+    if (endingConflicts.length) {
+        errors.endDate = "End date conflicts with an existing booking"
+    }
+    if (startingConflicts.length || endingConflicts.length) {
+        
+    }
+    res.status(200).json(startingConflicts)
 })
 
 //Create a Review for a Spot based on the Spot's id
