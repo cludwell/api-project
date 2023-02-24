@@ -11,13 +11,42 @@ router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 
+router.delete('/:imageId', restoreUser, async (req, res) => {
+    let reviewImage = await ReviewImage.findByPk(req.params.imageId)
+    let review = await Review.findOne({
+        where: {
+            userId: req.user.id,
+            id: reviewImage.reviewId
+        }
+    })
+    if (!reviewImage || !review) {
+        res.status(404).json({
+            "message": "Review Image couldn't be found",
+            "statusCode": 404
+        })
+    } else if (review.userId !== req.user.id) {
+        res.status(403).json({
+            "message": "Unauthorized user cannot delete this review",
+            "statusCode": 403
+          })
+    } else {
+        await reviewImage.destroy()
+        res.status(200).json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+          })
+    }
 
+
+
+})
 
 router.use((err, _req, _res, next) => {
-    const error = new Error("The requested resource couldn't be found.");
+
     err.title = "Resource Not Found";
-    err.errors = { message: "The requested resource couldn't be found." };
-    err.status = 404;
+    err.message = "Review Image couldn't be found";
+    err.statusCode = 404;
+    err.status = 404
     next(err);
   });
 
