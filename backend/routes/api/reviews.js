@@ -139,12 +139,13 @@ router.get('/current', restoreUser, async (req, res) => {
             attributes: ['id', 'url']
         })
         for(let key in review.dataValues) reviewPayload[key] = review[key]
-        // for (let key in spot.dataValues) reviewPayload.Spot[key] = spot[key]
-        // Spot.previewImage = preview
-        spot.set({previewImage: 'urlstring'})
+        let spotPOJO = {}
+        for (let key in spot.dataValues) spotPOJO[key] = spot[key]
+
         let {id, firstName, lastName} = req.user
         reviewPayload.User = {id, firstName, lastName}
-        reviewPayload.Spot = spot
+        reviewPayload.Spot = spotPOJO
+        reviewPayload.Spot.previewImage = preview["url"]
         reviewPayload.ReviewImages = reviewImages
         reviewAnswer.push(reviewPayload)
     }
