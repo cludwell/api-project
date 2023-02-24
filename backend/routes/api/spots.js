@@ -137,7 +137,7 @@ router.post('/:spotId/reviews', restoreUser, async (req, res) => {
         let created = await Review.findOne({
             where: {userId: req.user.id, spotId: spot.id}
         })
-        res.json(created)
+        res.json(spotReview)
     }
 })
 
