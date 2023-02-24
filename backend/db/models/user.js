@@ -21,13 +21,9 @@ module.exports = (sequelize, DataTypes) => {
       })
       User.belongsToMany(models.Spot, {
         through: 'Bookings',
-        onDelete: 'CASCADE',
-        hooks: true
     })
       User.belongsToMany(models.Spot, {
         through: 'Reviews',
-        onDelete: 'CASCADE',
-        hooks: true
       })
     }
     static getCurrentUserById(id) {
