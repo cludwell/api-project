@@ -13,7 +13,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 //Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', restoreUser, async (req,res) => {
     let spotQuery= await Spot.findByPk(req.params.spotId)
-    if (!spot || !req.params.spotId) {
+    if (!spotQuery || !req.params.spotId) {
         res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
@@ -72,10 +72,10 @@ router.post('/:spotId/bookings', restoreUser, async (req, res) => {
     }
     let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
 
-    let startingConflicts = bookingsArray.sort((a,b) => a[0] - b[0]).filter(ele=>
-        (ele[0] <= parsedStart && parsedStart <= ele[1]))
-    let endingConflicts = bookingsArray.sort((a,b) => a[0] - b[0]).filter(ele=>
-        (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+    let startingConflicts = bookingsArray.sort((a,b) => a[0] - b[0])
+        .filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
+    let endingConflicts = bookingsArray.sort((a,b) => a[0] - b[0])
+        .filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
 
     if (startingConflicts.length) {
         errors.startDate = "Start date conflicts with an existing booking"

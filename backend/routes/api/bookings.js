@@ -45,9 +45,17 @@ router.delete('/:bookingId', restoreUser, async (req, res) => {
     if (!booking) {
         res.status(404).json({message: "Booking couldn't be found", statusCode: 404})
     }
-
-    await booking.destroy({where: {id: req.params.bookingId}});
-    res.status(200).json({message: 'Successfully Deleted', statusCode: 200});
+    if (Date.parse(booking.startDate) < new Date()) {
+        res.status(403).json({
+            "message": "Bookings that have been started can't be deleted",
+            "statusCode": 403
+          })
+    }
+    await booking.destroy({where: {id: req.params.bookingId, userId: req.user.id}});
+    res.status(200).json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+      });
 })
 
 router.use((err, _req, _res, next) => {
