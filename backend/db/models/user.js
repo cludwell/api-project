@@ -19,12 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true
       })
-      User.belongsToMany(models.Spot, {
-        through: 'Bookings',
-    })
-      User.belongsToMany(models.Spot, {
-        through: 'Reviews',
-      })
+      User.belongsToMany(models.Spot, {through: 'Bookings'})
+      User.belongsToMany(models.Spot, {through: 'Reviews'})
     }
     static getCurrentUserById(id) {
       return User.scope("currentUser").findByPk(id);

@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     spotId: {
       type: DataTypes.INTEGER,
       references: {model: 'Spots'},
-      onDelete: 'CASCADE'
     },
     url: {
       type: DataTypes.STRING
