@@ -2,7 +2,7 @@ const express = require('express');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
@@ -26,19 +26,70 @@ const validateSignup = [
     handleValidationErrors
   ];
 
+
+
+
 // Sign up
-router.post(
-  '/',
-  validateSignup,
-  async (req, res) => {
-    const { email, password, username } = req.body;
-    const user = await User.signup({ email, username, password });
+router.post('/', async (req, res) => {
+    const errors = {}
+    const { email, password, username, firstName, lastName } = req.body;
+    const user = await User.signup({ email, username, password, firstName, lastName});
+    let token = await setTokenCookie(res, user);
 
-    await setTokenCookie(res, user);
+    if (!email) errors.email = 'Invalid email'
+    if (!username) errors.username = 'Username is required'
+    if (!firstName) errors.firstName = 'First Name is required'
+    if (!lastName) errors.lastName ='Last Name is required'
+    if (!password) errors.password = 'Password is required'
 
-    return res.json({
-      user: user
-    });
+    //conditionfor if user email exists
+    const userEmail = await User.findOne({
+      where: {email: email}
+    })
+    const userUsername = await User.findOne({
+      where: {username: username}
+    })
+
+    if (userEmail) {
+      let error = {
+          title: 'User already exists with the specified email',
+          message: "User already exists",
+          statusCode: 403,
+          errors: {
+          email: 'User with that email already exists'
+          }
+        }
+      res.status(403).json(error)
+    }
+
+    //condition for if user username exists
+    if (userUsername) {
+      let error = {
+        title: 'User already exists with the specified username',
+        message: "User already exists",
+        statusCode: 403,
+        errors: {
+        email: 'User with that username already exists'
+        }
+      }
+    res.status(403).json(error)
+    }
+
+    if (Object.keys(errors).length) {
+      res.status(400).json({
+        "message": "Validation error",
+        "statusCode": 400,
+        errors
+      })
+    }
+
+    res.json({
+      email: email,
+      password: password,
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      token: token});
   }
 );
 
