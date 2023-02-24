@@ -284,26 +284,27 @@ router.post('/', requireAuth, async (req, res, next) => {
     if (!description) errors.description = 'Description is required';
     if (!price) errors.price = 'Price per day is required';
 
-    if (Object.keys(errors).length > 0) res.status(400).json({
-        "message": "Validation Error",
-        "statusCode": 400,
-        errors
-    })
-
-    let newSpot = await Spot.create({
-        ownerId: req.user.id,
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price
-    })
-
-    res.status(201).json(newSpot)
+    if (Object.keys(errors).length > 0){
+        res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            errors
+        })
+    } else {
+        let newSpot = await Spot.create({
+            ownerId: req.user.id,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
+        res.status(201).json(newSpot)
+    }
 })
 
 //Get details of a Spot from an id

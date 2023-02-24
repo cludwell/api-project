@@ -36,9 +36,6 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
             "statusCode": 200
           })
     }
-
-
-
 })
 
 router.use((err, _req, _res, next) => {

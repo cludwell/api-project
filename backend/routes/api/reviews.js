@@ -10,41 +10,6 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
-// router.use([setTokenCookie, restoreUser])
-
-//get all reviews by spot id
-// router.get('/:spotId', async (req, res, next) =>{
-//     let Reviews = []
-//     let spotReviews = await Review.findAll({
-//         where: {spotId: req.params.spotId}
-//     })
-//     let spot = await Spot.findByPk(req.params.spotId)
-//     if (!spot) {
-//         let error =  {
-//             "message": "Spot couldn't be found",
-//             "statusCode": 404
-//         }
-//         res.status(404).json(error)
-//     }
-
-//     for (let review of spotReviews) {
-//         let payload = {}
-//         let user = await User.findOne({
-//             where: {id: review['userId']},
-//             attributes: ['id', 'firstName', 'lastName']
-//         })
-//         let reviewImages = await ReviewImage.findAll({
-//             where: {reviewId: review.id},
-//             attributes: ['id', 'url']
-//         })
-//         for (let key in review.dataValues) payload[key] = review[key]
-//         payload.User = user
-//         payload.ReviewImages = reviewImages
-//         Reviews.push(payload)
-//     }
-
-//     res.status(200).json({Reviews: Reviews})
-// })
 
 //Delete a Review
 router.delete('/:reviewId', restoreUser, async (req, res) => {
