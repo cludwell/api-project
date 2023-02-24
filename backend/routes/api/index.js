@@ -18,7 +18,7 @@ router.use('/spots', spotsRouter);
 
 router.use('/spots', spotsRouter);
 
-router.use('./bookings', bookingsRouter)
+router.use('/bookings', bookingsRouter)
 
 
 router.post('/test', (req, res) => {
