@@ -41,7 +41,13 @@ router.put('/:bookingId', restoreUser, async (req, res) => {
 
 //Delete a Booking
 router.delete('/:bookingId', restoreUser, async (req, res) => {
+    let booking = await Booking.findByPk(req.params.bookingId)
+    if (!booking) {
+        res.status(404).json({message: "Booking couldn't be found", statusCode: 404})
+    }
 
+    await booking.destroy({where: {id: req.params.bookingId}});
+    res.status(200).json({message: 'Successfully Deleted', statusCode: 200});
 })
 
 router.use((err, _req, _res, next) => {

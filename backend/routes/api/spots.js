@@ -76,6 +76,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res) => {
         (ele[0] <= parsedStart && parsedStart <= ele[1]))
     let endingConflicts = bookingsArray.sort((a,b) => a[0] - b[0]).filter(ele=>
         (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+
     if (startingConflicts.length) {
         errors.startDate = "Start date conflicts with an existing booking"
     }
@@ -83,9 +84,20 @@ router.post('/:spotId/bookings', restoreUser, async (req, res) => {
         errors.endDate = "End date conflicts with an existing booking"
     }
     if (startingConflicts.length || endingConflicts.length) {
-        
+        res.status(403).json({
+            "title": "Booking conflict",
+            "message": "Sorry, this spot is already booked for the specified dates",
+            "statusCode": 403,
+            errors
+        })
     }
-    res.status(200).json(startingConflicts)
+    let newBooking = await Booking.create({
+        startDate,
+        endDate,
+        userId: req.user.id,
+        spotId: spot.id
+    })
+    res.status(200).json(newBooking)
 })
 
 //Create a Review for a Spot based on the Spot's id
