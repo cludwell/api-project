@@ -10,26 +10,47 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
-// router.use(
-//     // configs the app to use the cookies
-//   csrf({
-//     cookie: true
-//   })
-// );
-
-// router.use((req, res, next)=> {
-//     res.cookie('XSRF-TOKEN', req.csrfToken())
-// })
-
-// router.use([setTokenCookie, restoreUser])
-
 //Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', restoreUser, async (req,res) => {
+    let spotQuery= await Spot.findByPk(req.params.spotId)
+    if (!spot || !req.params.spotId) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        })
+    }
+    if (req.user.id === spotQuery.ownerId) {
+        let bookings = await Booking.findAll({
+            where: {spotId: spotQuery.id}
+        })
+        let bookingPayload = [];
+        for (let book of bookings) {
+            let bookedUser = await User.findByPk(book.userId)
+            let bookData = {}
+            bookData.User = bookedUser
+            for (let key in book.dataValues) bookData[key] = book[key]
+            bookingPayload.push(bookData)
+        }
+        res.status(200).json({Bookings: bookingPayload})
+    } else if (req.user.id !== spotQuery.ownerId) {
+        let bookings = await Booking.findAll({
+            where: {spotId: spotQuery.id},
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+        res.status(200).json({Bookings: bookings})
+    }
+})
+
+//Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', restoreUser, async (req, res) => {
+    let {startDate, endDate} = req.body
+    let spot = await Spot.findByPk(req.params.spotId)
     let bookings = await Booking.findAll({
-        
+        where: {spotId: spot.id}
     })
 
-    res.status(200).json()
+    
+    res.status(200).json(bookings)
 })
 
 //Create a Review for a Spot based on the Spot's id
@@ -129,7 +150,7 @@ router.post('/:spotId/images', restoreUser, async (req, res) => {
     res.status(200).json(spot)
 })
 
-//get all spots of the current user
+//Get all Spots owned by the Current User
 router.get('/current', restoreUser, async (req, res) => {
     let mySpots = await Spot.findAll({
         where: {ownerId: req.user.id}
@@ -155,7 +176,7 @@ router.get('/current', restoreUser, async (req, res) => {
     res.status(200).json({Spots: Spots})
 })
 
-//edit a spot
+//Edit a Spot
 router.put('/:spotId', restoreUser, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {address, city, state, country, lat, lng, name, description, price} = req.body
@@ -190,7 +211,7 @@ router.put('/:spotId', restoreUser, async (req, res, next) => {
     res.status(200).json(spot)
 })
 
-//delete a spot
+//Delete a Spot
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
@@ -200,7 +221,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     res.status(200).json({message: 'Successfully Deleted', statusCode: 200});
 })
 
-//post a spot
+//Create a Spot
 router.post('/', requireAuth, async (req, res, next) => {
     if (!req.user) res.status(400).json({message: 'Please sign in to post a spot'})
     const {ownerId, address, city, state, country, lat, lng, name, description, price} = req.body
@@ -238,7 +259,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     res.status(201).json(newSpot)
 })
 
-//look up spot by id
+//Get details of a Spot from an id
 router.get('/:id', async (req, res, next) => {
 
     let spot = await Spot.findByPk(req.params.id)
@@ -268,7 +289,7 @@ router.get('/:id', async (req, res, next) => {
     res.status(200).json(payload)
 })
 
-//get a list of all spots
+//Get all Spots
 router.get('/', async (req, res, next) => {
     let {page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng} = req.query
     let where = {}, errors = [], pagination = {}
@@ -294,11 +315,11 @@ router.get('/', async (req, res, next) => {
     if (maxPrice >= 0) where.price = { [Op.lte]: maxPrice }
     if (maxPrice < 0) errors.push("Maximum price must be greater than or equal to 0")
 
-    if (minLat <= 180 || minLat >= 180 ) where.lat = { [Op.gte]: minLat }
-    if (minLat > 180 || minLat < -180 || maxLat <= minLat) errors.push("Minimum latitude is invalid")
+    if (minLat <= 90 || minLat >= 90 ) where.lat = { [Op.gte]: minLat }
+    if (minLat > 90 || minLat < -90 || maxLat <= minLat) errors.push("Minimum latitude is invalid")
 
-    if (maxLat <= 180 || maxLat >= -180) where.lat = { [Op.lte]: maxLat }
-    if (maxLat > 180 || maxLat < -180 || maxLat <= minLat) errors.push("Maximum latitude is invalid")
+    if (maxLat <= 90|| maxLat >= -90) where.lat = { [Op.lte]: maxLat }
+    if (maxLat > 90 || maxLat < -90 || maxLat <= minLat) errors.push("Maximum latitude is invalid")
 
     if (minLng <= 180 || minLng >= -180) where.lng = { [Op.gte]: maxPrice }
     if (minLng > 180 || minLng < -180 || minLng >= maxLng) errors.push("Minimum longitude is invalid")
