@@ -394,7 +394,7 @@ router.get('/', async (req, res, next) => {
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
         payload.avgRating = reviewTotal / spotsReviews.length
-        // payload.previewImage = previewImageData.url
+        payload.previewImage = previewImageData["url"]
         Spots.push(payload)
     }
 
@@ -403,6 +403,7 @@ router.get('/', async (req, res, next) => {
         "statusCode": 400,
         errors
     })
+    //
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
