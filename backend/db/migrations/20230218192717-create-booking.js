@@ -1,7 +1,10 @@
 'use strict';
 
-const { options } = require('../../routes/api');
+// const { options } = require('../../routes/api');
+/** @type {import('sequelize-cli').Migration} */
 
+let options = {};
+if (process.env.NODE_ENV === 'production') options.schema = process.env.SCHEMA
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -41,6 +44,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = 'Bookings'
     await queryInterface.dropTable('Bookings');
   }
 };
