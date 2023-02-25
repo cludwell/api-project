@@ -339,7 +339,7 @@ router.get('/:id', async (req, res, next) => {
 //Get all Spots
 router.get('/', async (req, res, next) => {
     let {page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng} = req.query
-    let where = {}, errors = [], pagination = {}
+    let where = {}, errors = {}, pagination = {}
 
     size = !size || parseInt(size) > 20 ? size = 20
     : parseInt(size)
