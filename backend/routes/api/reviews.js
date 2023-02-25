@@ -1,13 +1,9 @@
 const express = require('express')
-
 const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 const { check, Result } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 const {sequelize, Op} = require('sequelize');
-const csrf = require('csurf');
-const cookieParser = require('cookie-parser');
-router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Add an Image to a Review based on the Review's id
@@ -17,12 +13,11 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         where: {reviewId: review.id}
     })
     if (!review) {
-        res.status(404).json(    {
-            "title": "Couldn't find a Review with the specified id",
+        res.status(404).json({
             "message": "Review couldn't be found",
             "statusCode": 404
           })
-    }else if (existingReviewImages.length > 9) {
+    } else if (existingReviewImages.length > 9) {
         res.status(403).json({
             "message": "Maximum number of images for this resource was reached",
             "statusCode": 403
@@ -129,12 +124,5 @@ router.get('/current', requireAuth, async (req, res) => {
     res.status(200).json({Review: reviewAnswer})
 })
 
-router.use((err, _req, _res, next) => {
-    const error = new Error("The requested resource couldn't be found.");
-    err.title = "Resource Not Found";
-    err.errors = { message: "The requested resource couldn't be found." };
-    err.status = 404;
-    next(err);
-  });
 
 module.exports = router;
