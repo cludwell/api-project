@@ -392,10 +392,9 @@ router.get('/', async (req, res, next) => {
         let payload = {}, url;
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
-        for (let key in previewImageData.dataValues) url = previewImageData[key]
-        let previewData = String(previewImageData.url)
+        let jsonPreviewData = JSON.stringify(previewImageData.url).split('"')[1]
         payload.avgRating = reviewTotal / spotsReviews.length
-        payload.previewImage = previewData
+        payload.previewImage = jsonPreviewData
         Spots.push(payload)
     }
 
