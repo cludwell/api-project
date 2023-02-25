@@ -12,7 +12,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 
 //Delete a Review
-router.delete('/:reviewId', restoreUser, async (req, res) => {
+router.delete('/:reviewId', requireAuth, async (req, res) => {
     let reviewToDelete = await Review.findByPk(req.params.reviewId)
     if(!reviewToDelete) {
         res.status(404).json({
@@ -34,7 +34,7 @@ router.delete('/:reviewId', restoreUser, async (req, res) => {
 })
 
 //Edit a Review
-router.put('/:reviewId', restoreUser, async (req, res) => {
+router.put('/:reviewId', requireAuth, async (req, res) => {
     let reviewInstance = await Review.findByPk(req.params.reviewId)
     let {review, stars} = req.body
     let errors = {}
@@ -53,7 +53,7 @@ router.put('/:reviewId', restoreUser, async (req, res) => {
 })
 
 //Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', restoreUser, async (req, res) => {
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
     let review = await Review.findByPk(req.params.reviewId)
     if (!review) {
         res.status(404).json(    {
@@ -83,7 +83,7 @@ router.post('/:reviewId/images', restoreUser, async (req, res) => {
 })
 
 //Get all Reviews of the Current User
-router.get('/current', restoreUser, async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
 
     let reviews = await Review.findAll({
         where: {userId: req.user.id}
