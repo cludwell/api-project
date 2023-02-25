@@ -46,18 +46,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     }
     if (Date.parse(bookingQuery.endDate) < new Date()) {
         res.status(403).json({
-      "message": "Past bookings can't be modified",
-      "statusCode": 403
-    })
+            "message": "Past bookings can't be modified",
+            "statusCode": 403
+        })
     }
-
     let spot = await Spot.findOne({
         where: {id: bookingQuery.spotId}
     })
-
-
-
-    if (Date.parse(endDate) <= Date.parse(startDate)) {
+    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    if (parsedEnd <= parsedStart) {
         res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
@@ -66,22 +63,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             }
           })
     }
-
     let bookings = await Booking.findAll({
         where: {spotId: spot.id},
         attributes: ['startDate', 'endDate']
     })
-
-    let bookingsArray = [], errors = {}
-    for (let book of bookings) {
-        bookingsArray.push([Date.parse(book.startDate), Date.parse(book.endDate)])
-    }
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
-
-    let startingConflicts = bookingsArray.sort((a,b) => a[0] - b[0])
-        .filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
-    let endingConflicts = bookingsArray.sort((a,b) => a[0] - b[0])
-        .filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+    let  errors = {}
+    let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
+        .sort((a,b) => a[0] - b[0])
+    let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
+    let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
 
     if (startingConflicts.length) {
         errors.startDate = "Start date conflicts with an existing booking"
@@ -97,7 +87,6 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             errors
         })
     }
-
     let bookingEdit = bookingQuery.set({
         "startDate": startDate,
         "endDate": endDate

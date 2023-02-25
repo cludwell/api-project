@@ -50,8 +50,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             "statusCode": 404
         })
     }
-
-    if (Date.parse(endDate) <= Date.parse(startDate)) {
+    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    if (parsedEnd <= parsedStart) {
         res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
@@ -65,16 +65,12 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         attributes: ['startDate', 'endDate']
     })
 
-    let bookingsArray = [], errors = {}
-    for (let book of bookings) {
-        bookingsArray.push([Date.parse(book.startDate), Date.parse(book.endDate)])
-    }
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    let  errors = {}
+    let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
+        .sort((a,b) => a[0] - b[0])
 
-    let startingConflicts = bookingsArray.sort((a,b) => a[0] - b[0])
-        .filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
-    let endingConflicts = bookingsArray.sort((a,b) => a[0] - b[0])
-        .filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+    let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
+    let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
 
     if (startingConflicts.length) {
         errors.startDate = "Start date conflicts with an existing booking"
@@ -90,7 +86,6 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             errors
         })
     } else {
-
         let newBooking = await Booking.create({
             startDate,
             endDate,
