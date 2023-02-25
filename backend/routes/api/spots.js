@@ -65,7 +65,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         attributes: ['startDate', 'endDate']
     })
 
-    let  errors = {}
+    let errors = {}
     let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
         .sort((a,b) => a[0] - b[0])
 
