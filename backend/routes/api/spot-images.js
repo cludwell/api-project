@@ -20,9 +20,9 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
           })
     } else if (spotTiedToImage.ownerId !== req.user.id) {
         res.status(403).json({
-            "message": "Unauthorized user cannot delete this spot image",
-            "statusCode": 403
-          })
+          "message": "Forbidden",
+          "statusCode": 403
+        })
     } else {
         await reviewImage.destroy()
         res.status(200).json({

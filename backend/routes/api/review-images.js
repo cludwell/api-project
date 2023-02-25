@@ -26,7 +26,7 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
         })
     } else if (review.userId !== req.user.id) {
         res.status(403).json({
-            "message": "Unauthorized user cannot delete this review",
+            "message": "Forbidden",
             "statusCode": 403
           })
     } else {

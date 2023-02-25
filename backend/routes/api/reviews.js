@@ -50,7 +50,7 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
           })
     } else if (req.user.id !== reviewToDelete.userId) {
         res.status(403).json({
-            "message": "Unauthorized user cannot delete this review",
+            "message": "Forbidden",
             "statusCode": 403
           })
     } else {
@@ -75,6 +75,11 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
             "statusCode": 400,
             errors
         })
+    } else if (review.userId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
     } else {
         reviewInstance.set({review, stars})
         await reviewInstance.save()

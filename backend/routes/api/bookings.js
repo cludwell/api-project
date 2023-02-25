@@ -44,6 +44,12 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
       "statusCode": 404
     })
     }
+    if (bookingQuery.userId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
     if (Date.parse(bookingQuery.endDate) < new Date()) {
         res.status(403).json({
             "message": "Past bookings can't be modified",
@@ -100,6 +106,12 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     let booking = await Booking.findByPk(req.params.bookingId)
     if (!booking) {
         res.status(404).json({message: "Booking couldn't be found", statusCode: 404})
+    }
+    if (booking.userId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
     }
     if (Date.parse(booking.startDate) < new Date()) {
         res.status(403).json({

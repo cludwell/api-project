@@ -185,6 +185,12 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
             "statusCode": 404,
         })
     }
+    if (spot.ownerId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
     let spotImage = await SpotImage.create({
         spotId, url, preview
     })
@@ -233,7 +239,12 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     if (!spot) {
         res.status(404).json({message: "Spot cannot be found", statusCode: 404})
     }
-
+    if (spot.ownerId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    }
     if (!address) errors.address ='Street address is required'
     if (!city) errors.city = 'City is required'
     if (!state) errors.state = 'State is required'
@@ -264,6 +275,12 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
         res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+    }
+    if (spot.ownerId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
     }
     await spot.destroy({where: {id: req.params.spotId}});
     res.status(200).json({message: 'Successfully deleted', statusCode: 200});
