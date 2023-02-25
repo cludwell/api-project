@@ -10,6 +10,40 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
+//Add an Image to a Review based on the Review's id
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
+    let review = await Review.findByPk(req.params.reviewId)
+    let existingReviewImages = await ReviewImage.findAll({
+        where: {reviewId: review.id}
+    })
+    if (!review) {
+        res.status(404).json(    {
+            "title": "Couldn't find a Review with the specified id",
+            "message": "Review couldn't be found",
+            "statusCode": 404
+          })
+    }else if (existingReviewImages.length > 9) {
+        res.status(403).json({
+            "message": "Maximum number of images for this resource was reached",
+            "statusCode": 403
+          })
+    } else if (review.userId !== req.user.id) {
+        res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
+          })
+    } else {
+        let newImage = ReviewImage.create({
+            url: req.body.url,
+            reviewId: review.id
+        })
+        let payload = {
+            id: review.id,
+            url: req.body.url
+        }
+        res.status(200).json(payload)
+    }
+})
 
 //Delete a Review
 router.delete('/:reviewId', requireAuth, async (req, res) => {
@@ -53,35 +87,6 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     }
 })
 
-//Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', requireAuth, async (req, res) => {
-    let review = await Review.findByPk(req.params.reviewId)
-    if (!review) {
-        res.status(404).json(    {
-            "title": "Couldn't find a Review with the specified id",
-            "message": "Review couldn't be found",
-            "statusCode": 404
-          })
-    }
-    let existingReviewImages = await ReviewImage.findAll({
-        where: {reviewId: review.id}
-    })
-    if (existingReviewImages.length > 9) {
-        res.status(403).json({
-            "message": "Maximum number of images for this resource was reached",
-            "statusCode": 403
-          })
-    }
-    let newImage = ReviewImage.create({
-        url: req.body.url,
-        reviewId: review.id
-    })
-    let payload = {
-        id: review.id,
-        url: req.body.url
-    }
-    res.status(200).json(payload)
-})
 
 //Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res) => {
