@@ -178,7 +178,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 //Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
-    let {spotId, url, preview} = req.body
+    let {url, preview} = req.body
     if (!spot) {
         res.status(404).json({
             "message": "Spot couldn't be found",
@@ -192,7 +192,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
           })
     }
     let spotImage = await SpotImage.create({
-        spotId, url, preview
+        spotId: req.params.spotId, url, preview
     })
 
     let payload = {
