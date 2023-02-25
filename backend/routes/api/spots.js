@@ -89,14 +89,16 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             "statusCode": 403,
             errors
         })
+    } else {
+
+        let newBooking = await Booking.create({
+            startDate,
+            endDate,
+            userId: req.user.id,
+            spotId: spot.id
+        })
+        res.status(200).json(newBooking)
     }
-    let newBooking = await Booking.create({
-        startDate,
-        endDate,
-        userId: req.user.id,
-        spotId: spot.id
-    })
-    res.status(200).json(newBooking)
 })
 
 //Create a Review for a Spot based on the Spot's id
