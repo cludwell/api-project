@@ -75,7 +75,7 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
             "statusCode": 400,
             errors
         })
-    } else if (review.userId !== req.user.id) {
+    } else if (reviewInstance.userId !== req.user.id) {
         res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
