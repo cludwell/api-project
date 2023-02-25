@@ -414,11 +414,5 @@ router.get('/', async (req, res, next) => {
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
-//error handling middleware
-router.use((err, _req, _res, next) => {
-    err.title = "Resource Not Found";
-    err.status = 404;
-    next(err);
-  });
 
 module.exports = router;

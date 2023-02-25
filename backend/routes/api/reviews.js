@@ -82,7 +82,6 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
     }
 })
 
-
 //Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res) => {
 

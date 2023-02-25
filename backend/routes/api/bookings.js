@@ -125,13 +125,4 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
       });
 })
 
-router.use((err, _req, _res, next) => {
-
-    err.title = "Resource Not Found";
-    err.message = "Resource NotFound";
-    err.statusCode = 404;
-    err.status = 404
-    next(err);
-});
-
 module.exports = router;

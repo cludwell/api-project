@@ -38,13 +38,4 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
     }
 })
 
-router.use((err, _req, _res, next) => {
-
-    err.title = "Resource Not Found";
-    err.message = "Review Image couldn't be found";
-    err.statusCode = 404;
-    err.status = 404
-    next(err);
-  });
-
 module.exports = router;
