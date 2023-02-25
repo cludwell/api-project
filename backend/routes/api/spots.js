@@ -134,13 +134,14 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
         })
         let reviews = await Review.findAll()
         res.json({
-            "id": reviews.length,
-            "userId": req.user.id,
-            "spotId": req.params.spotId,
-            "review": review,
-            "stars": stars,
-            "createdAt": new Date().toISOString(),
-            "updatedAt": new Date().toISOString()
+            spotReview
+            // "id": reviews.length,
+            // "userId": req.user.id,
+            // "spotId": req.params.spotId,
+            // "review": review,
+            // "stars": stars,
+            // "createdAt": new Date().toISOString(),
+            // "updatedAt": new Date().toISOString()
         })
     }
 })
