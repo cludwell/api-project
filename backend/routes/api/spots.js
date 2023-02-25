@@ -179,7 +179,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 router.post('/:spotId/images', requireAuth, async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {spotId, url, preview} = req.body
-    if (!spot || !req.user || req.user.id !== spot.ownerId) {
+    if (!spot) {
         res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404,
