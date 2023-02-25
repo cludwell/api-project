@@ -357,22 +357,22 @@ router.get('/', async (req, res, next) => {
 
     //accepting query parameters
     if (minPrice >= 0) where.price = { [Op.gte]: minPrice }
-    if (minPrice < 0) errors.push("Minimum price must be greater than or equal to 0")
+    if (minPrice < 0) errors.minPrice = "Minimum price must be greater than or equal to 0"
 
     if (maxPrice >= 0) where.price = { [Op.lte]: maxPrice }
-    if (maxPrice < 0) errors.push("Maximum price must be greater than or equal to 0")
+    if (maxPrice < 0) errors.maxPrice = "Maximum price must be greater than or equal to 0"
 
     if (minLat <= 90 || minLat >= 90 ) where.lat = { [Op.gte]: minLat }
-    if (minLat > 90 || minLat < -90 || maxLat <= minLat) errors.push("Minimum latitude is invalid")
+    if (minLat > 90 || minLat < -90 || maxLat <= minLat) errors.minLat = "Minimum latitude is invalid"
 
     if (maxLat <= 90|| maxLat >= -90) where.lat = { [Op.lte]: maxLat }
-    if (maxLat > 90 || maxLat < -90 || maxLat <= minLat) errors.push("Maximum latitude is invalid")
+    if (maxLat > 90 || maxLat < -90 || maxLat <= minLat) errors.maxLat = "Maximum latitude is invalid"
 
     if (minLng <= 180 || minLng >= -180) where.lng = { [Op.gte]: maxPrice }
-    if (minLng > 180 || minLng < -180 || minLng >= maxLng) errors.push("Minimum longitude is invalid")
+    if (minLng > 180 || minLng < -180 || minLng >= maxLng) errors.minLng = "Minimum longitude is invalid"
 
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
-    if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.push("Minimum longitude is invalid")
+    if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.maxLng = "Minimum longitude is invalid"
 
 
     let Spots = []
@@ -398,7 +398,7 @@ router.get('/', async (req, res, next) => {
         Spots.push(payload)
     }
 
-    if (errors.length > 0) res.status(400).json({
+    if (Object.keys(errors).length > 0) res.status(400).json({
         "message": "Validation Error",
         "statusCode": 400,
         errors
