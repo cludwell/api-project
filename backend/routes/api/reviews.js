@@ -9,15 +9,17 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 //Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
     let review = await Review.findByPk(req.params.reviewId)
-    let existingReviewImages = await ReviewImage.findAll({
-        where: {reviewId: review.id}
-    })
+
     if (!review) {
         res.status(404).json({
             "message": "Review couldn't be found",
             "statusCode": 404
           })
-    } else if (existingReviewImages.length > 9) {
+    }
+    let existingReviewImages = await ReviewImage.findAll({
+        where: {reviewId: review.id}
+    })
+    if (existingReviewImages.length > 9) {
         res.status(403).json({
             "message": "Maximum number of images for this resource was reached",
             "statusCode": 403
