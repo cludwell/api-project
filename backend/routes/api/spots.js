@@ -222,7 +222,8 @@ router.get('/current', requireAuth, async (req, res) => {
         for (let key in spot.dataValues) payload[key] = spot[key]
         let reviewTotal = spotReviews.reduce((acc,next) => acc + next["stars"], 0)
         payload.avgRating = reviewTotal / spotReviews.length
-        payload.previewImage = previewImageData["url"]
+        payload.previewImage = previewImageData ? JSON.stringify(previewImageData.url).split('"')[1]
+        : 'No preview available'
         Spots.push(payload)
     }
     res.status(200).json({Spots: Spots})
