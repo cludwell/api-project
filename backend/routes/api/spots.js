@@ -1,5 +1,4 @@
 const express = require('express')
-
 const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -194,7 +193,7 @@ router.post('/:spotId/images', restoreUser, async (req, res) => {
         url: url,
         preview: preview
     }
-    res.status(200).json(spot)
+    res.status(200).json(payload)
 })
 
 //Get all Spots owned by the Current User
