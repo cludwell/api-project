@@ -46,10 +46,11 @@ router.put('/:reviewId', requireAuth, async (req, res) => {
             "statusCode": 400,
             errors
         })
+    } else {
+        reviewInstance.set({review, stars})
+        await reviewInstance.save()
+        res.status(200).json(reviewInstance)
     }
-    reviewInstance.set({review, stars})
-    await reviewInstance.save()
-    res.status(200).json(reviewInstance)
 })
 
 //Add an Image to a Review based on the Review's id
