@@ -348,8 +348,8 @@ router.get('/', async (req, res, next) => {
     : parseInt(page) > 10 ? 10
     : parseInt(page)
 
-    if (size < 0) errors.push("Size must be greater than or equal to 0",)
-    if(page < 0) errors.push("Page must be greater than or equal to 0",)
+    if (size < 0) errors.size = "Size must be greater than or equal to 0"
+    if(page < 0) errors.page = "Page must be greater than or equal to 0"
     if (page >=1 && size >= 1){
         pagination.limit = size;
         pagination.offset = size * (page - 1)
