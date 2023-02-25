@@ -132,10 +132,16 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             review,
             stars
         })
-        let created = await Review.findOne({
-            where: {userId: req.user.id, spotId: spot.id}
+        let reviews = await Review.findAll()
+        res.json({
+            "id": reviews.length,
+            "userId": req.user.id,
+            "spotId": req.params.spotId,
+            "review": review,
+            "stars": stars,
+            "createdAt": new Date().toISOString(),
+            "updatedAt": new Date().toISOString()
         })
-        res.json(created)
     }
 })
 
