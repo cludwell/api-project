@@ -10,7 +10,7 @@ router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings', restoreUser, async (req,res) => {
+router.get('/:spotId/bookings', requireAuth, async (req,res) => {
     let spotQuery= await Spot.findByPk(req.params.spotId)
     if (!spotQuery || !req.params.spotId) {
         res.status(404).json({
@@ -41,7 +41,7 @@ router.get('/:spotId/bookings', restoreUser, async (req,res) => {
 })
 
 //Create a Booking from a Spot based on the Spot's id
-router.post('/:spotId/bookings', restoreUser, async (req, res) => {
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     let {startDate, endDate} = req.body
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
@@ -100,7 +100,7 @@ router.post('/:spotId/bookings', restoreUser, async (req, res) => {
 })
 
 //Create a Review for a Spot based on the Spot's id
-router.post('/:spotId/reviews', restoreUser, async (req, res) => {
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {stars, review} = req.body, errors = {}
 
@@ -175,7 +175,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 })
 
 //Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', restoreUser, async (req, res) => {
+router.post('/:spotId/images', requireAuth, async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {spotId, url, preview} = req.body
     if (!spot || !req.user || req.user.id !== spot.ownerId) {
@@ -197,7 +197,7 @@ router.post('/:spotId/images', restoreUser, async (req, res) => {
 })
 
 //Get all Spots owned by the Current User
-router.get('/current', restoreUser, async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
     let mySpots = await Spot.findAll({
         where: {ownerId: req.user.id}
     })
@@ -223,7 +223,7 @@ router.get('/current', restoreUser, async (req, res) => {
 })
 
 //Edit a Spot
-router.put('/:spotId', restoreUser, async (req, res, next) => {
+router.put('/:spotId', requireAuth, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {address, city, state, country, lat, lng, name, description, price} = req.body
     let errors = {}
@@ -387,14 +387,15 @@ router.get('/', async (req, res, next) => {
             where: {spotId: spot["id"]}
         })
         let previewImageData = await SpotImage.findOne({
-            where: {spotId: spot["id"]}
+            where: {spotId: spot["id"], preview: true},
+            attributes: ['url']
         })
-        let payload = {}
+        let payload = {}, url;
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
-        let urlString = String(previewImageData["url"])
+        for (let key in previewImageData.dataValues) url = previewImageData[key]
         payload.avgRating = reviewTotal / spotsReviews.length
-        payload.previewImage = urlString
+        payload.previewImage = url
         Spots.push(payload)
     }
 
@@ -407,11 +408,9 @@ router.get('/', async (req, res, next) => {
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
-//error handling middleware, might be making more problems than it is solving
+//error handling middleware
 router.use((err, _req, _res, next) => {
-    const error = new Error("The requested resource couldn't be found.");
     err.title = "Resource Not Found";
-    // err.errors = { message: "The requested resource couldn't be found." };
     err.status = 404;
     next(err);
   });

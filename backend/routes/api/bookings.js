@@ -11,7 +11,7 @@ router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Get all of the Current User's Bookings
-router.get('/current', restoreUser, async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
     let bookings = await Booking.findAll({
         where: {userId: req.user.id}
     })
@@ -35,7 +35,7 @@ router.get('/current', restoreUser, async (req, res) => {
 })
 
 //Edit a Booking
-router.put('/:bookingId', restoreUser, async (req, res) => {
+router.put('/:bookingId', requireAuth, async (req, res) => {
     let {startDate, endDate} = req.body
     let bookingQuery = await Booking.findByPk(req.params.bookingId)
     if (!bookingQuery) {
@@ -107,7 +107,7 @@ router.put('/:bookingId', restoreUser, async (req, res) => {
 })
 
 //Delete a Booking
-router.delete('/:bookingId', restoreUser, async (req, res) => {
+router.delete('/:bookingId', requireAuth, async (req, res) => {
     let booking = await Booking.findByPk(req.params.bookingId)
     if (!booking) {
         res.status(404).json({message: "Booking couldn't be found", statusCode: 404})
