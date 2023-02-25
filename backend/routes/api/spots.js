@@ -129,9 +129,14 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             review,
             stars
         })
-        let reviews = await Review.findAll()
+        let reviews = await Review.findAll(
+            {attributes: ['id']}
+        )
+        //trying to return the created instance was not working, but does exist in DB. this method ensures that appropriate id is being returned to client
+        let maxId = reviews.sort((a, b) => b.id - a.id)[0].id
+        maxId++
         res.json({
-            "id": reviews.length,
+            "id": maxId,
             "userId": req.user.id,
             "spotId": req.params.spotId,
             "review": review,
