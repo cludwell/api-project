@@ -389,12 +389,12 @@ router.get('/', async (req, res, next) => {
             where: {spotId: spot["id"], preview: true},
             attributes: ['url']
         })
-        let payload = {}, url;
+        let payload = {}
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
-        previewImageData ? url = JSON.stringify(previewImageData.url).split('"')[1] : url = 'string'
         payload.avgRating = reviewTotal / spotsReviews.length
-        payload.previewImage = url
+        payload.previewImage = previewImageData ? JSON.stringify(previewImageData.url).split('"')[1]
+        : 'No preview available'
         Spots.push(payload)
     }
 
