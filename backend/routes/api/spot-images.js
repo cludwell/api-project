@@ -24,7 +24,7 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
           "statusCode": 403
         })
     } else {
-        await reviewImage.destroy()
+        await spotimage.destroy()
         res.status(200).json({
             "message": "Successfully deleted",
             "statusCode": 200
