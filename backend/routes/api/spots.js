@@ -374,7 +374,6 @@ router.get('/', async (req, res, next) => {
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
     if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.maxLng = "Minimum longitude is invalid"
 
-
     let Spots = []
     const spotsData = await Spot.findAll( {
         where,
@@ -394,8 +393,9 @@ router.get('/', async (req, res, next) => {
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
         for (let key in previewImageData.dataValues) url = previewImageData[key]
+        let previewData = String(previewImageData.url)
         payload.avgRating = reviewTotal / spotsReviews.length
-        payload.previewImage = url
+        payload.previewImage = previewData
         Spots.push(payload)
     }
 
