@@ -106,7 +106,6 @@ router.get('/current', requireAuth, async (req, res) => {
         for(let key in review.dataValues) reviewPayload[key] = review[key]
         let spotPOJO = {}
         for (let key in spot.dataValues) spotPOJO[key] = spot[key]
-        let jsonPreviewData = JSON.stringify(preview.url).split('"')[1]
         spotPOJO.previewImage = preview ? JSON.stringify(preview.url).split('"')[1]
         : 'No preview available'
         let {id, firstName, lastName} = req.user
