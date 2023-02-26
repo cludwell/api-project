@@ -182,7 +182,7 @@ router.get('/:spotId/reviews', async (req, res) => {
         reviewPayload.ReviewImages = reviewImages
         spotReviewPayload.push(reviewPayload)
     }
-    res.status(200).json(spotReviewPayload)
+    res.status(200).json({Reviews: spotReviewPayload})
 })
 
 //Add an Image to a Spot based on the Spot's id
