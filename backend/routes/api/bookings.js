@@ -105,13 +105,14 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             "statusCode": 403,
             errors
         })
+    } else {
+        let bookingEdit = bookingQuery.set({
+            "startDate": startDate,
+            "endDate": endDate
+        })
+        await bookingEdit.save()
+        res.status(200).json(bookingEdit)
     }
-    let bookingEdit = bookingQuery.set({
-        "startDate": startDate,
-        "endDate": endDate
-    })
-    await bookingEdit.save()
-    res.status(200).json(bookingEdit)
 })
 
 //Delete a Booking
