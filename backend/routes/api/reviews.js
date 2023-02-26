@@ -34,8 +34,13 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
             url: req.body.url,
             reviewId: review.id
         })
+
+        //see notes for Spots -create review, for why this approach is being used
+        let reviewImages = ReviewImage.findAll().sort
+        let maxId = reviewImages.sort((a, b) => b.id - a.id)[0].id
+        maxId++
         let payload = {
-            id: review.id,
+            id: maxId,
             url: req.body.url
         }
         res.status(200).json(payload)
