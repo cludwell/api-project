@@ -66,8 +66,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     })
 
     let errors = {}
-    let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
-        .sort((a,b) => a[0] - b[0])
+    let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)]).sort((a,b) => a[0] - b[0])
 
     let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
     let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
@@ -129,20 +128,19 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             review,
             stars
         })
-        let reviews = await Review.findAll(
-            {attributes: ['id']}
-        )
-        //trying to return the created instance was not working, but does exist in DB. this method ensures that appropriate id is being returned to client
-        let maxId = reviews.sort((a, b) => b.id - a.id)[0].id
-        maxId++
-        res.json({
-            "id": maxId,
-            "userId": req.user.id,
-            "spotId": req.params.spotId,
-            "review": review,
-            "stars": stars,
-            "createdAt": new Date().toISOString(),
-            "updatedAt": new Date().toISOString()
+
+        let created = await Review.findOne({
+            where: {spotId: req.params.spotId,
+                    userId: req.user.id,}
+        })
+        res.status(200).json({
+            id: created.id,
+            userId: created.userId,
+            spotId: created.spotId,
+            review: created.review,
+            stars: created.stars,
+            createdAt: created.createdAt,
+            updatedAt: created.updatedAt
         })
     }
 })
