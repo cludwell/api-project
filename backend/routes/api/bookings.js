@@ -20,9 +20,17 @@ router.get('/current', requireAuth, async (req, res) => {
         let spot = await Spot.findOne({
             where: {id: book.spotId}
         })
-        let bookdata = {}
+        let bookdata = {}, spotData = {}
         for (let key in book.dataValues) bookdata[key] = book[key]
-        bookdata.Spot = spot
+        for (let key in spot.dataValues) spotData[key] = spot[key]
+
+        let previewImageData = await SpotImage.findOne({
+            where: {spotId: spot["id"]},
+            attributes: ['url']
+        })
+        bookdata.Spot = spotData
+        bookdata.Spot.previewImage = previewImageData ? previewImageData.url
+        : 'No preview available'
         bookingPayload.push(bookdata)
     }
     if (!req.user.id || !bookings.length) {
