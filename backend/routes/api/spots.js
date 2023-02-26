@@ -71,7 +71,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
 
     let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
     let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
-    let fallsWithin = bookingsArray.filter(ele=> ele[0] <= parsedStart && parsedEnd <= ele[1])
+    let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
     if (fallsWithin.length) {
         errors.startDate = "Start date conflicts with an existing booking"
         errors.endDate = "End date conflicts with an existing booking"
