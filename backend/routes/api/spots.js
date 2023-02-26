@@ -44,20 +44,26 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => {
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     let {startDate, endDate} = req.body
     let spot = await Spot.findByPk(req.params.spotId)
+    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (!spot) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
     }
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (parsedEnd <= parsedStart) {
-        res.status(400).json({
+        return res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
               "endDate": "endDate cannot be on or before startDate"
             }
+          })
+    }
+    if (!req.user.id || req.user.id === spot.ownerId) {
+        return res.status(403).json({
+            "message": "Forbidden",
+            "statusCode": 403
           })
     }
     let bookings = await Booking.findAll({
@@ -82,7 +88,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         errors.endDate = "End date conflicts with an existing booking"
     }
     if (startingConflicts.length || endingConflicts.length || fallsWithin.length) {
-        res.status(403).json({
+        return res.status(403).json({
             "title": "Booking conflict",
             "message": "Sorry, this spot is already booked for the specified dates",
             "statusCode": 403,
@@ -95,7 +101,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             userId: req.user.id,
             spotId: spot.id
         })
-        res.status(200).json(newBooking)
+        return res.status(200).json(newBooking)
     }
 })
 
@@ -159,7 +165,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     })
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
@@ -190,13 +196,13 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
     let {url, preview} = req.body
     if (!spot) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404,
         })
     }
     if (spot.ownerId !== req.user.id) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
           })
@@ -247,10 +253,10 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     let errors = {}
 
     if (!spot) {
-        res.status(404).json({message: "Spot cannot be found", statusCode: 404})
+        return res.status(404).json({message: "Spot cannot be found", statusCode: 404})
     }
     if (spot.ownerId !== req.user.id) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
           })
@@ -267,7 +273,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     console.log(Object.keys(errors))
 
     if (Object.keys(errors).length) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Body Validation Error",
             "statusCode": 404,
             errors
@@ -284,10 +290,10 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
 router.delete('/:spotId', requireAuth, async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId)
     if (!spot) {
-        res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+        return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
     }
     if (spot.ownerId !== req.user.id) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
           })

@@ -47,6 +47,7 @@ router.get('/current', requireAuth, async (req, res) => {
 router.put('/:bookingId', requireAuth, async (req, res) => {
     let {startDate, endDate} = req.body
     let bookingQuery = await Booking.findByPk(req.params.bookingId)
+    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (!bookingQuery) {
         res.status(404).json({
       "message": "Booking couldn't be found",
@@ -54,13 +55,13 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     })
     }
     if (bookingQuery.userId !== req.user.id) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
           })
     }
-    if (Date.parse(bookingQuery.endDate) < new Date()) {
-        res.status(403).json({
+    if (parsedEnd < new Date() || parsedStart < new Date()) {
+        return res.status(403).json({
             "message": "Past bookings can't be modified",
             "statusCode": 403
         })
@@ -68,9 +69,8 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     let spot = await Spot.findOne({
         where: {id: bookingQuery.spotId}
     })
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (parsedEnd <= parsedStart) {
-        res.status(400).json({
+        return res.status(400).json({
             "message": "Validation error",
             "statusCode": 400,
             "errors": {
@@ -98,8 +98,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     if (endingConflicts.length) {
         errors.endDate = "End date conflicts with an existing booking"
     }
-    if (startingConflicts.length || endingConflicts.length || fallsWithin.length) {
-        res.status(403).json({
+
+
+    if (startingConflicts.length || endingConflicts.length || fallsWithin.length ) {
+        return res.status(403).json({
             "title": "Booking conflict",
             "message": "Sorry, this spot is already booked for the specified dates",
             "statusCode": 403,
@@ -111,7 +113,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             "endDate": endDate
         })
         await bookingEdit.save()
-        res.status(200).json(bookingEdit)
+        return res.status(200).json(bookingEdit)
     }
 })
 
