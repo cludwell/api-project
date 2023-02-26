@@ -55,7 +55,6 @@ router.post('/', async (req, res) => {
       where: {username: username}
     })
 
-
     if (userEmail) {
       let error = {
         title: 'User already exists with the specified email',

@@ -60,7 +60,6 @@ router.post(
       if(!credential || !password) {
         res.status(400).json(credentialError)
       }
-      console.log(credentialError)
       if (!user && credential && password) {
         const error ={
         title: 'Invalid credentials',
