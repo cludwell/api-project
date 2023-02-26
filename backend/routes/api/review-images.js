@@ -13,18 +13,19 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 router.delete('/:imageId', restoreUser, async (req, res) => {
     let reviewImage = await ReviewImage.findByPk(req.params.imageId)
+    if (!reviewImage || !review) {
+        res.status(404).json({
+            "message": "Review Image couldn't be found",
+            "statusCode": 404
+        })
+    }
     let review = await Review.findOne({
         where: {
             userId: req.user.id,
             id: reviewImage.reviewId
         }
     })
-    if (!reviewImage || !review) {
-        res.status(404).json({
-            "message": "Review Image couldn't be found",
-            "statusCode": 404
-        })
-    } else if (review.userId !== req.user.id) {
+    if (review.userId !== req.user.id) {
         res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
