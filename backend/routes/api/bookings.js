@@ -78,14 +78,18 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         .sort((a,b) => a[0] - b[0])
     let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
     let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
-
+    let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
+    if (fallsWithin.length) {
+        errors.startDate = "Start date conflicts with an existing booking"
+        errors.endDate = "End date conflicts with an existing booking"
+    }
     if (startingConflicts.length) {
         errors.startDate = "Start date conflicts with an existing booking"
     }
     if (endingConflicts.length) {
         errors.endDate = "End date conflicts with an existing booking"
     }
-    if (startingConflicts.length || endingConflicts.length) {
+    if (startingConflicts.length || endingConflicts.length || fallsWithin.length) {
         res.status(403).json({
             "title": "Booking conflict",
             "message": "Sorry, this spot is already booked for the specified dates",
