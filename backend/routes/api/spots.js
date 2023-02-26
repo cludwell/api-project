@@ -133,8 +133,10 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
             {attributes: ['id']}
         )
         //trying to return the created instance was not working, but does exist in DB. this method ensures that appropriate id is being returned to client
+        //when hosted locally created review will be found and can key its id
+        //on render it will not, so increment the max id found
         let maxId = reviews.sort((a, b) => b.id - a.id)[0].id
-        // maxId++
+        maxId++
         res.json({
             "id": maxId,
             "userId": req.user.id,
