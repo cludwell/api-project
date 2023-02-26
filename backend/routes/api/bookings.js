@@ -18,7 +18,8 @@ router.get('/current', requireAuth, async (req, res) => {
     let bookingPayload = []
     for (let book of bookings) {
         let spot = await Spot.findOne({
-            where: {id: book.spotId}
+            where: {id: book.spotId},
+            attributes: {exclude: ['description', 'createdAt', 'updatedAt']}
         })
         let bookdata = {}, spotData = {}
         for (let key in book.dataValues) bookdata[key] = book[key]
@@ -78,7 +79,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
           })
     }
     let bookings = await Booking.findAll({
-        where: {spotId: spot.id},
+        where: {spotId: spot.id, id: { [Op.ne]: req.params.bookingId}},
         attributes: ['startDate', 'endDate']
     })
     let  errors = {}
