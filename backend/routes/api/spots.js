@@ -24,7 +24,7 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => {
         })
         let bookingPayload = [];
         for (let book of bookings) {
-            let bookedUser = await User.findByPk(book.userId)
+            let bookedUser = await User.findByPk(book.userId, {attributes:['id', 'firstName', 'lastName']})
             let bookData = {}
             bookData.User = bookedUser
             for (let key in book.dataValues) bookData[key] = book[key]
