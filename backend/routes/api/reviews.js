@@ -36,7 +36,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
         })
 
         //see notes for Spots -create review, for why this approach is being used
-        let reviewImages = ReviewImage.findAll({where: {reviewId: review.id}})
+        let reviewImages = ReviewImage.findAll()
         let maxId = reviewImages.sort((a, b) => b.id - a.id)[0].id
         maxId++
         let payload = {
