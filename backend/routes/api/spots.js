@@ -396,7 +396,7 @@ router.get('/', async (req, res, next) => {
     if (maxPrice >= 0) where.price = { [Op.lte]: maxPrice }
     if (maxPrice < 0) errors.maxPrice = "Maximum price must be greater than or equal to 0"
 
-    if (minLat <= 90 || minLat >= 90 ) where.lat = { [Op.gte]: minLat }
+    if (minLat <= 90 || minLat >= -90 ) where.lat = { [Op.gte]: minLat }
     if (minLat > 90 || minLat < -90 || maxLat <= minLat) errors.minLat = "Minimum latitude is invalid"
 
     if (maxLat <= 90|| maxLat >= -90) where.lat = { [Op.lte]: maxLat }
@@ -432,12 +432,14 @@ router.get('/', async (req, res, next) => {
         Spots.push(payload)
     }
 
-    if (Object.keys(errors).length > 0) res.status(400).json({
-        "message": "Validation Error",
-        "statusCode": 400,
-        errors
-    })
-    //
+    if (Object.keys(errors).length > 0){
+        return res.status(400).json({
+            "message": "Validation Error",
+            "statusCode": 400,
+            errors
+        })
+    }
+    
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 

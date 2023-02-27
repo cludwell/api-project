@@ -39,13 +39,13 @@ router.post(
     const { credential, password } = req.body;
 
     const user = await User.login({ credential, password });
-    // if (!user) {
-    //   const err = new Error('Login failed');
-    //   err.status = 401;
-    //   err.title = 'Login failed';
-    //   err.errors = { credential: 'The provided credentials were invalid.' };
-    //   return next(err);
-    // }
+    if (!user) {
+      const err = new Error('Login failed');
+      err.status = 401;
+      err.title = 'Login failed';
+      err.errors = { credential: 'The provided credentials were invalid.' };
+      return next(err);
+    }
 
     const credentialError = {
       title: 'Validation error',
