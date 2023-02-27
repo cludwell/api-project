@@ -14,7 +14,7 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 router.delete('/:imageId', restoreUser, async (req, res) => {
     let reviewImage = await ReviewImage.findByPk(req.params.imageId)
     if (!reviewImage) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Review Image couldn't be found",
             "statusCode": 404
         })
@@ -26,7 +26,7 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
         }
     })
     if (!review) {
-    res.status(404).json({
+    return res.status(404).json({
         message: "Resource doesnt exist",
         statusCode: 404
     })

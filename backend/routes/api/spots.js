@@ -267,7 +267,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     if (!country) errors.country = 'Country is required'
     if (!lat) errors.lat = 'Latitude is not valid'
     if (!lng) errors.lng = 'Longitude is not valid'
-    if (!name) errors.name ='Name must be less than 50 characters'
+    if (!name || name.length > 50) errors.name = 'Name must be less than 50 characters';
     if (!description) errors.description = 'Description is required'
     if (!price) errors.price = 'Price per day is required'
     console.log(Object.keys(errors))
@@ -317,7 +317,6 @@ router.post('/', requireAuth, async (req, res, next) => {
     if (!name || name.length > 50) errors.name = 'Name must be less than 50 characters';
     if (!description) errors.description = 'Description is required';
     if (!price) errors.price = 'Price per day is required';
-
     if (Object.keys(errors).length > 0){
         res.status(400).json({
             "message": "Validation Error",
@@ -364,7 +363,7 @@ router.get('/:id', async (req, res, next) => {
     let reviewTotal = spotReviews.reduce((acc,next, ind, arr) => acc + next["stars"], 0)
     for (let key in spot.dataValues) payload[key] = spot[key]
     payload.numReviews = spotReviews.length
-    payload.avgStarRating = reviewTotal / spotReviews.length
+    payload.avgStarRating = spotReviews.length ? (reviewTotal / spotReviews.length).toFixed(1) : 'No reviews yet'
     payload.SpotImages = spotImagesData
     payload.Owner = spotOwner
 
@@ -427,9 +426,9 @@ router.get('/', async (req, res, next) => {
         let payload = {}
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
-        payload.avgRating = reviewTotal / spotsReviews.length
-        payload.previewImage = previewImageData ? JSON.stringify(previewImageData.url).split('"')[1]
-        : 'No preview available'
+        payload.avgRating = spotsReviews.length ? (reviewTotal / spotsReviews.length).toFixed(1) : 'No reviews yet'
+        payload.previewImage = previewImageData ? previewImageData.url
+        : 'No preview available yet'
         Spots.push(payload)
     }
 
