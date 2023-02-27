@@ -49,7 +49,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     let bookingQuery = await Booking.findByPk(req.params.bookingId)
     let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (!bookingQuery) {
-        res.status(404).json({
+        return res.status(404).json({
       "message": "Booking couldn't be found",
       "statusCode": 404
     })
