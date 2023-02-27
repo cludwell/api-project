@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
-
+//Delete a Review Image
 router.delete('/:imageId', restoreUser, async (req, res) => {
     let reviewImage = await ReviewImage.findByPk(req.params.imageId)
     if (!reviewImage) {

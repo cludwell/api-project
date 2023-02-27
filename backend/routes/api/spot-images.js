@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
+//Delete a Spot Image
 router.delete('/:imageId', restoreUser, async (req, res) => {
     let spotimage = await SpotImage.findByPk(req.params.imageId)
     if (!spotimage) {

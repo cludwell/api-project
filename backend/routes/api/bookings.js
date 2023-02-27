@@ -35,7 +35,7 @@ router.get('/current', requireAuth, async (req, res) => {
         bookingPayload.push(bookdata)
     }
     if (!req.user.id || !bookings.length) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "The requested resource could not be found",
             "statusCode": 404
         })
