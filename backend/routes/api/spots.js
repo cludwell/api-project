@@ -10,10 +10,10 @@ router.use(cookieParser())
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings', requireAuth, async (req,res) => {
+router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
     let spotQuery= await Spot.findByPk(req.params.spotId)
     if (!spotQuery || !req.params.spotId) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
         })
@@ -30,13 +30,13 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => {
             for (let key in book.dataValues) bookData[key] = book[key]
             bookingPayload.push(bookData)
         }
-        res.status(200).json({Bookings: bookingPayload})
+        return res.status(200).json({Bookings: bookingPayload})
     } else if (req.user.id !== spotQuery.ownerId) {
         let bookings = await Booking.findAll({
             where: {spotId: spotQuery.id},
             attributes: ['spotId', 'startDate', 'endDate']
         })
-        res.status(200).json({Bookings: bookings})
+        return res.status(200).json({Bookings: bookings})
     }
 })
 
