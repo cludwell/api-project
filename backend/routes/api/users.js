@@ -83,15 +83,14 @@ router.post('/', async (req, res) => {
       const user = await User.signup({ email, username, password, firstName, lastName});
       let token = await setTokenCookie(res, user);
 
-      res.json({
+      res.json({"user": {
         id: user.id,
         email: email,
         username: username,
         firstName: firstName,
         lastName: lastName,
-        token: token});
-      }
-      );
+        token: token}});
+      });
 
 
 module.exports = router;
