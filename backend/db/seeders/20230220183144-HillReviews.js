@@ -9,27 +9,32 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {spotId: 1,
       userId: 4,
-      review: "Good location, easy to find, great parking. Bed was very comfortable. Would stay again.",
+      review: "Amazing piece of history, on site camping was available. Nature was absolutely stunning.",
       stars: 5
       },
       {spotId: 1,
       userId: 5,
-      review: "Furniture was extremely comfortable, and the place was very clean. My compliments to the previous airbnb users that stayed there. Amazing restaurants within walking distance.",
+      review: "Incredible place that felt like walking through history. Cant wait to return and continue to explore",
       stars: 4
       },
-      {spotId: 1,
+      {spotId: 2,
       userId: 6,
-      review: "Hip and blossoming area, I loved the location and am lookig forward to visiting again.",
+      review: "Beautiful historic location",
       stars: 4.5
       },
-      {spotId: 1,
-      userId: 7,
+      {spotId: 2,
+      userId: 6,
       review: "Good location, easy to find, great parking. Bed was very comfortable. Would stay again.",
       stars: 4
       },
-      {spotId: 1,
+      {spotId: 3,
       userId: 3,
       review: "We stayed for three nights and found the spot to be a calm and cozy space to recharge after running around doing touristy stuff. Owner even left a bottle of wine for us!",
+      stars: 4
+      },
+      {spotId: 4,
+      userId: 3,
+      review: "The service here is great. Really appreciate the staff. Location is the best. Lounge, restaurant and bar are all awesome. It's a very old hotel in a busy area. So be prepared for noise and less modern surroundings. That said, the hotel is surprisingly comfortable and a cool place to stay.",
       stars: 4
       },
     ])
