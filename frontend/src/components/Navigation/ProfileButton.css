@@ -1,0 +1,22 @@
+button {
+    background-color: white;
+    border-radius: 3rem;
+    border: solid grey;
+    padding: .3rem;
+    justify-content: center;
+}
+.profileburger :hover {
+    box-shadow: 0px 10px 10px lightgrey;
+}
+i {
+    display: inline-block;
+    vertical-align: middle;
+    padding-inline: .3rem;
+    font-size: 1rem;
+    box-shadow: none;
+    color: #A0A7B2
+}
+.fa-user-circle {
+    font-size: 1.5rem;
+}
+
