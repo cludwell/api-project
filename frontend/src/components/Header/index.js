@@ -1,4 +1,3 @@
-import Navigation from '../Navigation'
 import ProfileButton from '../Navigation/ProfileButton'
 import './Header.css'
 import logo from '../../images/purpplanchette.png'
