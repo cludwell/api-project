@@ -34,10 +34,12 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       url: { [Op.in]: [
-      'authenticate-me/spotimages/spot1.webp',
-      'authenticate-me/spotimages/spot1-image2.webp',
-      'authenticate-me/spotimages/spot2.webp',
-      'authenticate-me/spotimages/spot2-image2.webp'
+        'https://i.imgur.com/eDILaiO.jpg',
+        'https://i.imgur.com/ZPQUcxs.jpg',
+        'https://i.imgur.com/X7uaodG.jpg',
+        'https://i.imgur.com/IFI4m0H.jpg',
+        'https://i.imgur.com/5WwHYGC.jpg',
+        'https://i.imgur.com/AgGa6gS.jpg',
     ]}
     }, {});
   }

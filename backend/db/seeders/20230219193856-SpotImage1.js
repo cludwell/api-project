@@ -88,10 +88,24 @@ return queryInterface.bulkInsert(options, [
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       url: { [Op.in]: [
-        'authenticate-me/spotimages/spot1-review1.webp',
-        'authenticate-me/spotimages/spot1-review2.webp',
-        'authenticate-me/spotimages/spot2-review1.webp',
-        'authenticate-me/spotimages/spot2-image2.webp',
+        'https://i.imgur.com/w1iSd6f.jpg',
+        'https://i.imgur.com/0F8IWOa.jpg',
+        'https://i.imgur.com/XSoxchI.jpg',
+        'https://i.imgur.com/1KGnM7X.jpg',
+        'https://i.imgur.com/lEjFir5.jpg',
+        'https://i.imgur.com/yqrH7eO.jpg',
+        'https://i.imgur.com/6yeA9kQ.jpg',
+        'https://i.imgur.com/55E4WqI.jpg',
+        'https://i.imgur.com/fQvMRGd.jpg',
+        'https://i.imgur.com/9WH4MYQ.jpg',
+        'https://i.imgur.com/mw7gBfm.jpg',
+        'https://i.imgur.com/rFILXlK.jpg',
+        'https://i.imgur.com/OGAH0v4.jpg',
+        'https://i.imgur.com/dWpZnPx.jpg',
+        'https://i.imgur.com/sU4i9fF.jpg',
+        'https://i.imgur.com/hlC2faH.jpg',
+        'https://i.imgur.com/TsKe4Gk.jpg',
+        'https://i.imgur.com/SlV6orF.jpg',
     ]}
     }, {});
   }

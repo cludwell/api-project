@@ -1,15 +1,15 @@
-import ProfileButton from '../Navigation/ProfileButton'
 import './Header.css'
 import logo from '../../images/purpplanchette.png'
 import { Link } from 'react-router-dom'
-
-function Header({ props }) {
+import { Switch } from 'react-router-dom'
+import Navigation from '../Navigation'
+function Header({ props, isLoaded }) {
     return (
         <>
         <div className='header'>
 
         <div className='logo-side'>
-            <Link to={`/landing`}>
+            <Link to={`/`}>
             <img src={logo} alt='logo' className='planchette'/>
             {/* <i class="fa-solid fa-ghost"></i> */}
             <span className='logo'>scarebnb</span>
@@ -18,7 +18,11 @@ function Header({ props }) {
             <div className='navigation-corner'>
                 <span className='scarebnb-home'>Scarebnb your home</span>
                 <i class="fa-solid fa-globe"></i>
-                <ProfileButton></ProfileButton>
+                <Navigation isLoaded={isLoaded} />
+                {isLoaded && (
+                    <Switch>
+                    </Switch>
+                )}
             </div>
         </div>
         </>

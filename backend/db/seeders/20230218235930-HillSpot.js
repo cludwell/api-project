@@ -65,7 +65,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['The Hill House', 'The Getaway',] }
+      name: { [Op.in]: ['Bodie California Ghost Town', 'Old Cahawba Archaeological Park & Ghost Town', 'Crescent Hotel & Spa', 'Hotel Monte Vista',] }
     }, {});
   }
 };

@@ -20,7 +20,7 @@ function App() {
       <head>
         <title>scarebnb</title>
       </head>
-      <Header />
+      <Header isLoaded={isLoaded}/>
       {/* <Switch>
         <Route exact path='/landing' component={Landing} />
       </Switch> */}
