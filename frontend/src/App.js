@@ -17,9 +17,6 @@ function App() {
 
   return (
     <>
-      <head>
-        <title>scarebnb</title>
-      </head>
       <Header isLoaded={isLoaded}/>
       {/* <Switch>
         <Route exact path='/landing' component={Landing} />

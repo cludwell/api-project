@@ -1,9 +1,13 @@
+import { useSelector } from "react-redux"
+import SpotCard from "../SpotCard"
 
 export default function Landing() {
-    console.log('landing component is being hit')
+    const spots = useSelector(state => state.spots)
     return (
-        <>
-        <span>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</span>
-        </>
+       <div className="landing">
+        {/* {spots.foreach(spot => (
+            <SpotCard spot={spot}
+        ))} */}
+       </div>
     )
 }

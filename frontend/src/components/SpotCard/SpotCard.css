@@ -1,0 +1,8 @@
+.spot-card {
+    height: 15rem;
+    width:fit-content;
+    border-radius: 1rem;
+}
+.spot-image {
+    width: 100%;
+}
