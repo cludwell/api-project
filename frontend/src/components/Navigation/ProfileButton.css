@@ -22,3 +22,12 @@ i {
 .hidden {
     display: none;
 }
+.profile-dropdown {
+    box-shadow: 0px 0px 100rem black;
+    position: fixed;
+    border-radius: .5rem;
+    top: 6rem;
+    right: 2rem;
+    background: white;
+    padding: 2rem;
+}

@@ -1,8 +1,33 @@
 .spot-card {
-    height: 15rem;
-    width:fit-content;
+    display: grid;
+    height: 28rem;
+    width: 20rem;
     border-radius: 1rem;
+    flex-wrap: row;
 }
 .spot-image {
-    width: 100%;
+    width: 20rem;
+    height: 20rem;
+    border-radius: 1rem;
+    object-fit: cover;
+}
+.rating {
+    text-align: right;
+}
+p {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    font-family: 'Montserrat', sans-serif;
+    color: grey;
+}
+.city {
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+.rating {
+    text-align: right;
+}
+.price {
+    color: black;
+    font-weight: 600;
 }

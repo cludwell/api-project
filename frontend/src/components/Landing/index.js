@@ -1,19 +1,28 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-// import SpotCard from "../SpotCard"
 import './Landing.css'
 import { initialSpots } from "../../store/spots";
+import SpotCard from "../SpotCard";
+
 export default function Landing() {
 
-    const spots = useSelector(state => state.spots)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(initialSpots())
     }, [dispatch])
-    // console.log('Here is the state', spots)
+    const spots = useSelector(state => state.spots.allSpots)
+    console.log('Here is the state', spots)
+    if (!spots) return null
+    const data = Object.values(spots)
+    console.log('DATA ARRAY IS WORKING', data)
     return (
-       <div className="landing">
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-       </div>
+        <>
+        <div className="spot-cards">
+            {data.map(spot => (
+                <SpotCard spot={spot} />
+        ))}
+        </div>
+
+        </>
     )
 }
