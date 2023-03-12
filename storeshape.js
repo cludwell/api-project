@@ -1,4 +1,4 @@
-store = {
+const store = {
   session: {},
   spots: {
     // Notice there are two slices of state within spots. This is to handle your two different routes for getting a spot.

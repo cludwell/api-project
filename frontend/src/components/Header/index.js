@@ -9,7 +9,7 @@ function Header({ props }) {
         <div className='header'>
 
         <div className='logo-side'>
-            <Link to={`/`}>
+            <Link to={`/landing`}>
             <img src={logo} alt='logo' className='planchette'/>
             {/* <i class="fa-solid fa-ghost"></i> */}
             <span className='logo'>scarebnb</span>
