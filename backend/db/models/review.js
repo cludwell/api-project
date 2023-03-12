@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true,
     },
     review: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     stars: {

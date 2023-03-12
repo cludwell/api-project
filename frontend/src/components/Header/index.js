@@ -17,7 +17,7 @@ function Header({ props, isLoaded }) {
         </div>
             <div className='navigation-corner'>
                 <span className='scarebnb-home'>Scarebnb your home</span>
-                <i class="fa-solid fa-globe"></i>
+                <i className="fa-solid fa-globe"></i>
                 <Navigation isLoaded={isLoaded} />
                 {isLoaded && (
                     <Switch>

@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import './index.css'
-// import Landing from "./components/Landing";
+import Landing from "./components/Landing";
 // import { Route } from "react-router-dom";
 
 function App() {
@@ -14,18 +14,16 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
+  // console.log(isLoaded)
   return (
     <>
       <Header isLoaded={isLoaded}/>
-      {/* <Switch>
-        <Route exact path='/landing' component={Landing} />
-      </Switch> */}
-      <Navigation isLoaded={isLoaded} />
+      <Landing />
+      {/* <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
         </Switch>
-      )}
+      )} */}
     </>
   );
 }

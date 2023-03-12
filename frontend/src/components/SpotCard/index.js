@@ -1,4 +1,4 @@
-import spot from "../../../../backend/db/models/spot";
+// import spot from "../../../../backend/db/models/spot";
 
 export default function SpotCard({ spot }) {
 

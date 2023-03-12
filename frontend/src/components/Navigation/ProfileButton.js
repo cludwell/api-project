@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
     <>
     <div className="profileburger">
       <button onClick={openMenu}>
-        <i class="fa-solid fa-bars"></i>
+        <i className="fa-solid fa-bars"></i>
         <i className="fas fa-user-circle" />
       </button>
       </div>
