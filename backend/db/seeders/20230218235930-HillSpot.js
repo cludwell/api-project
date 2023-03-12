@@ -42,9 +42,7 @@ module.exports = {
       lat: 36.40823147330142,
       lng:  -93.73744045736635,
       name: 'Crescent Hotel & Spa',
-      description: `Perched high above the Victorian Village of Eureka Springs, Arkansas is the 1886 Crescent Hotel & Spa, a palatial structure and landmark hotel known widely in the Ozark Mountains as the "symbol of hospitality" for the State of Arkansas and brought to life year round.
-
-      An Icon for Eureka Springs lodging, guests enjoy the resort activities, hot tub, swimming pool, New Moon Spa & Salon, Crystal Dining Room, SkyBar Gourmet Pizza, resort host and bellman service, and 15 acres of manicured gardens with hiking, biking, and walking trails that loop through the city and pass the city dog park, skate park, and city playground. `,
+      description: `Perched high above the Victorian Village of Eureka Springs, Arkansas is the 1886 Crescent Hotel & Spa, a palatial structure and landmark hotel known widely in the Ozark Mountains as the "symbol of hospitality" for the State of Arkansas and brought to life year round. An Icon for Eureka Springs lodging, guests enjoy the resort activities, hot tub, swimming pool, New Moon Spa & Salon, Crystal Dining Room, SkyBar Gourmet Pizza, resort host and bellman service, and 15 acres of manicured gardens with hiking, biking, and walking trails that loop through the city and pass the city dog park, skate park, and city playground.`,
       price: 348.00,
     },
     { ownerId: 5,
