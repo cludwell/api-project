@@ -5,8 +5,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import './index.css'
-import Landing from "./components/Landing";
-import { Route } from "react-router-dom";
+// import Landing from "./components/Landing";
+// import { Route } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
