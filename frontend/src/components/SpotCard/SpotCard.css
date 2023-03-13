@@ -32,6 +32,9 @@
     color: black;
     font-weight: 600;
 }
+.fa-star {
+    color: gold;
+}
 .spot-tooltip {
     visibility: hidden;
     width: fit-content;
