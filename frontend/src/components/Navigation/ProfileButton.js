@@ -5,12 +5,14 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-
+  //when user logs out, redirected to homepage
+  const history = useHistory();
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -36,6 +38,8 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    //when user logs out, redirected to homepage
+    history.push('/')
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -48,17 +52,20 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" />
       </button>
     </div>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+          <p>Hello, {user.firstName}.</p>
+            <p>{user.username}</p>
+            <p>{user.firstName} {user.lastName}</p>
+            <p>{user.email}</p>
+            <p>
               <button onClick={logout}>Log Out</button>
-            </li>
+            </p>
           </>
-        ) : (
+        )
+
+        : (
           <>
             <OpenModalMenuItem
               itemText="Log In"
@@ -72,7 +79,7 @@ function ProfileButton({ user }) {
             />
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }

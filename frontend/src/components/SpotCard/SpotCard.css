@@ -14,7 +14,7 @@
 .rating {
     text-align: right;
 }
-p {
+.spot-card-text {
     margin-top: .5rem;
     margin-bottom: .5rem;
     font-family: 'Montserrat', sans-serif;

@@ -426,7 +426,7 @@ router.get('/', async (req, res, next) => {
         let payload = {}
         let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (let key in spot.dataValues) payload[key] = spot[key]
-        payload.avgRating = spotsReviews.length ? (reviewTotal / spotsReviews.length).toFixed(1) : 'No reviews yet'
+        payload.avgRating = spotsReviews.length ? (reviewTotal / spotsReviews.length).toFixed(1) : 'New'
         payload.previewImage = previewImageData ? previewImageData.url
         : 'No preview available yet'
         Spots.push(payload)
@@ -439,7 +439,7 @@ router.get('/', async (req, res, next) => {
             errors
         })
     }
-    
+
     res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
