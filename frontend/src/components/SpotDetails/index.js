@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { populateSingleSpot } from '../../store/singlespot';
 import './SpotDetails.css'
 
-export default function SpotDetails({ spot }) {
+export default function SpotDetails({ spotId }) {
     const dispatch = useDispatch();
-    dispatch(populateSingleSpot(spot.id))
+    dispatch(populateSingleSpot(spotId))
     const singleSpot = useSelector(state => state.singleSpot)
     console.log('STATE IN COMPONENT', singleSpot)
     if (!singleSpot) return null;
@@ -16,4 +16,3 @@ export default function SpotDetails({ spot }) {
         </div>
     )
 }
-

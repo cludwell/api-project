@@ -1,10 +1,12 @@
 // import spot from "../../../../backend/db/models/spot";
+import { NavLink } from 'react-router-dom'
 import './SpotCard.css'
 
 export default function SpotCard({ spot }) {
     if (!spot.previewImage) return null
-    
+
     return (
+        <NavLink to={`/spotsfe/${spot.id}`}>
         <div className="spot-card">
         <div className='spot-tooltip'>
         <i class="fa-solid fa-ghost"></i>
@@ -17,7 +19,7 @@ export default function SpotCard({ spot }) {
             <p className='spot-card-text'>{spot.description.slice(0, 50)}</p>
             <p className='spot-card-text price'>${spot.price.toFixed(2)} night</p>
         </div>
-
+        </NavLink>
 
     )
 }
