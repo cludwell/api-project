@@ -17,6 +17,7 @@ export default function Landing() {
     // console.log('DATA ARRAY IS WORKING', data)
     return (
         <>
+        
         <div className="spot-cards">
             {data.map(spot => (
                 <SpotCard spot={spot}
