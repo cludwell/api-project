@@ -1,0 +1,14 @@
+.log-in{
+    font-family: 'Mulish', sans-serif;
+    color: #4a355e;
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    font-family: 'Montserrat', sans-serif;
+}
+.log-in-modal {
+    border-radius: 1rem;
+    padding: 2rem;
+}

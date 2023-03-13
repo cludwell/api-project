@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch } from "react-router-dom";
+// import { Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
-import Navigation from "./components/Navigation";
+// import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import './index.css'
 import Landing from "./components/Landing";
