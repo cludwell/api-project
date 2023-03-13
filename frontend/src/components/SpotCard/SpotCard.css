@@ -55,6 +55,10 @@
     font-weight: 600;
 
 }
+.fa-solid.fa-ghost{
+    font-size: 1.5rem;
+    color: #4a355e;
+}
 .spot-tooltip::after {
     content: '';
     position: absolute;

@@ -6,6 +6,7 @@ export default function SpotCard({ spot }) {
     return (
         <div className="spot-card">
         <div className='spot-tooltip'>
+        <i class="fa-solid fa-ghost"></i>
             {spot.name}</div>
             <img src={`${spot.previewImage}`} alt='preview' className="spot-image"/>
             <div className="top-line">
