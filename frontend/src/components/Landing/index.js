@@ -11,18 +11,19 @@ export default function Landing() {
         dispatch(initialSpots())
     }, [dispatch])
     const spots = useSelector(state => state.spots.allSpots)
-    console.log('Here is the state', spots)
+    // console.log('Here is the state', spots)
     if (!spots) return null
     const data = Object.values(spots)
-    console.log('DATA ARRAY IS WORKING', data)
+    // console.log('DATA ARRAY IS WORKING', data)
     return (
         <>
         <div className="spot-cards">
             {data.map(spot => (
-                <SpotCard spot={spot} />
+                <SpotCard spot={spot}
+                key={spot.id}/>
         ))}
         </div>
 
         </>
     )
-} 
+}

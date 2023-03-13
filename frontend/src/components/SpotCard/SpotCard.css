@@ -4,6 +4,7 @@
     width: 20rem;
     border-radius: 1rem;
     flex-wrap: row;
+    visibility: visible;
 }
 .spot-image {
     width: 20rem;
@@ -30,4 +31,32 @@
 .price {
     color: black;
     font-weight: 600;
+}
+.spot-tooltip {
+    visibility: hidden;
+    width: fit-content;
+    background-color: white;
+    border-radius: 1rem;
+    color: black;
+    padding: .4rem;
+    border-radius: .4rem;
+    position: absolute;
+    z-index: 1;
+    margin-top: .5rem;
+    margin-left: .5rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 3rem;
+    margin-left: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+
+}
+.spot-tooltip::after {
+    content: '';
+    position: absolute;
+}
+.spot-card:hover .spot-tooltip {
+    visibility: visible;
+    opacity: 1;
 }
