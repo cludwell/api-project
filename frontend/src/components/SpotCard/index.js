@@ -3,6 +3,7 @@ import './SpotCard.css'
 
 export default function SpotCard({ spot }) {
     if (!spot.previewImage) return null
+    
     return (
         <div className="spot-card">
         <div className='spot-tooltip'>
