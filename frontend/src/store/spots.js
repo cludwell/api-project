@@ -26,9 +26,9 @@ const initialState = {
 export default function spotsReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_SPOTS:
-            const newState = {allSpots: {}, ...state }
+            const newState = {...state }
             // console.log('HERE IN REDUCER', action.spotData)
-            action.spotData.Spots.forEach(s=> newState.allSpots[s.id] = s)
+            action.spotData.Reviews.forEach(r=> newState.reviews.spot[r.id] = r)
             // console.log('NEW STATE', newState)
         return newState;
         default:

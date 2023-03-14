@@ -41,7 +41,7 @@ export default function SpotDetails() {
         </div>
         <hr className='rounded'/>
         <div className='reviews-printed'>
-
+                
         </div>
     </>
     )
