@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -10,6 +10,7 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const [ disable, setDisable] = useState(true)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,10 +20,15 @@ function LoginFormModal() {
       .catch(
         async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+          if (data && data.errors) setErrors(Object.values(data.errors));
         }
       );
   };
+
+  useEffect(() => {
+    if (credential.length >= 4 &&  password.length >= 6) setDisable(false)
+    else setDisable(true)
+  }, [credential, password])
 
   return (
     <div className="log-in-modal">
@@ -30,7 +36,7 @@ function LoginFormModal() {
       <form onSubmit={handleSubmit}
       className='form'>
         <ul>
-          {errors.map((error, idx) => (
+          {errors?.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
@@ -52,7 +58,8 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit"
+        disabled={disable}>Log In</button>
       </form>
     </div>
   );
