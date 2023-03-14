@@ -11,7 +11,6 @@ function Header({ props, isLoaded }) {
         <div className='logo-side'>
             <Link to={`/`}>
             <img src={logo} alt='logo' className='planchette'/>
-            {/* <i class="fa-solid fa-ghost"></i> */}
             <span className='logo'>scarebnb</span>
             </Link>
         </div>

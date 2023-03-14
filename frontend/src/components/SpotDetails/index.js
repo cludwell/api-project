@@ -45,12 +45,6 @@ export default function SpotDetails() {
         </div>
         <hr className='rounded'/>
         <div className='reviews-printed'>
-            {/* {spotReviews.length && (
-                {spotReviews.map(r => (
-                    <p className='review-text'
-                    key={r.id}>{r.}</p>
-                ))}
-            )} */}
         </div>
     </>
     )

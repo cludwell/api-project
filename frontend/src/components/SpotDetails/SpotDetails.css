@@ -18,3 +18,9 @@
     height: 15rem;
     object-fit: cover;
 }
+.spot-name, .spot-subtitle, .hosted-by{
+    font-family: 'Mulish', sans-serif;
+}
+.description {
+    font-family: 'Montserrat', sans-serif;
+}

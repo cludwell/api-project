@@ -11,7 +11,7 @@ export default function Landing() {
         dispatch(initialSpots())
     }, [dispatch])
     const spots = useSelector(state => state.spots.allSpots)
-    console.log('HERE IN LANDING COMP', spots)
+    // console.log('HERE IN LANDING COMP', spots)
     if (!spots) return null
     const data = Object.values(spots)
     // console.log('DATA ARRAY IS WORKING', data)
