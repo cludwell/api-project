@@ -30,6 +30,12 @@ function LoginFormModal() {
     else setDisable(true)
   }, [credential, password])
 
+  const demoUser = (e) => {
+    setCredential('demo')
+    setPassword('password')
+    handleSubmit()
+  }
+
   return (
     <div className="log-in-modal">
       <h1 className="log-in">Log In</h1>
@@ -60,6 +66,9 @@ function LoginFormModal() {
         </label>
         <button type="submit"
         disabled={disable}>Log In</button>
+        <button
+        onClick={demoUser}
+        type='submit'>Login as Demo User</button>
       </form>
     </div>
   );
