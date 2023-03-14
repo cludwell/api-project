@@ -1,0 +1,20 @@
+.spot-details{
+    margin-top: 7rem;
+}
+.detail-image {
+    border-radius: 1rem;
+    margin: .25rem;
+}
+.detail-image-0 {
+    width: 40rem;
+    height: 40rem;
+    object-fit: cover;
+}
+.detail-image-1,
+.detail-image-2,
+.detail-image-3,
+.detail-image-4 {
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
+}

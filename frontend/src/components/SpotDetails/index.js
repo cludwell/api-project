@@ -1,18 +1,48 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { populateSingleSpot } from '../../store/singlespot';
+import { useParams } from 'react-router-dom';
+import { findSingleSpot } from '../../store/singlespot';
 import './SpotDetails.css'
 
-export default function SpotDetails({ spotId }) {
+export default function SpotDetails() {
+    const {spotId} = useParams()
     const dispatch = useDispatch();
-    dispatch(populateSingleSpot(spotId))
+    useEffect(() => {
+        dispatch(findSingleSpot(spotId))
+    }, [dispatch, spotId])
     const singleSpot = useSelector(state => state.singleSpot)
     console.log('STATE IN COMPONENT', singleSpot)
-    if (!singleSpot) return null;
+    if (!Object.entries(singleSpot).length) return null;
     return (
+    <>
         <div className='spot-details'>
-            <h3 className='spot-name'>{singleSpot.name}</h3>
-            <h4 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h4>
+            <h1 className='spot-name'>{singleSpot.name}</h1>
+            <h2 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h2>
+            <div className='detail-images'>
+            {singleSpot.SpotImages.map((ele, i) => (
+                i < 6 ? <img src={ele.url}
+                alt='main'
+                key={i}
+                className={`detail-image detail-image-${i}`}></img> : null
+            ))}
+            </div>
+            <h1 className='hosted-by'>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</h1>
+            <p className='description'>{singleSpot.description}</p>
+            <div className='price-review-reserve'>
+                <span className='reserve-left'>${singleSpot.price} night</span>
+                <span className='reserve-right'>
+                <i className="fa-solid fa-star"></i>
+                {singleSpot.avgStarRating}
+                <i className="fa-solid fa-hashtag"></i>
+                <i className="fa-solid fa-ghost"></i>
+                {singleSpot.numReviews}</span>
+                <button className='reserve-button'>Reserve</button>
+            </div>
+        </div>
+        <hr className='rounded'/>
+        <div className='reviews-printed'>
 
         </div>
+    </>
     )
 }

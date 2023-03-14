@@ -22,7 +22,8 @@ function App() {
       <Header isLoaded={isLoaded}/>
       <Switch>
         <Route exact path='/' component={Landing}/>
-        <Route path='/spotsfe/:spotId' component={SpotDetails} />
+        <Route path='/spotsfe/:spotId'
+        component={SpotDetails}/>
       </Switch>
     </>
   );

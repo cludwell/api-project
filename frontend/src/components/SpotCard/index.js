@@ -6,10 +6,12 @@ export default function SpotCard({ spot }) {
     if (!spot.previewImage) return null
 
     return (
-        <NavLink to={`/spotsfe/${spot.id}`}>
+        <NavLink to={`/spotsfe/${spot.id}`}
+        style={{"text-decoration": "none"}}
+        spotId={spot.id}>
         <div className="spot-card">
         <div className='spot-tooltip'>
-        <i class="fa-solid fa-ghost"></i>
+        <i className="fa-solid fa-ghost"></i>
             {spot.name}</div>
             <img src={`${spot.previewImage}`} alt='preview' className="spot-image"/>
             <div className="top-line">
