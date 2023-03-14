@@ -57,6 +57,13 @@ module.exports = {
         lastName: 'Gribble',
         hashedPassword: bcrypt.hashSync('password7')
       },
+      {
+        email: 'demo@user.io',
+        username: 'demo',
+        firstName: 'demo',
+        lastName: 'user',
+        hashedPassword: bcrypt.hashSync('password')
+      },
     ], {});
   },
 
