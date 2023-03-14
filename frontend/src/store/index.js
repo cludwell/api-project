@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotsReducer,
   singleSpot: singleSpotReducer,
-  reviews: reviewsReducer
+  reviewsReducer
 });
 
 

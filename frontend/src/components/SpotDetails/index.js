@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
+import { findSpotReviews } from '../../store/reviews';
 import { findSingleSpot } from '../../store/singlespot';
 import './SpotDetails.css'
 
@@ -9,10 +10,13 @@ export default function SpotDetails() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(findSingleSpot(spotId))
+        dispatch(findSpotReviews(spotId))
     }, [dispatch, spotId])
     const singleSpot = useSelector(state => state.singleSpot)
-    console.log('STATE IN COMPONENT', singleSpot)
-    if (!Object.entries(singleSpot).length) return null;
+    const spotReviews = useSelector(state => state.reviews)
+    console.log('STATE IN COMPONENT', spotReviews)
+    if (!Object.entries(singleSpot).length ) return null;
+    // if (!spotReviews.length) return null;
     return (
     <>
         <div className='spot-details'>
@@ -41,7 +45,12 @@ export default function SpotDetails() {
         </div>
         <hr className='rounded'/>
         <div className='reviews-printed'>
-                
+            {/* {spotReviews.length && (
+                {spotReviews.map(r => (
+                    <p className='review-text'
+                    key={r.id}>{r.}</p>
+                ))}
+            )} */}
         </div>
     </>
     )

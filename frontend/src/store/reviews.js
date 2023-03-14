@@ -9,22 +9,22 @@ export const populateReviews = reviewData =>{
 
 //review thunks
 export const findSpotReviews = (spotId) => async dispatch => {
-    const reviewResponse = await fetch(`/api/spots/${spotId}`);
-    console.log('SINGLESPOT THUNK', reviewResponse)
+    const reviewResponse = await fetch(`/api/spots/${spotId}/reviews`);
     if (reviewResponse.ok) {
         const reviewData = await reviewResponse.json();
+        // console.log('REVIEW THUNK', reviewData)
         dispatch(populateReviews(reviewData));
         return reviewData;
     }
 };
 
-const initialState = {}
+const initialState = { reviews: {} }
 
 export default function reviewsReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_REVIEWS:
-            const newState = {allSpots: {}, ...state }
-            action.reviewData.Spots.forEach(s=> newState.allSpots[s.id] = s)
+            const newState = { ...state, reviews: action.reviewData.Reviews };
+            // console.log('REVIEW REDUCER', newState)
         return newState;
         default:
         return state;
