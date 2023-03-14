@@ -15,8 +15,9 @@ export default function SpotDetails() {
     const singleSpot = useSelector(state => state.singleSpot)
     const spotReviews = useSelector(state => state.reviews)
     console.log('STATE IN COMPONENT', spotReviews)
-    if (!Object.entries(singleSpot).length ) return null;
-    // if (!spotReviews.length) return null;
+    // console.log('WHAT IS IT', Object.entries(spotReviews))
+    if (!Object.entries(singleSpot).length) return null;
+    if (!Object.entries(spotReviews).length) return null;
     return (
     <>
         <div className='spot-details'>
@@ -45,6 +46,16 @@ export default function SpotDetails() {
         </div>
         <hr className='rounded'/>
         <div className='reviews-printed'>
+            {spotReviews.length ? spotReviews.map((rev, i) => (
+                <>
+                <h3 className='username-title'
+                key={'username'+i}>{rev.User.firstName}</h3>
+                <h4 className='review-date'
+                key={'created'+i}>{rev.createdAt.slice(0, 10)}</h4>
+                <p className='review-body'
+                key={'reviewbody' +i}>{rev.review}</p>
+                </>
+            )) : null}
         </div>
     </>
     )

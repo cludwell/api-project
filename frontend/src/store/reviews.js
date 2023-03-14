@@ -18,14 +18,15 @@ export const findSpotReviews = (spotId) => async dispatch => {
     }
 };
 
-const initialState = { reviews: {} }
+const initialState = []
 
 export default function reviewsReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_REVIEWS:
-            const newState = { ...state, reviews: action.reviewData.Reviews };
+            // const newState = { ...state, reviews: action.reviewData.Reviews };
+            // newState.reviews = [action.reviewData.Reviews]
             // console.log('REVIEW REDUCER', newState)
-        return newState;
+        return action.reviewData.Reviews;
         default:
         return state;
     }

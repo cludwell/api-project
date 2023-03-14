@@ -10,7 +10,7 @@ export const populateSingleSpot = singleSpot =>{
 //single spot thunks
 export const findSingleSpot = (spotId) => async dispatch => {
     const spotResponse = await fetch(`/api/spots/${spotId}`);
-    console.log('SINGLESPOT THUNK', spotResponse)
+    // console.log('SINGLESPOT THUNK', spotResponse)
     if (spotResponse.ok) {
         const spotData = await spotResponse.json();
         dispatch(populateSingleSpot(spotData));
@@ -25,7 +25,7 @@ export default function singleSpotReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_SINGLE:
             const updateSingleSpot = {...state, ...action.singleSpot}
-            console.log('HERE IN REDUCER', updateSingleSpot)
+            // console.log('HERE IN REDUCER', updateSingleSpot)
         return updateSingleSpot;
         default:
         return state;
