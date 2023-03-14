@@ -18,7 +18,7 @@ export default function SpotCard({ spot }) {
                 <span className="city">{spot.city}, {spot.state}</span>
                 <span className="rating"><i className="fa-solid fa-star"></i>{spot.avgRating}</span>
             </div>
-            <p className='spot-card-text'>{spot.description.slice(0, 50)}</p>
+            <p className='spot-card-text'>{spot.description}</p>
             <p className='spot-card-text price'>${spot.price.toFixed(2)} night</p>
         </div>
         </NavLink>
