@@ -5,7 +5,6 @@
     border-radius: 1rem;
     flex-wrap: row;
     visibility: visible;
-    overflow: hidden;
 }
 .spot-image {
     width: 20rem;
@@ -21,6 +20,7 @@
     margin-bottom: .5rem;
     font-family: 'Montserrat', sans-serif;
     color: grey;
+    overflow: hidden;
 }
 .city {
     font-weight: 600;

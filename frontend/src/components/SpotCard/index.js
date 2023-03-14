@@ -7,7 +7,7 @@ export default function SpotCard({ spot }) {
 
     return (
         <NavLink to={`/spotsfe/${spot.id}`}
-        style={{"text-decoration": "none"}}
+        style={{"textDecoration": "none"}}
         spotId={spot.id}>
         <div className="spot-card">
         <div className='spot-tooltip'>

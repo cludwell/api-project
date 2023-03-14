@@ -46,7 +46,7 @@ function Header({ props, isLoaded }) {
             </Link>
         </div>
             <div className='navigation-corner'>
-                {typeof user === 'object' ? (
+                {user ? (
                     <OpenModalMenuItem
                     itemText={`Create a Spot`}
                     onClick={openMenu}

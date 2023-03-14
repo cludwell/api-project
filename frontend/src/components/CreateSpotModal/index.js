@@ -16,8 +16,17 @@ export default function CreateSpotModal() {
     const [img3, setImg3] = useState('Image URL')
     const [img4, setImg4] = useState('Image URL')
     const [img5, setImg5] = useState('Image URL')
-    const [errors, setErrors] = useState({})
+    // const [errors, setErrors] = useState({})
 
+    const handleSubmit = e => {
+        e.preventDefault();
+        // return dispatchEvent()
+    }
+    const validate = () => {
+        const err = {}
+        if (country === 'Country' || !country) err.country = 'Country is required'
+        if ()
+    }
     return (
         <div className='create-spot-modal'>
             <h1 className='create-spot'>Create a New Spot</h1>
@@ -129,6 +138,8 @@ export default function CreateSpotModal() {
                 onChange={e => setImg5(e.target.value)}
                 ></input>
             </label>
+            <button
+            type='submit'>Create Spot</button>
 
         </div>
     )
