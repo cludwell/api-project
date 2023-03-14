@@ -25,7 +25,14 @@ export default function CreateSpotModal() {
     const validate = () => {
         const err = {}
         if (country === 'Country' || !country) err.country = 'Country is required'
-        if ()
+        if (street === 'Street' || !street) err.street = 'Address is required'
+        if (city === 'City' || !city) err.city = 'City is required'
+        if (state === 'state' || !state) err.state = 'State is required'
+        if (lat === 'Latitude' || !lat) err.lat = 'Latitude is required'
+        if (lng === 'Longitude' || !lng) err.lng = 'Longitude is required'
+        if (desc.length < 30 || desc === 'Please write at least 30 characters' || !desc) err.desc = 'Description needs a minimum of 30 characters'
+        if (title.length < 4 || !title || title === 'Name of your spot') err.title = 'Name is required'
+        
     }
     return (
         <div className='create-spot-modal'>
