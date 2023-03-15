@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { createSpotBackEnd } from '../../store/spots'
 import { createSpotImageBackEnd } from '../../store/spotImages'
 import './CreateSpotModal.css'
+import { useHistory } from 'react-router-dom'
 
 export default function CreateSpotModal() {
     const [country, setCountry] = useState('Country')
@@ -21,6 +22,7 @@ export default function CreateSpotModal() {
     const [img5, setImg5] = useState('Image URL')
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const validate = () => {
         const err = {}
@@ -57,6 +59,7 @@ export default function CreateSpotModal() {
                     if (image) dispatch(createSpotImageBackEnd(data.id, {image, "preview": true}))
                 })
             }
+            history.push(`/spotsfe/${data.id}`)
         })
         }
     }

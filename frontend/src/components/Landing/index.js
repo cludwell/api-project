@@ -20,8 +20,10 @@ export default function Landing() {
 
         <div className="spot-cards">
             {data.map(spot => (
-                <SpotCard spot={spot}
-                key={spot.id}/>
+                spot.previewImage !== "No preview available yet" ?
+                (<SpotCard spot={spot}
+                key={spot.id}/>)
+                : null
         ))}
         </div>
 
