@@ -16,20 +16,20 @@ function Header({ props, isLoaded }) {
     const ulRef = useRef();
     const openMenu = () => {
         if (showMenu) return;
-        setShowMenu(true)
+        setShowMenu(true);
     }
     useEffect(() => {
-        dispatch(restoreUser())
-    }, [dispatch])
+        dispatch(restoreUser());
+    }, [dispatch]);
 
     useEffect(() => {
-        if (!showMenu) return
+        if (!showMenu) return;
         const closeMenu = e => {
             if (!ulRef.current.contains(e.target)) setShowMenu(false)
         }
         document.addEventListener('click', closeMenu);
-        return () =>document.removeEventListener('click', closeMenu)
-    }, [showMenu])
+        return () =>document.removeEventListener('click', closeMenu);
+    }, [showMenu]);
     const closeMenu = () => setShowMenu(false)
     const user = useSelector(store => store.session.user)
     console.log('HERE IS THE USER', user)
