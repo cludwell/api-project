@@ -11,7 +11,8 @@ export const createSpotImage = reviewData =>{
 
 //spot image thunks
 export const createSpotImageBackEnd = (spotId, imageData) => async dispatch => {
-    const spotImageResponse = await csrfFetch(`/api/spots/${spotId}/images`);
+    console.log(spotId, 'WHERE IS THE ID')
+    const spotImageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {"method": "POST", "body": JSON.stringify(imageData)});
     if (spotImageResponse.ok) {
         const imageData = await spotImageResponse.json();
         console.log('SPOT IMAGE THUNK', imageData)

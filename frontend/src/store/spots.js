@@ -28,15 +28,14 @@ export const initialSpots = () => async dispatch => {
     }
 };
 export const createSpotBackEnd = (spotData) => async dispatch => {
-    console.log('were getting right here')
     const response = await csrfFetch('/api/spots',
     {"method": "POST", "body": JSON.stringify(spotData)});
-    console.log(response)
+    const clone = response.clone()
     if (response.ok) {
         const spotData = await response.json();
         dispatch(createSpot(spotData));
-        console.log('CREATE SPOT BACK END', spotData)
-        return spotData;
+        console.log('RESPONSE')
+        return clone;
     }
 };
 
@@ -50,10 +49,10 @@ export default function spotsReducer(state = initialState, action) {
             action.spotData.Spots.forEach(s=> newState.allSpots[s.id] = s)
         return newState;
         case CREATE_SPOT:
-            const beforeNewSpot = { ...state }
-            beforeNewSpot.allSpots[action.spotData.id] = action.spotData
-            console.log('SPOT REDUCER', action.spotData)
-        return beforeNewSpot
+            const withNewSpot = { ...state }
+            withNewSpot.allSpots[action.spotData.id] = action.spotData
+            // console.log('SPOT REDUCER', action.spotData)
+        return withNewSpot
         default:
         return state;
     }

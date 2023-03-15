@@ -53,7 +53,6 @@ function Header({ props, isLoaded }) {
                     onItemClick={closeMenu}
                     modalComponent={<CreateSpotModal/>}
                     />) : yourHome}
-
                 <i className="fa-solid fa-globe"></i>
                 <Navigation isLoaded={isLoaded} />
                 {isLoaded && (

@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { createSpotBackEnd } from '../../store/spots'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { createSpotBackEnd, initialSpots } from '../../store/spots'
 import { createSpotImageBackEnd } from '../../store/spotImages'
 import './CreateSpotModal.css'
 import { useHistory } from 'react-router-dom'
+import { useModal } from '../../context/Modal'
 
 export default function CreateSpotModal() {
     const [country, setCountry] = useState('Country')
@@ -23,6 +24,7 @@ export default function CreateSpotModal() {
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch();
     const history = useHistory();
+    const { closeModal } = useModal();
 
     const validate = () => {
         const err = {}
@@ -36,32 +38,37 @@ export default function CreateSpotModal() {
         if (name.length < 4 || !name || name === 'Name of your spot') err.name = 'Name is required'
 
         if ((prev === 'Image URL' || !prev) && (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
-        if ((img2 !== 'Image URL') && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if ((img3 !== 'Image URL') && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if ((img4 !== 'Image URL') && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if ((img5 !== 'Image URL') && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if ((img2 !== 'Image URL') && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if ((img3 !== 'Image URL') && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if ((img4 !== 'Image URL') && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if ((img5 !== 'Image URL') && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(err)
     }
 
-    const handleSubmit = e => {
+    // useEffect(() => {
+    //     dispatch(initialSpots())
+    // }, [dispatch])
+    // const spots = useSelector(state => state.spots.allSpots)
+    const handleSubmit = async e => {
         e.preventDefault();
         validate();
-        if (!errors.length) {
-            console.log('SENDING FIRST DISPATCH')
-            dispatch(createSpotBackEnd({ country, address, state, city, lat, lng, description, name, price}))
-            .catch(async (res) => {
-            const data = await res.json();
-            console.log('RESPONSE FROM CREATE SPOT', data)
-            if (data && data.errors) setErrors(data.errors);
-            else {
-                [ prev, img2, img3, img4, img5 ].forEach(image => {
-                    console.log(image)
-                    if (image) dispatch(createSpotImageBackEnd(data.id, {image, "preview": true}))
-                })
-            }
-            history.push(`/spotsfe/${data.id}`)
-        })
-        }
+
+        if (Object.values(errors).length) return;
+        const spot = await dispatch(createSpotBackEnd({ country, address, state, city, lat, lng, description, name, price, prev}))
+            .then(res =>{
+                const clone = res.clone();
+                if (clone.ok) return clone.json();
+            })
+
+        console.log('SPOT', spot)
+
+        dispatch(createSpotImageBackEnd(spot?.id, {url: prev, "preview": true}))
+        if (img2) dispatch(createSpotImageBackEnd(spot?.id, {url: img2, "preview": true}))
+        if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))
+        if (img4) dispatch(createSpotImageBackEnd(spot?.id, {url: img4, "preview": true}))
+        if (img5) dispatch(createSpotImageBackEnd(spot?.id, {url: img5, "preview": true}))
+        closeModal()
+        history.push(`/spotsfe/${spot?.id}`)
     }
     return (
         <div className='create-spot-modal'>
@@ -152,7 +159,7 @@ export default function CreateSpotModal() {
             <h2>Liven up your spot with photos</h2>
             <label>Submit a link to at least one photo to publish your spot
                 <input
-                type='url'
+                type='text'
                 value={prev}
                 onChange={e => setPrev(e.target.value)}
                 ></input>

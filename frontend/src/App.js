@@ -9,6 +9,7 @@ import Landing from "./components/Landing";
 // import Route from "express/lib/router/route";
 import { Route } from "react-router-dom";
 import SpotDetails from './components/SpotDetails'
+import ManageSpots from "./components/ManageSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,9 +22,9 @@ function App() {
     <>
       <Header isLoaded={isLoaded}/>
       <Switch>
+        <Route path='/spotsfe/:spotId' component={SpotDetails}/>
+        <Route exact path='/manage-spots' component={ManageSpots} />
         <Route exact path='/' component={Landing}/>
-        <Route path='/spotsfe/:spotId'
-        component={SpotDetails}/>
       </Switch>
     </>
   );

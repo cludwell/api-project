@@ -17,7 +17,6 @@ export default function Landing() {
     // console.log('DATA ARRAY IS WORKING', data)
     return (
         <>
-
         <div className="spot-cards">
             {data.map(spot => (
                 spot.previewImage !== "No preview available yet" ?

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { findSpotReviews } from '../../store/reviews';
+import { restoreUser } from '../../store/session';
 import { findSingleSpot } from '../../store/singlespot';
 import './SpotDetails.css'
 
@@ -9,15 +10,16 @@ export default function SpotDetails() {
     const {spotId} = useParams()
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(findSingleSpot(spotId))
-        dispatch(findSpotReviews(spotId))
-        // dispatch()
+        dispatch(findSingleSpot(spotId));
+        dispatch(findSpotReviews(spotId));
+        dispatch(restoreUser());
     }, [dispatch, spotId])
     const singleSpot = useSelector(state => state.singleSpot)
     const spotReviews = useSelector(state => state.reviews)
-    console.log('STATE IN COMPONENT', singleSpot)
+    const user = useSelector(store => store.session.user)
+    console.log('USER', user)
     if (!Object.entries(singleSpot).length) return null;
-    if (!Object.entries(spotReviews).length) return null;
+    // if (!Object.entries(spotReviews).length) return null;
 
     const featureAlert = () => alert('Feature coming soon')
     return (
@@ -30,7 +32,7 @@ export default function SpotDetails() {
             {singleSpot.SpotImages.map((ele, i) => (
                 i < 6 ? <img src={ele.url}
                 alt='main'
-                key={i}
+                key={`detail-image-${i}`}
                 className={`detail-image detail-image-${i}`}></img> : null
             ))}
 
@@ -85,7 +87,8 @@ export default function SpotDetails() {
                 <p className='review-body'
                 key={'reviewbody' +i}>{rev.review}</p>
                 </>
-            )) : <p>Be the first to post a review!</p>}
+            )) : singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
+                : null}
         </div>
     </>
     )

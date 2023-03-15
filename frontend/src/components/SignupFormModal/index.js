@@ -39,7 +39,7 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          console.log('BACKEND', data)
+          // console.log('BACKEND', data)
           if (data && data.errors) setErrors(Object.values(data.errors));
         });
     }
@@ -49,7 +49,7 @@ function SignupFormModal() {
 
 
   return (
-    <>
+    <div className="signup-div">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <ul>
@@ -112,7 +112,7 @@ function SignupFormModal() {
         <button type="submit"
         disabled={disable}>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
