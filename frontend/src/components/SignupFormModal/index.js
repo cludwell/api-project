@@ -31,8 +31,8 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    validate()
-    console.log('VALIDATION', errors)
+    validate();
+    // console.log('VALIDATION', errors)
     if (!errors.length) {
       // setErrors([]);
       return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))

@@ -1,5 +1,5 @@
 export const POPULATE_SPOTS = 'spots/POPULATE'
-
+export const CREATE_SPOT = 'spots/CREATE'
 export const populateSpots = spotData =>{
     return {
         type: POPULATE_SPOTS,
