@@ -1,3 +1,5 @@
+import { csrfFetch } from './csrf';
+
 export const POPULATE_SPOTS = 'spots/POPULATE'
 export const CREATE_SPOT = 'spots/CREATE'
 
@@ -26,12 +28,14 @@ export const initialSpots = () => async dispatch => {
     }
 };
 export const createSpotBackEnd = (spotData) => async dispatch => {
-    const response = await fetch('/api/spots', {"method": "POST"});
-
+    console.log('were getting right here')
+    const response = await csrfFetch('/api/spots',
+    {"method": "POST", "body": JSON.stringify(spotData)});
+    console.log(response)
     if (response.ok) {
         const spotData = await response.json();
         dispatch(createSpot(spotData));
-        console.log('THUNK', spotData)
+        console.log('CREATE SPOT BACK END', spotData)
         return spotData;
     }
 };
@@ -48,6 +52,7 @@ export default function spotsReducer(state = initialState, action) {
         case CREATE_SPOT:
             const beforeNewSpot = { ...state }
             beforeNewSpot.allSpots[action.spotData.id] = action.spotData
+            console.log('SPOT REDUCER', action.spotData)
         return beforeNewSpot
         default:
         return state;

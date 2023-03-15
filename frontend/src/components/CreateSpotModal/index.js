@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { createSpotBackEnd } from '../../store/spots'
+import { createSpotImageBackEnd } from '../../store/spotImages'
 import './CreateSpotModal.css'
 
 export default function CreateSpotModal() {
     const [country, setCountry] = useState('Country')
-    const [street, setStreet] = useState('Address')
+    const [address, setStreet] = useState('Address')
     const [city, setCity] = useState('City')
     const [state, setState] = useState('STATE')
     const [lat, setLat] = useState('Latitude')
     const [lng, setLng] = useState('Longitude')
-    const [desc, setDesc] = useState('Please write at least 30 characters')
-    const [title, setTitle] = useState('Name of your spot')
+    const [description, setDesc] = useState('Please write at least 30 characters')
+    const [name, setTitle] = useState('Name of your spot')
     const [price, setPrice] = useState('Price per night (USD)')
     const [prev, setPrev] = useState('Preview Image URL')
     const [img2, setImg2] = useState('Image URL')
@@ -23,23 +25,19 @@ export default function CreateSpotModal() {
     const validate = () => {
         const err = {}
         if (country === 'Country' || !country) err.country = 'Country is required'
-        if (street === 'Street' || !street) err.street = 'Address is required'
+        if (address === 'Street' || !address) err.address = 'Address is required'
         if (city === 'City' || !city) err.city = 'City is required'
         if (state === 'state' || !state) err.state = 'State is required'
         if (lat === 'Latitude' || !lat) err.lat = 'Latitude is required'
         if (lng === 'Longitude' || !lng) err.lng = 'Longitude is required'
-        if (desc.length < 30 || desc === 'Please write at least 30 characters' || !desc) err.desc = 'Description needs a minimum of 30 characters'
-        if (title.length < 4 || !title || title === 'Name of your spot') err.title = 'Name is required'
+        if (description.length < 30 || description === 'Please write at least 30 characters' || !description) err.description = 'Description needs a minimum of 30 characters'
+        if (name.length < 4 || !name || name === 'Name of your spot') err.name = 'Name is required'
 
-        if (!prev.endsWith('png') || !prev.endsWith('jpg') || !prev.endsWith('jpeg')) err.prev = 'Preview Image is required'
-        if (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        else if (img2 === '' || img2 === 'Image URL') delete err.img2
-        if (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        else if (img3 === '' || img3 === 'Image URL') delete err.img3
-        if (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        else if (img4 === '' || img4 === 'Image URL') delete err.img4
-        if (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
-        else if (img5 === '' || img5 === 'Image URL') delete err.img5
+        if ((prev === 'Image URL' || !prev) && (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
+        if ((img2 !== 'Image URL') && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if ((img3 !== 'Image URL') && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if ((img4 !== 'Image URL') && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if ((img5 !== 'Image URL') && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(err)
     }
 
@@ -47,11 +45,24 @@ export default function CreateSpotModal() {
         e.preventDefault();
         validate();
         if (!errors.length) {
-            return dispatch()
+            console.log('SENDING FIRST DISPATCH')
+            dispatch(createSpotBackEnd({ country, address, state, city, lat, lng, description, name, price}))
+            .catch(async (res) => {
+            const data = await res.json();
+            console.log('RESPONSE FROM CREATE SPOT', data)
+            if (data && data.errors) setErrors(data.errors);
+            else {
+                [ prev, img2, img3, img4, img5 ].forEach(image => {
+                    console.log(image)
+                    if (image) dispatch(createSpotImageBackEnd(data.id, {image, "preview": true}))
+                })
+            }
+        })
         }
     }
     return (
         <div className='create-spot-modal'>
+            <form onSubmit={handleSubmit} >
             <h1 className='create-spot'>Create a New Spot</h1>
             <h2 className='create-subtitle'>Where's your place located?</h2>
             <p>Guests will only get your exact address once they booked a reservation.</p>
@@ -67,7 +78,7 @@ export default function CreateSpotModal() {
                 <span className='errors'>{errors.street}</span>
                 <input
                 type='text'
-                value={street}
+                value={address}
                 onChange={e => setStreet(e.target.value)}
                 ></input>
             </label>
@@ -108,7 +119,7 @@ export default function CreateSpotModal() {
             <label>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
                 <textarea
                 type='text'
-                value={desc}
+                value={description}
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>
                 <p className='errors'>{errors.desc}</p>
@@ -118,7 +129,7 @@ export default function CreateSpotModal() {
             <label>Catch guests' attention with a spot title that highlights what makes your place special.
                 <input
                 type='text'
-                value={title}
+                value={name}
                 onChange={e => setTitle(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.title}</p>
@@ -178,7 +189,7 @@ export default function CreateSpotModal() {
             </label>
             <button
             type='submit'>Create Spot</button>
-
+            </form>
         </div>
     )
 }

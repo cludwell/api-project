@@ -16,7 +16,6 @@ export default function SpotDetails() {
     const singleSpot = useSelector(state => state.singleSpot)
     const spotReviews = useSelector(state => state.reviews)
     console.log('STATE IN COMPONENT', singleSpot)
-    // console.log('WHAT IS IT', Object.entries(spotReviews))
     if (!Object.entries(singleSpot).length) return null;
     if (!Object.entries(spotReviews).length) return null;
 
