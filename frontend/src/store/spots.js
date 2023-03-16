@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 export const POPULATE_SPOTS = 'spots/POPULATE'
 export const CREATE_SPOT = 'spots/CREATE'
-
+export const DELETE_SPOT = 'spots/DELETE'
 export const populateSpots = spotData =>{
     return {
         type: POPULATE_SPOTS,
@@ -15,7 +15,12 @@ export const createSpot = spotData =>{
         spotData
     }
 }
-
+export const deleteSpot = spotId => {
+    return {
+        type: DELETE_SPOT,
+        spotId
+    }
+}
 //spots thunks
 export const initialSpots = () => async dispatch => {
     const response = await fetch('/api/spots');
@@ -34,10 +39,20 @@ export const createSpotBackEnd = (spotData) => async dispatch => {
     if (response.ok) {
         const spotData = await response.json();
         dispatch(createSpot(spotData));
-        console.log('RESPONSE')
+        // console.log('RESPONSE')
         return clone;
     }
 };
+export const deleteSpotById = spotId => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`,
+    {"method": "DELETE"})
+    if (response.ok) {
+        const confirmation = await response.json();
+        dispatch(deleteSpot(spotId));
+        console.log('DELETE DISPATCH')
+        return
+    }
+}
 
 const initialState = {}
 
@@ -51,8 +66,11 @@ export default function spotsReducer(state = initialState, action) {
         case CREATE_SPOT:
             const withNewSpot = { ...state }
             withNewSpot.allSpots[action.spotData.id] = action.spotData
-            // console.log('SPOT REDUCER', action.spotData)
-        return withNewSpot
+        return withNewSpot;
+        case DELETE_SPOT:
+            const withoutDeleted = { ...state }
+            delete withoutDeleted[action.spotId]
+        return withoutDeleted;
         default:
         return state;
     }
