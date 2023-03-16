@@ -43,9 +43,10 @@ export default function reviewsReducer(state = initialState, action) {
             console.log('REVIEW REDUCER', newState)
         return action.reviewData.Reviews;
         case DELETE_REVIEW:
-            const withoutReview = { ...state }
-            withoutReview.reviewData.Reviews.filter(ele => ele.id !== action.reviewId)
-            return withoutReview
+            const withReview = { ...state }
+            const withoutReview = withReview.reviewData.Reviews.filter(ele => ele.id !== action.reviewId)
+            withReview.reviewData.Reviews = {...withoutReview}
+            return withReview
         default:
         return state;
     }
