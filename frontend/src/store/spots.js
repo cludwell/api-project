@@ -24,11 +24,9 @@ export const deleteSpot = spotId => {
 //spots thunks
 export const initialSpots = () => async dispatch => {
     const response = await fetch('/api/spots');
-
     if (response.ok) {
         const spotData = await response.json();
         dispatch(populateSpots(spotData));
-        // console.log('DATA', spotData)
         return spotData;
     }
 };
@@ -50,7 +48,7 @@ export const deleteSpotById = spotId => async dispatch => {
         const confirmation = await response.json();
         dispatch(deleteSpot(spotId));
         console.log('DELETE DISPATCH')
-        return
+        return confirmation
     }
 }
 

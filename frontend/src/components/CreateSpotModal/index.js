@@ -26,8 +26,10 @@ export default function CreateSpotModal() {
     const history = useHistory();
     const { closeModal } = useModal();
 
+    //handling validation errors
     const validate = () => {
         const err = {}
+        //most fields must have data
         if (country === 'Country' || !country) err.country = 'Country is required'
         if (address === 'Street' || !address) err.address = 'Address is required'
         if (city === 'City' || !city) err.city = 'City is required'
@@ -37,6 +39,8 @@ export default function CreateSpotModal() {
         if (description.length < 30 || description === 'Please write at least 30 characters' || !description) err.description = 'Description needs a minimum of 30 characters'
         if (name.length < 4 || !name || name === 'Name of your spot') err.name = 'Name is required'
 
+        //want logic to accept default or empty string
+        //otherwise url must be a url
         if ((prev === 'Image URL' || !prev) && (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
         // if ((img2 !== 'Image URL') && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
         // if ((img3 !== 'Image URL') && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
@@ -49,6 +53,8 @@ export default function CreateSpotModal() {
     //     dispatch(initialSpots())
     // }, [dispatch])
     // const spots = useSelector(state => state.spots.allSpots)
+
+    //upon submission, do this
     const handleSubmit = async e => {
         e.preventDefault();
         validate();
@@ -62,6 +68,7 @@ export default function CreateSpotModal() {
 
         console.log('SPOT', spot)
 
+        //must send preview, other images are optional
         dispatch(createSpotImageBackEnd(spot?.id, {url: prev, "preview": true}))
         if (img2) dispatch(createSpotImageBackEnd(spot?.id, {url: img2, "preview": true}))
         if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))

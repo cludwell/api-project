@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { restoreUser } from '../../store/session';
 import { initialSpots } from '../../store/spots';
 import CreateSpotModal from '../CreateSpotModal';
+import DeleteSpotModal from '../DeleteSpotModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import SpotCard from '../SpotCard';
 import './ManageSpots.css'
@@ -22,7 +23,7 @@ export default function ManageSpots() {
         if (showMenu) return;
         setShowMenu(true);
     }
-    
+
     useEffect(() => {
         if (!showMenu) return;
         const closeMenu = e => {
@@ -55,7 +56,13 @@ export default function ManageSpots() {
 
             <div className='button-field' key={`buttondiv${i}`}>
 
-            <button key={`delete${i}`} className={`${i}`}>Delete</button>
+            <OpenModalMenuItem
+            itemText={`Delete`}
+            onClick={openMenu}
+            onItemClick={closeMenu}
+            modalComponent={<DeleteSpotModal />}
+            key={`delete-button-${i}`}
+            spotId={ele.id}/>
             <button key={`update${i}`} className={`${i}`}>Update</button>
 
             </div>
