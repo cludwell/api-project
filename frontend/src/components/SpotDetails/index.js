@@ -8,6 +8,7 @@ import DeleteReviewModal from '../DeleteReviewModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import './SpotDetails.css'
 import { useRef } from 'react';
+
 export default function SpotDetails() {
     const {spotId} = useParams()
     const dispatch = useDispatch();
@@ -53,6 +54,7 @@ export default function SpotDetails() {
             <div className='detail-images'>
 
             {singleSpot.SpotImages.map((ele, i) => (
+                //only display the first 5 images
                 i < 6 ? <img src={ele.url}
                 alt='main'
                 key={`detail-image-${i}`}
@@ -65,14 +67,16 @@ export default function SpotDetails() {
             <div className='price-review-reserve'>
                 <span className='reserve-left'>${singleSpot.price} night</span>
                 <span className='reserve-right'>
-            {singleSpot.numReviews === 0 ? (<>
+            { //either the spot is new with no reviews, or numReviews is displayed
+            singleSpot.numReviews === 0 ? (<>
             <i className="fa-solid fa-star"></i>
             New!
             </>) : (<>
             <i className="fa-solid fa-star"></i>
             {singleSpot.avgStarRating}
              ●
-            {singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
+            { //either plural or singular number of reviews
+            singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
             :singleSpot.numReviews + ' Reviews'}
         </>)}
                 </span>
@@ -110,13 +114,15 @@ export default function SpotDetails() {
                 </h4>
                 <p className='review-body'
                 key={'reviewbody' +i}>{rev.review}</p>
+                {//ternary logic for owner can delete review
+                user.id === rev.ownerId ? (
                 <OpenModalMenuItem
                 itemText={`Delete`}
                 onClick={openMenu}
                 onItemClick={closeMenu}
                 modalComponent={<DeleteReviewModal spotId={singleSpot.id} reviewId={rev.id} />}
                 key={`review-delete-button${rev.id}`}
-                />
+                />) : null}
             </div>
 
             )) : singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
