@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 export const POPULATE_SPOTS = 'spots/POPULATE'
 export const CREATE_SPOT = 'spots/CREATE'
 export const DELETE_SPOT = 'spots/DELETE'
+export const UPDATE_SPOT = 'spots/UPDATE'
 export const populateSpots = spotData =>{
     return {
         type: POPULATE_SPOTS,
@@ -21,6 +22,12 @@ export const deleteSpot = spotId => {
         spotId
     }
 }
+export const updateSpot = spotData => {
+    return {
+        type: UPDATE_SPOT,
+        spotData
+    }
+}
 //spots thunks
 export const initialSpots = () => async dispatch => {
     const response = await fetch('/api/spots');
@@ -37,7 +44,6 @@ export const createSpotBackEnd = (spotData) => async dispatch => {
     if (response.ok) {
         const spotData = await response.json();
         dispatch(createSpot(spotData));
-        // console.log('RESPONSE')
         return clone;
     }
 };
@@ -47,11 +53,20 @@ export const deleteSpotById = spotId => async dispatch => {
     if (response.ok) {
         const confirmation = await response.json();
         dispatch(deleteSpot(spotId));
-        console.log('DELETE DISPATCH', spotId)
+        // console.log('DELETE DISPATCH', spotId)
         return confirmation
     }
 }
-
+export const updateSpotbyId = spotData => async dispatch => {
+    const response = await csrfFetch('/api/spots',
+    {"method": "PUT", "body": JSON.stringify(spotData)})
+    const clone = response.clone()
+    if (response.ok) {
+        const confirmation = await response.json();
+        dispatch(updateSpot(confirmation))
+        return clone
+    }
+}
 const initialState = {}
 
 //spots reducer
@@ -71,6 +86,11 @@ export default function spotsReducer(state = initialState, action) {
             console.log('DELETING IN REDUCER', state)
             delete withoutDeleted.spots.allSpots[action.spotId]
         return withoutDeleted;
+        case UPDATE_SPOT:
+            const updateState = { ...state }
+            delete updateState.spots.allSpots[action.spotData.id]
+            updateState.spots.allSpots[action.spotData.id] = {...action.spotData}
+            return updateState
         default:
         return state;
     }

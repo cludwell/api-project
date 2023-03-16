@@ -15,6 +15,7 @@ export default function SpotDetails() {
         dispatch(restoreUser());
     }, [dispatch, spotId])
     const singleSpot = useSelector(state => state.singleSpot)
+    console.log('SINGLGE SPOT', singleSpot)
     const spotReviews = useSelector(state => state.reviews)
     const user = useSelector(store => store.session.user)
     console.log('USER', user)

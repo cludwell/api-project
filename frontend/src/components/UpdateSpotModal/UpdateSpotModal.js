@@ -1,31 +1,43 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { createSpotBackEnd } from '../../store/spots'
 import { createSpotImageBackEnd } from '../../store/spotImages'
 import './UpdateSpotModal.css'
 import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
+import { findSingleSpot } from '../../store/singlespot'
 
 export default function UpdateSpotModal({ spot }) {
 
-    const [country, setCountry] = useState('Country')
-    const [address, setStreet] = useState('Address')
-    const [city, setCity] = useState('City')
-    const [state, setState] = useState('STATE')
-    const [lat, setLat] = useState('Latitude')
-    const [lng, setLng] = useState('Longitude')
-    const [description, setDesc] = useState('Please write at least 30 characters')
-    const [name, setTitle] = useState('Name of your spot')
-    const [price, setPrice] = useState('Price per night (USD)')
-    const [prev, setPrev] = useState('Preview Image URL')
-    const [img2, setImg2] = useState('Image URL')
-    const [img3, setImg3] = useState('Image URL')
-    const [img4, setImg4] = useState('Image URL')
-    const [img5, setImg5] = useState('Image URL')
-    const [errors, setErrors] = useState({})
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(findSingleSpot(spot.id))
+    })
+    const updateSpot = useSelector(state => state.singleSpot)
+    const spotImgArray = updateSpot.SpotImages.map(img => img.url)
+    console.log(spotImgArray)
+    const spotImage2 = spotImgArray[1] ? spotImgArray[1] : 'Image URL'
+    const spotImage3 = spotImgArray[2] ? spotImgArray[2] : 'Image URL'
+    const spotImage4 = spotImgArray[3] ? spotImgArray[3] : 'Image URL'
+    const spotImage5 = spotImgArray[4] ? spotImgArray[4] : 'Image URL'
+    const [country, setCountry] = useState(spot.country)
+    const [address, setStreet] = useState(spot.address)
+    const [city, setCity] = useState(spot.city)
+    const [state, setState] = useState(spot.state)
+    const [lat, setLat] = useState(spot.lat)
+    const [lng, setLng] = useState(spot.lng)
+    const [description, setDesc] = useState(spot.description)
+    const [name, setTitle] = useState(spot.name)
+    const [price, setPrice] = useState(spot.price)
+    const [prev, setPrev] = useState(spot.previewImage)
+    const [img2, setImg2] = useState(spotImage2)
+    const [img3, setImg3] = useState(spotImage3)
+    const [img4, setImg4] = useState(spotImage4)
+    const [img5, setImg5] = useState(spotImage5)
+    const [errors, setErrors] = useState({})
     const history = useHistory();
     const { closeModal } = useModal();
+
 
     //handling validation errors
     const validate = () => {
@@ -49,11 +61,6 @@ export default function UpdateSpotModal({ spot }) {
         // if ((img5 !== 'Image URL') && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(err)
     }
-
-    // useEffect(() => {
-    //     dispatch(initialSpots())
-    // }, [dispatch])
-    // const spots = useSelector(state => state.spots.allSpots)
 
     //upon submission, do this
     const handleSubmit = async e => {
