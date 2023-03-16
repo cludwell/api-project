@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { findSpotReviews } from '../../store/reviews';
@@ -7,7 +7,7 @@ import { findSingleSpot } from '../../store/singlespot';
 import DeleteReviewModal from '../DeleteReviewModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import './SpotDetails.css'
-
+import { useRef } from 'react';
 export default function SpotDetails() {
     const {spotId} = useParams()
     const dispatch = useDispatch();
