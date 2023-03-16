@@ -13,14 +13,17 @@ export default function UpdateSpotModal({ spot }) {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(findSingleSpot(spot.id))
-    })
+    }, [dispatch, spot.id])
     const updateSpot = useSelector(state => state.singleSpot)
-    const spotImgArray = updateSpot.SpotImages.map(img => img.url)
-    console.log(spotImgArray)
-    const spotImage2 = spotImgArray[1] ? spotImgArray[1] : ''
-    const spotImage3 = spotImgArray[2] ? spotImgArray[2] : ''
-    const spotImage4 = spotImgArray[3] ? spotImgArray[3] : ''
-    const spotImage5 = spotImgArray[4] ? spotImgArray[4] : ''
+
+    //this will be used when updating images is added
+
+    // const spotImgArray = updateSpot.SpotImages.map(img => img.url)
+    // console.log(spotImgArray)
+    // const spotImage2 = spotImgArray[1] ? spotImgArray[1] : ''
+    // const spotImage3 = spotImgArray[2] ? spotImgArray[2] : ''
+    // const spotImage4 = spotImgArray[3] ? spotImgArray[3] : ''
+    // const spotImage5 = spotImgArray[4] ? spotImgArray[4] : ''
 
     const [country, setCountry] = useState(spot.country)
     const [address, setStreet] = useState(spot.address)
@@ -31,11 +34,11 @@ export default function UpdateSpotModal({ spot }) {
     const [description, setDesc] = useState(spot.description)
     const [name, setTitle] = useState(spot.name)
     const [price, setPrice] = useState(spot.price)
-    const [prev, setPrev] = useState(spot.previewImage)
-    const [img2, setImg2] = useState(spotImage2)
-    const [img3, setImg3] = useState(spotImage3)
-    const [img4, setImg4] = useState(spotImage4)
-    const [img5, setImg5] = useState(spotImage5)
+    // const [prev, setPrev] = useState(spot.previewImage)
+    // const [img2, setImg2] = useState(spotImage2)
+    // const [img3, setImg3] = useState(spotImage3)
+    // const [img4, setImg4] = useState(spotImage4)
+    // const [img5, setImg5] = useState(spotImage5)
     const [errors, setErrors] = useState({})
     const history = useHistory();
     const { closeModal } = useModal();
@@ -56,11 +59,11 @@ export default function UpdateSpotModal({ spot }) {
 
         //want logic to accept default or empty string
         //otherwise url must be a url
-        if (!prev || (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
-        if (img2 && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        if (img5 && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if (!prev || (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
+        // if (img2 && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        // if (img5 && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(err)
     }
 
@@ -70,13 +73,14 @@ export default function UpdateSpotModal({ spot }) {
         validate();
 
         if (Object.values(errors).length) return;
-        await dispatch(updateSpotData({ id: updateSpot.id, country, address, state, city, lat, lng, description, name, price, prev}))
+        await dispatch(updateSpotData({ id: updateSpot.id, country, address, state, city, lat, lng, description, name, price }))
             .then(res =>{
                 const clone = res.clone();
                 if (clone.ok) return clone.json();
             })
-            .then(closeModal())
+            // .then(closeModal())
             .then(data => history.push(`/spotsfe/${data.id}`))
+            .then(closeModal())
 
         //image updates are optional, would have to write put for each image url
 

@@ -60,11 +60,12 @@ export const deleteSpotById = spotData => async dispatch => {
     }
 }
 export const updateSpotData = spotData => async dispatch => {
-    const response = await csrfFetch('/api/spots',
+    const response = await csrfFetch(`/api/spots/${spotData.id}`,
     {"method": "PUT", "body": JSON.stringify(spotData)})
     const clone = response.clone()
     if (response.ok) {
         const confirmation = await response.json();
+        console.log('HITTING THE THUNK', confirmation)
         dispatch(updateSpot(confirmation))
         return clone
     }
@@ -90,8 +91,10 @@ export default function spotsReducer(state = initialState, action) {
         return withoutDeleted;
         case UPDATE_SPOT:
             const updateState = { ...state }
-            // delete updateState.spots.allSpots[action.spotData.id]
-            updateState.spots.allSpots[action.spotData.id] = {...action.spotData}
+            console.log('IN THE UPDATE REDUCER', action.spotData)
+            console.log(updateState)
+            updateState.allSpots[action.spotData.id] = {...action.spotData}
+            console.log('IS THE UPDATE KEYING TO CORRECT PLACE', updateState.allSpots[action.spotData.id], action.spotData)
             return updateState
         default:
         return state;
