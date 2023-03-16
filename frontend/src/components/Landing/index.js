@@ -11,14 +11,18 @@ export default function Landing() {
         dispatch(initialSpots())
     }, [dispatch])
     const spots = useSelector(state => state.spots.allSpots)
-    // console.log('HERE IN LANDING COMP', spots)
+
+    //if thunk hasnt returned spot data
     if (!spots) return null
+
+    //array of spot objeccts
     const data = Object.values(spots)
-    // console.log('DATA ARRAY IS WORKING', data)
     return (
         <>
         <div className="spot-cards">
             {data.map(spot => (
+
+//must have a preview image to be displayed
                 spot.previewImage !== "No preview available yet" ?
                 (<SpotCard spot={spot}
                 key={spot.id}/>)

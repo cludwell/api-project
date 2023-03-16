@@ -45,6 +45,7 @@ export default function ManageSpots() {
                 modalComponent={<CreateSpotModal />} />
         <hr></hr>
             <div className='manage-landing'>
+            {/* does the user have any spots? */}
             {userSpots.length ? (
             userSpots.map((ele, i) => (
                 ele.previewImage !== 'No preview available yet' || null ?
@@ -60,9 +61,9 @@ export default function ManageSpots() {
             itemText={`Delete`}
             onClick={openMenu}
             onItemClick={closeMenu}
-            modalComponent={<DeleteSpotModal />}
-            key={`delete-button-${i}`}
-            spotId={ele.id}/>
+            modalComponent={<DeleteSpotModal spotId={ele.id}/>}
+            key={`delete-button-${ele.id}`}
+            />
             <button key={`update${i}`} className={`${i}`}>Update</button>
 
             </div>

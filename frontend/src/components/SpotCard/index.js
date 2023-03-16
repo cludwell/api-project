@@ -7,6 +7,7 @@ export default function SpotCard({ spot }) {
 
     return (
         <NavLink to={`/spotsfe/${spot.id}`}
+        //want link w/o underline of everything
         style={{"textDecoration": "none"}}
         spotId={spot.id}>
         <div className="spot-card">

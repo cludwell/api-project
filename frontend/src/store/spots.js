@@ -47,7 +47,7 @@ export const deleteSpotById = spotId => async dispatch => {
     if (response.ok) {
         const confirmation = await response.json();
         dispatch(deleteSpot(spotId));
-        console.log('DELETE DISPATCH')
+        console.log('DELETE DISPATCH', spotId)
         return confirmation
     }
 }
@@ -66,8 +66,10 @@ export default function spotsReducer(state = initialState, action) {
             withNewSpot.allSpots[action.spotData.id] = action.spotData
         return withNewSpot;
         case DELETE_SPOT:
+            console.log('ACTION.SPOTID', action.spotId)
             const withoutDeleted = { ...state }
-            delete withoutDeleted[action.spotId]
+            console.log('DELETING IN REDUCER', state)
+            delete withoutDeleted.spots.allSpots[action.spotId]
         return withoutDeleted;
         default:
         return state;
