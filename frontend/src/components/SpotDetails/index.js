@@ -73,7 +73,8 @@ export default function SpotDetails() {
             {spotReviews.length ? spotReviews
             .sort((a,b)=>Date.parse(b.createdAt)-Date.parse(a.createdAt))
             .map((rev, i) => (
-                <>
+
+            <div className='review-container' key={`review-container${i}`}>
                 <h3 className='username-title'
                 key={'username-iter'+i}>{rev.User.firstName}</h3>
                 <h4 className='review-date'
@@ -87,7 +88,9 @@ export default function SpotDetails() {
                 </h4>
                 <p className='review-body'
                 key={'reviewbody' +i}>{rev.review}</p>
-                </>
+                
+            </div>
+
             )) : singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
                 : null}
         </div>

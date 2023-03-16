@@ -2,7 +2,7 @@
 import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import './DeleteReviewModal.css'
-
+import { deleteReviewById } from '../../store/reviews';
 export default function DeleteReviewModal({ reviewId, spotId }) {
 
     const { closeModal } = useModal();

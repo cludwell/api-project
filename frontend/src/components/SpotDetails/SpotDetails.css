@@ -24,3 +24,13 @@
 .description {
     font-family: 'Montserrat', sans-serif;
 }
+.review-container {
+    margin-top: 7rem;
+}
+h1, h3, h4 {
+    font-family: 'Mulish', sans-serif;
+}
+.price-review-reserve {
+    font-family: 'Montserrat', sans-serif;
+
+}
