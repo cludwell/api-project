@@ -12,7 +12,7 @@ export default function DeleteSpotModal({ spotId }) {
     const { closeModal } = useModal();
     const history = useHistory();
     useEffect(() => {
-        dispatch(initialSpots)
+        dispatch(initialSpots())
     })
     const spots = useSelector(state => state.spots.allSpots)
 
