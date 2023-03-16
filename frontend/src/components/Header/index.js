@@ -1,5 +1,5 @@
 import './Header.css'
-import logo from '../../images/purpplanchette.png'
+import logo from '../../images/board.png'
 import { Link } from 'react-router-dom'
 import { Switch } from 'react-router-dom'
 import Navigation from '../Navigation'
