@@ -1,14 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { findSpotReviews } from '../../store/reviews';
 import { restoreUser } from '../../store/session';
 import { findSingleSpot } from '../../store/singlespot';
+import DeleteReviewModal from '../DeleteReviewModal';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import './SpotDetails.css'
 
 export default function SpotDetails() {
     const {spotId} = useParams()
     const dispatch = useDispatch();
+
+    //modal functionality
+    const [showMenu, setShowMenu] = useState(false)
+    const ulRef = useRef();
+    const openMenu = () => {
+        if (showMenu) return;
+        setShowMenu(true)
+    }
+
+    useEffect(() => {
+        if (!showMenu) return;
+        const closeMenu = e =>{
+            if(!ulRef.current.contains(e.target)) setShowMenu(false)
+        }
+        document.addEventListener('click', closeMenu);
+        return () => document.removeEventListener('click', closeMenu);
+    }, [showMenu])
+    const closeMenu = () => setShowMenu(false)
+
+    //retrieval of all relevant state data
     useEffect(() => {
         dispatch(findSingleSpot(spotId));
         dispatch(findSpotReviews(spotId));
@@ -88,7 +110,13 @@ export default function SpotDetails() {
                 </h4>
                 <p className='review-body'
                 key={'reviewbody' +i}>{rev.review}</p>
-                
+                <OpenModalMenuItem
+                itemText={`Delete`}
+                onClick={openMenu}
+                onItemClick={closeMenu}
+                modalComponent={<DeleteReviewModal spotId={singleSpot.id} reviewId={rev.id} />}
+                key={`review-delete-button${rev.id}`}
+                />
             </div>
 
             )) : singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>

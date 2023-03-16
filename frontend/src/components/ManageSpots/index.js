@@ -34,6 +34,8 @@ export default function ManageSpots() {
         return () => document.removeEventListener('click', closeMenu);
     }, [showMenu]);
     const closeMenu = () => setShowMenu(false);
+
+    
     console.log(spots)
     console.log('USER', user.id, 'SPOTS', Object.values(spots))
     return (

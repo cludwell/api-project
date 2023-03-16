@@ -3,11 +3,12 @@ import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import './DeleteReviewModal.css'
 import { deleteReviewById } from '../../store/reviews';
+import { useDispatch } from 'react-redux';
 export default function DeleteReviewModal({ reviewId, spotId }) {
 
     const { closeModal } = useModal();
     const history = useHistory();
-
+    const dispatch = useDispatch();
     const handleDeletion = async e => {
         e.preventDefault();
         await dispatch(deleteReviewById(reviewId))
