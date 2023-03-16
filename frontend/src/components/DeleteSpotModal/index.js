@@ -22,7 +22,7 @@ export default function DeleteSpotModal({ spotId }) {
         await dispatch(deleteSpotById(spotId))
         console.log("AFTER", spots)
         closeModal()
-       
+       history.push('/manage-spots')
     }
     const handleGoBack = e => {
         e.preventDefault();

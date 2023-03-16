@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createSpotBackEnd } from '../../store/spots'
 import { createSpotImageBackEnd } from '../../store/spotImages'
-import './CreateSpotModal.css'
+import './UpdateSpotModal.css'
 import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 
-export default function CreateSpotModal() {
+export default function UpdateSpotModal({ spot }) {
+
     const [country, setCountry] = useState('Country')
     const [address, setStreet] = useState('Address')
     const [city, setCity] = useState('City')
@@ -80,7 +81,7 @@ export default function CreateSpotModal() {
     return (
         <div className='create-spot-modal'>
             <form onSubmit={handleSubmit} >
-            <h1 className='create-spot'>Create a New Spot</h1>
+            <h1 className='create-spot'>Update Your Spot</h1>
             <h2 className='create-subtitle'>Where's your place located?</h2>
             <p>Guests will only get your exact address once they booked a reservation.</p>
             <label>Country
@@ -205,7 +206,7 @@ export default function CreateSpotModal() {
                 <p className='errors'>{errors.img5}</p>
             </label>
             <button
-            type='submit'>Create Spot</button>
+            type='submit'>Update Your Spot</button>
             </form>
         </div>
     )

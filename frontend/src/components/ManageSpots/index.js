@@ -6,6 +6,7 @@ import CreateSpotModal from '../CreateSpotModal';
 import DeleteSpotModal from '../DeleteSpotModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import SpotCard from '../SpotCard';
+import UpdateSpotModal from '../UpdateSpotModal/UpdateSpotModal';
 import './ManageSpots.css'
 
 export default function ManageSpots() {
@@ -64,7 +65,14 @@ export default function ManageSpots() {
             modalComponent={<DeleteSpotModal spotId={ele.id}/>}
             key={`delete-button-${ele.id}`}
             />
-            <button key={`update${i}`} className={`${i}`}>Update</button>
+
+            <OpenModalMenuItem
+            itemText={`Update`}
+            onClick={openMenu}
+            onItemClick={closeMenu}
+            modalComponent={<UpdateSpotModal spot={ele} />}
+            key={`update-button-${ele.id}`}
+            />
 
             </div>
             </div>
