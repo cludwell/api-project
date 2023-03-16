@@ -9,14 +9,15 @@ export default function Landing() {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(initialSpots())
-    }, [dispatch])
+    })
     const spots = useSelector(state => state.spots.allSpots)
 
     //if thunk hasnt returned spot data
     if (!spots) return null
 
     //array of spot objeccts
-    const data = Object.values(spots)
+    const data = Object.values(spots).sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
+    // console.log('DATA', data)
     return (
         <>
         <div className="spot-cards">

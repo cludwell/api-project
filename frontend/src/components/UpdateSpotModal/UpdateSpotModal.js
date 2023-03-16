@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createSpotBackEnd } from '../../store/spots'
+import { createSpotBackEnd, updateSpotbyId } from '../../store/spots'
 import { createSpotImageBackEnd } from '../../store/spotImages'
 import './UpdateSpotModal.css'
 import { useHistory } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { findSingleSpot } from '../../store/singlespot'
 
 export default function UpdateSpotModal({ spot }) {
 
+    //spotimages not attached with spot state passed as props
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(findSingleSpot(spot.id))
@@ -16,10 +17,11 @@ export default function UpdateSpotModal({ spot }) {
     const updateSpot = useSelector(state => state.singleSpot)
     const spotImgArray = updateSpot.SpotImages.map(img => img.url)
     console.log(spotImgArray)
-    const spotImage2 = spotImgArray[1] ? spotImgArray[1] : 'Image URL'
-    const spotImage3 = spotImgArray[2] ? spotImgArray[2] : 'Image URL'
-    const spotImage4 = spotImgArray[3] ? spotImgArray[3] : 'Image URL'
-    const spotImage5 = spotImgArray[4] ? spotImgArray[4] : 'Image URL'
+    const spotImage2 = spotImgArray[1] ? spotImgArray[1] : ''
+    const spotImage3 = spotImgArray[2] ? spotImgArray[2] : ''
+    const spotImage4 = spotImgArray[3] ? spotImgArray[3] : ''
+    const spotImage5 = spotImgArray[4] ? spotImgArray[4] : ''
+
     const [country, setCountry] = useState(spot.country)
     const [address, setStreet] = useState(spot.address)
     const [city, setCity] = useState(spot.city)
@@ -43,22 +45,22 @@ export default function UpdateSpotModal({ spot }) {
     const validate = () => {
         const err = {}
         //most fields must have data
-        if (country === 'Country' || !country) err.country = 'Country is required'
-        if (address === 'Street' || !address) err.address = 'Address is required'
-        if (city === 'City' || !city) err.city = 'City is required'
-        if (state === 'state' || !state) err.state = 'State is required'
-        if (lat === 'Latitude' || !lat) err.lat = 'Latitude is required'
-        if (lng === 'Longitude' || !lng) err.lng = 'Longitude is required'
-        if (description.length < 30 || description === 'Please write at least 30 characters' || !description) err.description = 'Description needs a minimum of 30 characters'
-        if (name.length < 4 || !name || name === 'Name of your spot') err.name = 'Name is required'
+        if (!country) err.country = 'Country is required'
+        if (!address) err.address = 'Address is required'
+        if (!city) err.city = 'City is required'
+        if (!state) err.state = 'State is required'
+        if (!lat) err.lat = 'Latitude is required'
+        if (!lng) err.lng = 'Longitude is required'
+        if (description.length < 30 || !description) err.description = 'Description needs a minimum of 30 characters'
+        if (name.length < 4 || !name) err.name = 'Name is required'
 
         //want logic to accept default or empty string
         //otherwise url must be a url
-        if ((prev === 'Image URL' || !prev) && (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
-        // if ((img2 !== 'Image URL') && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        // if ((img3 !== 'Image URL') && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        // if ((img4 !== 'Image URL') && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        // if ((img5 !== 'Image URL') && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!prev || (!prev.endsWith('.png') || !prev.endsWith('.jpg') || !prev.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
+        if (img2 && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img5 && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(err)
     }
 
@@ -68,7 +70,7 @@ export default function UpdateSpotModal({ spot }) {
         validate();
 
         if (Object.values(errors).length) return;
-        const spot = await dispatch(createSpotBackEnd({ country, address, state, city, lat, lng, description, name, price, prev}))
+        const spot = await dispatch(updateSpotbyId({ country, address, state, city, lat, lng, description, name, price, prev}))
             .then(res =>{
                 const clone = res.clone();
                 if (clone.ok) return clone.json();
@@ -76,12 +78,13 @@ export default function UpdateSpotModal({ spot }) {
 
         console.log('SPOT', spot)
 
-        //must send preview, other images are optional
-        dispatch(createSpotImageBackEnd(spot?.id, {url: prev, "preview": true}))
-        if (img2) dispatch(createSpotImageBackEnd(spot?.id, {url: img2, "preview": true}))
-        if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))
-        if (img4) dispatch(createSpotImageBackEnd(spot?.id, {url: img4, "preview": true}))
-        if (img5) dispatch(createSpotImageBackEnd(spot?.id, {url: img5, "preview": true}))
+        //image updates are optional, would have to write put for each image url
+
+        // dispatch(createSpotImageBackEnd(spot?.id, {url: prev, "preview": true}))
+        // if (img2) dispatch(createSpotImageBackEnd(spot?.id, {url: img2, "preview": true}))
+        // if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))
+        // if (img4) dispatch(createSpotImageBackEnd(spot?.id, {url: img4, "preview": true}))
+        // if (img5) dispatch(createSpotImageBackEnd(spot?.id, {url: img5, "preview": true}))
         closeModal()
         history.push(`/spotsfe/${spot?.id}`)
     }
@@ -96,6 +99,7 @@ export default function UpdateSpotModal({ spot }) {
                 <input
                 type='text'
                 value={country}
+                placeholder='Country'
                 onChange={e => setCountry(e.target.value)}
                 ></input>
             </label>
@@ -126,7 +130,7 @@ export default function UpdateSpotModal({ spot }) {
             <label>Latitude
             <span className='errors'>{errors.lat}</span>
                 <input
-                type='text'
+                type='number'
                 value={lat}
                 onChange={e => setLat(e.target.value)}
                 ></input>
@@ -134,7 +138,7 @@ export default function UpdateSpotModal({ spot }) {
             <label>Longitude
             <span className='errors'>{errors.lng}</span>
                 <input
-                type='text'
+                type='number'
                 value={lng}
                 onChange={e => setLng(e.target.value)}
                 ></input>
@@ -145,6 +149,7 @@ export default function UpdateSpotModal({ spot }) {
                 <textarea
                 type='text'
                 value={description}
+                placeholder='Please write at least 30 characters'
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>
                 <p className='errors'>{errors.desc}</p>
@@ -155,6 +160,7 @@ export default function UpdateSpotModal({ spot }) {
                 <input
                 type='text'
                 value={name}
+                placeholder='Name of your spot'
                 onChange={e => setTitle(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.title}</p>
@@ -163,19 +169,23 @@ export default function UpdateSpotModal({ spot }) {
             <hr/>
             <h2 className='create-price'>Set a base price for your spot</h2>
             <label>Competetive pricing can help your listing stand out and rank higher in search results.
-                <input
-                type='text'
+            <input
+                type='number'
+                min={0.00}
+                step={0.01}
                 value={price}
+                placeholder='Price per night (USD)'
                 onChange={e => setPrice(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.price}</p>
             </label>
             <hr/>
-            <h2>Liven up your spot with photos</h2>
+            {/* <h2>Liven up your spot with photos</h2>
             <label>Submit a link to at least one photo to publish your spot
                 <input
                 type='text'
                 value={prev}
+                placeholder='Preview Image URL'
                 onChange={e => setPrev(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.prev}</p>
@@ -184,6 +194,7 @@ export default function UpdateSpotModal({ spot }) {
                 <input
                 type='url'
                 value={img2}
+                placeholder='Image URL'
                 onChange={e => setImg2(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.img2}</p>
@@ -192,6 +203,7 @@ export default function UpdateSpotModal({ spot }) {
                 <input
                 type='url'
                 value={img3}
+                placeholder='Image URL'
                 onChange={e => setImg3(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.img3}</p>
@@ -200,6 +212,7 @@ export default function UpdateSpotModal({ spot }) {
                 <input
                 type='url'
                 value={img4}
+                placeholder='Image URL'
                 onChange={e => setImg4(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.img4}</p>
@@ -208,10 +221,11 @@ export default function UpdateSpotModal({ spot }) {
                 <input
                 type='url'
                 value={img5}
+                placeholder='Image URL'
                 onChange={e => setImg5(e.target.value)}
                 ></input>
                 <p className='errors'>{errors.img5}</p>
-            </label>
+            </label> */}
             <button
             type='submit'>Update Your Spot</button>
             </form>

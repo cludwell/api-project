@@ -32,7 +32,7 @@ function Header({ props, isLoaded }) {
     }, [showMenu]);
     const closeMenu = () => setShowMenu(false)
     const user = useSelector(store => store.session.user)
-    console.log('HERE IS THE USER', user)
+    // console.log('HERE IS THE USER', user)
     const yourHome = (<span className='scarebnb-home'>Scarebnb your home</span>)
 
     return (

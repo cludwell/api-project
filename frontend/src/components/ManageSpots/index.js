@@ -14,7 +14,7 @@ export default function ManageSpots() {
     useEffect(() => {
         dispatch(restoreUser());
         dispatch(initialSpots());
-    }, [dispatch]);
+    });
     const user = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots.allSpots);
     const userSpots = Object.values(spots).filter(ele => user.id === ele.ownerId);

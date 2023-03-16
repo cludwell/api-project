@@ -47,12 +47,12 @@ export const createSpotBackEnd = (spotData) => async dispatch => {
         return clone;
     }
 };
-export const deleteSpotById = spotId => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${spotId}`,
+export const deleteSpotById = spotData => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotData.id}`,
     {"method": "DELETE"})
     if (response.ok) {
         const confirmation = await response.json();
-        dispatch(deleteSpot(spotId));
+        dispatch(deleteSpot(spotData));
         // console.log('DELETE DISPATCH', spotId)
         return confirmation
     }
@@ -88,7 +88,7 @@ export default function spotsReducer(state = initialState, action) {
         return withoutDeleted;
         case UPDATE_SPOT:
             const updateState = { ...state }
-            delete updateState.spots.allSpots[action.spotData.id]
+            // delete updateState.spots.allSpots[action.spotData.id]
             updateState.spots.allSpots[action.spotData.id] = {...action.spotData}
             return updateState
         default:
