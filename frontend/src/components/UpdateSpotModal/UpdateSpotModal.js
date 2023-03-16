@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createSpotBackEnd, updateSpotbyId } from '../../store/spots'
-import { createSpotImageBackEnd } from '../../store/spotImages'
+import { updateSpotData } from '../../store/spots'
+// import { createSpotImageBackEnd } from '../../store/spotImages'
 import './UpdateSpotModal.css'
 import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
@@ -70,13 +70,13 @@ export default function UpdateSpotModal({ spot }) {
         validate();
 
         if (Object.values(errors).length) return;
-        const spot = await dispatch(updateSpotbyId({ country, address, state, city, lat, lng, description, name, price, prev}))
+        await dispatch(updateSpotData({ id: updateSpot.id, country, address, state, city, lat, lng, description, name, price, prev}))
             .then(res =>{
                 const clone = res.clone();
                 if (clone.ok) return clone.json();
             })
-
-        console.log('SPOT', spot)
+            .then(closeModal())
+            .then(data => history.push(`/spotsfe/${data.id}`))
 
         //image updates are optional, would have to write put for each image url
 
@@ -85,8 +85,8 @@ export default function UpdateSpotModal({ spot }) {
         // if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))
         // if (img4) dispatch(createSpotImageBackEnd(spot?.id, {url: img4, "preview": true}))
         // if (img5) dispatch(createSpotImageBackEnd(spot?.id, {url: img5, "preview": true}))
-        closeModal()
-        history.push(`/spotsfe/${spot?.id}`)
+
+
     }
     return (
         <div className='create-spot-modal'>

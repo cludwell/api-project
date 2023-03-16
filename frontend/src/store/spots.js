@@ -4,6 +4,8 @@ export const POPULATE_SPOTS = 'spots/POPULATE'
 export const CREATE_SPOT = 'spots/CREATE'
 export const DELETE_SPOT = 'spots/DELETE'
 export const UPDATE_SPOT = 'spots/UPDATE'
+
+//spot actions
 export const populateSpots = spotData =>{
     return {
         type: POPULATE_SPOTS,
@@ -57,7 +59,7 @@ export const deleteSpotById = spotData => async dispatch => {
         return confirmation
     }
 }
-export const updateSpotbyId = spotData => async dispatch => {
+export const updateSpotData = spotData => async dispatch => {
     const response = await csrfFetch('/api/spots',
     {"method": "PUT", "body": JSON.stringify(spotData)})
     const clone = response.clone()
