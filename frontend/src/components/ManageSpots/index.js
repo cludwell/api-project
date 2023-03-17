@@ -16,6 +16,7 @@ export default function ManageSpots() {
         dispatch(getCurrentUserSpots());
     }, [dispatch]);
     const user = useSelector(state => state.session.user);
+    console.log(user)
     const spots = useSelector(state => state.spots.currentUser)
     // const spots = useSelector(state => state.spots.allSpots);
     // let userSpots = spots && Object.values(spots) ? Object.values(spots).filter(ele => user.id === ele.ownerId) : (<h1>Loading...</h1>)
