@@ -37,7 +37,8 @@ export default function SpotDetails() {
         dispatch(findSingleSpot(spotId));
         dispatch(findSpotReviews(spotId));
         dispatch(restoreUser());
-    }, [dispatch, spotId, spotReviews])
+    }, [dispatch, spotId])
+
 
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
@@ -46,7 +47,14 @@ export default function SpotDetails() {
     console.log('SPOT REVIEWS IN DETAILS', spotReviews)
     const user = useSelector(store => store.session.user)
     // console.log('USER', user)
+    const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
+
+    //rerender page without refresh
+    useEffect(() => {
+        dispatch(findSpotReviews(spotId))
+    }, [dispatch, spotId, spotReviews])
     if (!Object.entries(singleSpot).length) return null;
+
 
     const featureAlert = () => alert('Feature coming soon')
     return (
@@ -76,7 +84,7 @@ export default function SpotDetails() {
             New!
             </>) : (<>
             <i className="fa-solid fa-star"></i>
-            {singleSpot.avgStarRating}
+            {averageRating}
              ●
             { //either plural or singular number of reviews
             singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
@@ -94,13 +102,20 @@ export default function SpotDetails() {
             New!
             </>) : (<>
             <i className="fa-solid fa-star"></i>
-            {singleSpot.avgStarRating}
+            {averageRating}
              ●
             {singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
             :singleSpot.numReviews + ' Reviews'}
          </>)}</h1>
-            {//ternary logic if user is logged in and has no review for this spot
-            user && user.id !== singleSpot.ownerId && spotReviews &&!spotReviews?.some(r => r.userId === user?.id) ?
+            {//ternary logic for if user is logged in and has no review for this spot but also there are no reviews yet
+            user && user.id !== singleSpot.ownerId && !spotReviews.length ?
+            (<OpenModalMenuItem
+                itemText={`Post Your Review`}
+                onClick={openMenu}
+                onItemClick={closeMenu}
+                modalComponent={<PostReviewModal spotId={singleSpot.id}/>}/>)
+            //if those are true but there are reviews, check to see if user has posted a review already
+                : !spotReviews.some(r => r.userId === user?.id) ?
             (<OpenModalMenuItem
                 itemText={`Post Your Review`}
                 onClick={openMenu}
