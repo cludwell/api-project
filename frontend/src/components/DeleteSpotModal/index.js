@@ -21,8 +21,8 @@ export default function DeleteSpotModal({ spotId }) {
         // console.log('HANDLE DELETION', spotId)
         await dispatch(deleteSpotById(spotId))
         .then(closeModal())
-        .then(history.push('/manage-spots'))
-        console.log("AFTER", spots)
+        .then(dispatch(initialSpots()))
+
     }
     const handleGoBack = e => {
         e.preventDefault();

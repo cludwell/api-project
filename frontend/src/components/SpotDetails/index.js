@@ -37,7 +37,7 @@ export default function SpotDetails() {
         dispatch(findSingleSpot(spotId));
         dispatch(findSpotReviews(spotId));
         dispatch(restoreUser());
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, spotReviews])
 
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
@@ -100,7 +100,7 @@ export default function SpotDetails() {
             :singleSpot.numReviews + ' Reviews'}
          </>)}</h1>
             {//ternary logic if user is logged in and has no review for this spot
-            user && user.id !== singleSpot.ownerId && !spotReviews.some(r => r.userId === user?.id) ?
+            user && user.id !== singleSpot.ownerId && spotReviews &&!spotReviews?.some(r => r.userId === user?.id) ?
             (<OpenModalMenuItem
                 itemText={`Post Your Review`}
                 onClick={openMenu}

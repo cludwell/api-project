@@ -42,7 +42,7 @@ export default function PostReviewModal({ spotId }) {
         dispatch(postReviewById({review, stars, userId: user.id, spotId}))
         .then(closeModal())
         .catch(async res => {
-            const data = await res.json();
+            const data = await res;
             if (data && data.errors) setErrors(Object.values(data.errors))
         })
         .then(history.push(`/spotsfe/${spotId}`))
