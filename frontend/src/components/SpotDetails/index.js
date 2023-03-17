@@ -43,10 +43,10 @@ export default function SpotDetails() {
     const singleSpot = useSelector(state => state.singleSpot)
     // console.log('SINGLGE SPOT', singleSpot)
     const spotReviews = useSelector(state => state.reviews)
+    console.log('SPOT REVIEWS IN DETAILS', spotReviews)
     const user = useSelector(store => store.session.user)
     // console.log('USER', user)
     if (!Object.entries(singleSpot).length) return null;
-    // if (!Object.entries(spotReviews).length) return null;
 
     const featureAlert = () => alert('Feature coming soon')
     return (
@@ -100,7 +100,7 @@ export default function SpotDetails() {
             :singleSpot.numReviews + ' Reviews'}
          </>)}</h1>
             {//ternary logic if user is logged in and has no review for this spot
-            user && !spotReviews.some(r => r.userId === user?.id) ?
+            user && user.id !== singleSpot.ownerId && !spotReviews.some(r => r.userId === user?.id) ?
             (<OpenModalMenuItem
                 itemText={`Post Your Review`}
                 onClick={openMenu}
@@ -127,14 +127,16 @@ export default function SpotDetails() {
                 <p className='review-body'
                 key={'reviewbody' +i}>{rev.review}</p>
                 {//ternary logic for review-owner to delete review
-                user && user.id === rev.ownerId ? (
+                user && user.id === rev.userId ? (
                 <OpenModalMenuItem
                 itemText={`Delete`}
                 onClick={openMenu}
                 onItemClick={closeMenu}
                 modalComponent={<DeleteReviewModal spotId={singleSpot.id} reviewId={rev.id} />}
                 key={`review-delete-button${rev.id}`}
-                />) : null}
+                />
+
+                ) : null}
             </div>
 
             )) : singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>

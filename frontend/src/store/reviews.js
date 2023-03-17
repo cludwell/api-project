@@ -34,7 +34,8 @@ export const findSpotReviews = spotId => async dispatch => {
     }
 };
 export const deleteReviewById = reviewId => async dispatch => {
-    const reviewResponse = await csrfFetch(`api/reviews/${reviewId}`)
+    const reviewResponse = await csrfFetch(`/api/reviews/${reviewId}`,
+    {"method": "DELETE"})
 
     if (reviewResponse.ok) {
         const reviewData = await reviewResponse.json();
@@ -43,8 +44,8 @@ export const deleteReviewById = reviewId => async dispatch => {
     }
 };
 export const postReviewById = (reviewData) => async dispatch => {
-    const reviewResponse = await csrfFetch(`api/spots/${reviewData.spotId}/reviews`, {"method": "POST", "body": JSON.stringify(reviewData)})
-
+    const reviewResponse = await csrfFetch(`/api/spots/${reviewData.spotId}/reviews`, {"method": "POST", "body": JSON.stringify(reviewData)})
+    
     if (reviewResponse.ok) {
         const review = await reviewResponse.json()
         dispatch(postReview(review))
@@ -62,12 +63,16 @@ export default function reviewsReducer(state = initialState, action) {
             return action.reviewData.Reviews;
         case DELETE_REVIEW:
             const withReview = { ...state }
-            const withoutReview = withReview.reviewData.Reviews.filter(ele => ele.id !== action.reviewId)
-            withReview.reviewData.Reviews = {...withoutReview}
+            console.log('REVIEW REDUCER WITH REVIEW', withReview)
+            const withoutReview = withReview.reviews.filter(ele => ele.id !== action.reviewId)
+            console.log('REVIEW REDUCER WITHOUT', withoutReview)
+            withReview.reviews = {...withoutReview}
             return withReview
         case POST_REVIEW:
             const beforeReview = { ...state }
-            const reviewIncluded = beforeReview.reviews.push(action.review)
+            console.log('IN REVIEW REDUCER: POST:', action.reviewData)
+            console.log('IN REVIEW REDUCER: beforeReview:', beforeReview)
+            const reviewIncluded = beforeReview.reviews.push(action.reviewData)
             console.log('IN THE REVIEW REDUCER: STATE', reviewIncluded)
             return reviewIncluded
         default:
