@@ -11,6 +11,15 @@ const store = {
       // you can do this on the frontend instead of in your slice is state which is why it is optional.
       optionalOrderedList: [],
     },
+    //following is my implementation
+    currentUser: {
+      [spotId]: {
+        spotData,
+      },
+      // These optional ordered lists are for you to be able to store an order in which you want your data displayed.
+      // you can do this on the frontend instead of in your slice is state which is why it is optional.
+      optionalOrderedList: [],
+    },
     // Notice singleSpot has more data that the allSpots slice. Review your API Docs for more information.
     singleSpot: {
       spotData,

@@ -4,7 +4,7 @@ export const POPULATE_SPOTS = 'spots/POPULATE'
 export const CREATE_SPOT = 'spots/CREATE'
 export const DELETE_SPOT = 'spots/DELETE'
 export const UPDATE_SPOT = 'spots/UPDATE'
-
+export const GET_CURRENT ='spots/CURRENT'
 //spot actions
 export const populateSpots = spotData =>{
     return {
@@ -30,6 +30,12 @@ export const updateSpot = spotData => {
         spotData
     }
 }
+export const userSpots = current => {
+    return {
+        type: GET_CURRENT,
+        current
+    }
+}
 //spots thunks
 export const initialSpots = () => async dispatch => {
     const response = await fetch('/api/spots');
@@ -49,12 +55,12 @@ export const createSpotBackEnd = (spotData) => async dispatch => {
         return clone;
     }
 };
-export const deleteSpotById = spotData => async dispatch => {
-    const response = await csrfFetch(`/api/spots/${spotData.id}`,
+export const deleteSpotById = spotId => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`,
     {"method": "DELETE"})
     if (response.ok) {
         const confirmation = await response.json();
-        dispatch(deleteSpot(spotData));
+        dispatch(deleteSpot(spotId));
         // console.log('DELETE DISPATCH', spotId)
         return confirmation
     }
@@ -65,9 +71,17 @@ export const updateSpotData = spotData => async dispatch => {
     const clone = response.clone()
     if (response.ok) {
         const confirmation = await response.json();
-        console.log('HITTING THE THUNK', confirmation)
+        // console.log('HITTING THE THUNK', confirmation)
         dispatch(updateSpot(confirmation))
         return clone
+    }
+}
+export const getCurrentUserSpots = () => async dispatch => {
+    const response = await csrfFetch(`/api/spots/current`)
+    if (response.ok) {
+        const current = await response.json();
+        dispatch(userSpots(current))
+        return current
     }
 }
 const initialState = {}
@@ -77,6 +91,7 @@ export default function spotsReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_SPOTS:
             const newState = {allSpots: {}, ...state }
+            console.log('FINDING ERRORS', action.spotData)
             action.spotData.Spots.forEach(s=> newState.allSpots[s.id] = s)
         return newState;
         case CREATE_SPOT:
@@ -87,15 +102,17 @@ export default function spotsReducer(state = initialState, action) {
             console.log('ACTION.SPOTID', action.spotId)
             const withoutDeleted = { ...state }
             console.log('DELETING IN REDUCER', state)
-            delete withoutDeleted.spots.allSpots[action.spotId]
+            delete withoutDeleted.allSpots[action.spotId]
         return withoutDeleted;
         case UPDATE_SPOT:
             const updateState = { ...state }
-            console.log('IN THE UPDATE REDUCER', action.spotData)
-            console.log(updateState)
+            // console.log('IN THE UPDATE REDUCER', action.spotData)
+            // console.log(updateState)
             updateState.allSpots[action.spotData.id] = {...action.spotData}
-            console.log('IS THE UPDATE KEYING TO CORRECT PLACE', updateState.allSpots[action.spotData.id], action.spotData)
-            return updateState
+            // console.log('IS THE UPDATE KEYING TO CORRECT PLACE', updateState.allSpots[action.spotData.id], action.spotData)
+            return updateState;
+        case GET_CURRENT:
+            return {...state, currentUser: action.current.Spots}
         default:
         return state;
     }

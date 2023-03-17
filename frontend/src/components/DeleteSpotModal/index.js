@@ -1,20 +1,19 @@
-import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './DeleteSpotModal.css'
 import { deleteSpotById, initialSpots } from '../../store/spots';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 export default function DeleteSpotModal({ spotId }) {
 
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const history = useHistory();
+    // const history = useHistory();
     useEffect(() => {
         dispatch(initialSpots())
     })
-    const spots = useSelector(state => state.spots.allSpots)
+    // const spots = useSelector(state => state.spots.allSpots)
 
     const handleDeletion = async e => {
         e.preventDefault();
