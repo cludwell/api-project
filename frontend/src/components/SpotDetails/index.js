@@ -8,6 +8,7 @@ import DeleteReviewModal from '../DeleteReviewModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import './SpotDetails.css'
 import { useRef } from 'react';
+import PostReviewModal from '../PostReviewModal';
 
 export default function SpotDetails() {
     const {spotId} = useParams()
@@ -37,7 +38,7 @@ export default function SpotDetails() {
         dispatch(findSpotReviews(spotId));
         dispatch(restoreUser());
     }, [dispatch, spotId])
-    
+
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
     // console.log('SINGLGE SPOT', singleSpot)
@@ -98,7 +99,16 @@ export default function SpotDetails() {
             {singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
             :singleSpot.numReviews + ' Reviews'}
          </>)}</h1>
-            {spotReviews.length ? spotReviews
+            {//ternary logic if user is logged in and has no review for this spot
+            user && !spotReviews.some(r => r.userId === user?.id) ?
+            (<OpenModalMenuItem
+                itemText={`Post Your Review`}
+                onClick={openMenu}
+                onItemClick={closeMenu}
+                modalComponent={<PostReviewModal spotId={singleSpot.id}/>}/>)
+                : null
+            }
+            {spotReviews && spotReviews.length ? spotReviews
             .sort((a,b)=>Date.parse(b.createdAt)-Date.parse(a.createdAt))
             .map((rev, i) => (
 
@@ -116,8 +126,8 @@ export default function SpotDetails() {
                 </h4>
                 <p className='review-body'
                 key={'reviewbody' +i}>{rev.review}</p>
-                {//ternary logic for owner can delete review
-                user.id === rev.ownerId ? (
+                {//ternary logic for review-owner to delete review
+                user && user.id === rev.ownerId ? (
                 <OpenModalMenuItem
                 itemText={`Delete`}
                 onClick={openMenu}

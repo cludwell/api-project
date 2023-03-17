@@ -1,27 +1,27 @@
 import { csrfFetch } from "./csrf";
 
-export const POPULATE_REVIEWS = 'reviews/POPULATE'
-export const DELETE_REVIEW = 'reviews/DELETE'
-export const POST_REVIEW = 'reviews/POST'
+export const POPULATE_REVIEWS = 'reviews/POPULATE';
+export const DELETE_REVIEW = 'reviews/DELETE';
+export const POST_REVIEW = 'reviews/POST';
 
 export const populateReviews = reviewData => {
     return {
         type: POPULATE_REVIEWS,
         reviewData
     }
-}
+};
 export const deleteReview = reviewId => {
     return {
         type: DELETE_REVIEW,
         reviewId
     }
-}
-export const postReview = (spotId, reviewData) => {
+};
+export const postReview = reviewData => {
     return {
         type: POST_REVIEW,
         reviewData
     }
-}
+};
 
 //review thunks
 export const findSpotReviews = spotId => async dispatch => {
@@ -41,7 +41,7 @@ export const deleteReviewById = reviewId => async dispatch => {
         dispatch(deleteReview(reviewId))
         return reviewData
     }
-}
+};
 export const postReviewById = (reviewData) => async dispatch => {
     const reviewResponse = await csrfFetch(`api/spots/${reviewData.spotId}/reviews`, {"method": "POST", "body": JSON.stringify(reviewData)})
 
@@ -49,9 +49,9 @@ export const postReviewById = (reviewData) => async dispatch => {
         const review = await reviewResponse.json()
         dispatch(postReview(review))
     }
-}
+};
 
-const initialState = []
+const initialState = [];
 
 export default function reviewsReducer(state = initialState, action) {
     switch (action.type) {
@@ -73,4 +73,4 @@ export default function reviewsReducer(state = initialState, action) {
         default:
             return state;
     }
-}
+};
