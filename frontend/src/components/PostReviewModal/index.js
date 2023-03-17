@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import { deleteReviewById } from '../../store/reviews';
 import './PostReviewModal.css'
+import { restoreUser } from '../../store/session';
 
 export default function PostReviewModal({ spotId }) {
 
@@ -16,7 +17,8 @@ export default function PostReviewModal({ spotId }) {
     const [disable, setDisable] = useState()
 
     useEffect(() => review.length < 10 ? setDisable(true) : setDisable(true), [review])
-
+    useEffect(()=> dispatch(restoreUser()), [dispatch])
+    const user = useSelector(store => store.session.user)
     const validate = () => {
         const err = {}
         if (stars < 1 || stars > 5) err.stars = 'Stars must be an integer from 1 to 5'
@@ -30,7 +32,7 @@ export default function PostReviewModal({ spotId }) {
 
         if (Object.values(errors).length) return
 
-        dispatch(deleteReviewById({review, stars}))
+        dispatch(deleteReviewById({review, stars, userId: user.id, spotId}))
         .then(closeModal())
         .catch(async res => {
             const data = await res.json();
