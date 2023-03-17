@@ -44,7 +44,7 @@ export default function SpotDetails() {
     const singleSpot = useSelector(state => state.singleSpot)
     // console.log('SINGLGE SPOT', singleSpot)
     const spotReviews = useSelector(state => state.reviews)
-    console.log('SPOT REVIEWS IN DETAILS', spotReviews)
+    // console.log('SPOT REVIEWS IN DETAILS', spotReviews)
     const user = useSelector(store => store.session.user)
     // console.log('USER', user)
     const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
@@ -55,8 +55,9 @@ export default function SpotDetails() {
     }, [dispatch, spotId, spotReviews])
     if (!Object.entries(singleSpot).length) return null;
 
-
     const featureAlert = () => alert('Feature coming soon')
+
+    console.log('TERNARY LOGIC', user, 'ID', user.id, 'spotReviews', spotReviews.length)
     return (
     <>
         <div className='spot-details'>
@@ -114,7 +115,7 @@ export default function SpotDetails() {
                 onClick={openMenu}
                 onItemClick={closeMenu}
                 modalComponent={<PostReviewModal spotId={singleSpot.id}/>}/>)
-            //if those are true but there are reviews, check to see if user has posted a review already
+            //if user is logged, doesnt own spot but there are reviews, check to see if user has posted a review already
                 : !spotReviews.some(r => r.userId === user?.id) ?
             (<OpenModalMenuItem
                 itemText={`Post Your Review`}
