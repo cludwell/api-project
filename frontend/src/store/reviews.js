@@ -46,10 +46,11 @@ export const postReviewById = (reviewData) => async dispatch => {
     const reviewResponse = await csrfFetch(`api/spots/${reviewData.spotId}/reviews`, {"method": "POST", "body": JSON.stringify(reviewData)})
 
     if (reviewResponse.ok) {
-        const reviewData = await reviewResponse.json()
-        dispatch(postReview())
+        const review = await reviewResponse.json()
+        dispatch(postReview(review))
     }
 }
+
 const initialState = []
 
 export default function reviewsReducer(state = initialState, action) {
@@ -58,13 +59,18 @@ export default function reviewsReducer(state = initialState, action) {
             const newState = { ...state, reviews: action.reviewData.Reviews };
             newState.reviews = [action.reviewData.Reviews]
             console.log('REVIEW REDUCER', newState)
-        return action.reviewData.Reviews;
+            return action.reviewData.Reviews;
         case DELETE_REVIEW:
             const withReview = { ...state }
             const withoutReview = withReview.reviewData.Reviews.filter(ele => ele.id !== action.reviewId)
             withReview.reviewData.Reviews = {...withoutReview}
             return withReview
+        case POST_REVIEW:
+            const beforeReview = { ...state }
+            const reviewIncluded = beforeReview.reviews.push(action.review)
+            console.log('IN THE REVIEW REDUCER: STATE', reviewIncluded)
+            return reviewIncluded
         default:
-        return state;
+            return state;
     }
 }
