@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 export const POPULATE_REVIEWS = 'reviews/POPULATE'
 export const DELETE_REVIEW = 'reviews/DELETE'
+export
 export const populateReviews = reviewData => {
     return {
         type: POPULATE_REVIEWS,

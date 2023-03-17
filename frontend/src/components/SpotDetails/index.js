@@ -37,11 +37,13 @@ export default function SpotDetails() {
         dispatch(findSpotReviews(spotId));
         dispatch(restoreUser());
     }, [dispatch, spotId])
+    
+    //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
-    console.log('SINGLGE SPOT', singleSpot)
+    // console.log('SINGLGE SPOT', singleSpot)
     const spotReviews = useSelector(state => state.reviews)
     const user = useSelector(store => store.session.user)
-    console.log('USER', user)
+    // console.log('USER', user)
     if (!Object.entries(singleSpot).length) return null;
     // if (!Object.entries(spotReviews).length) return null;
 
