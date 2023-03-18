@@ -41,7 +41,8 @@ h1, h3, h4 {
 }
 .price-review-reserve {
     font-family: 'Montserrat', sans-serif;
-    border: solid black;
+    border: solid grey;
+    border-radius: .5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -57,4 +58,7 @@ h1, h3, h4 {
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     justify-content: center;
+}
+.description {
+    display: flexbox;
 }

@@ -83,6 +83,7 @@ export default function SpotDetails() {
 
             </div>
             <h1 className='hosted-by'>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</h1>
+            <div className='description'>
             <p className='description'>{singleSpot.description}</p>
             <div className='price-review-reserve'>
                 <span className='reserve-left'>${singleSpot.price} night</span>
@@ -104,6 +105,9 @@ export default function SpotDetails() {
                 onClick={featureAlert}>Reserve</button>
             </div>
         </div>
+        
+        </div>
+
         <hr className='rounded'/>
         <div className='reviews-printed'>
             <h1>{singleSpot.numReviews === 0 ? (<>
