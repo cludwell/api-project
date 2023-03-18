@@ -11,7 +11,7 @@ export default function PostReviewModal({ spotId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const history = useHistory();
-    const [stars, setStars] = useState('')
+    const [stars, setStars] = useState(1)
     const [review, setReview] = useState('')
     const [errors, setErrors] = useState({});
     const [disable, setDisable] = useState(true)
@@ -59,25 +59,22 @@ export default function PostReviewModal({ spotId }) {
             <textarea
             type='text'
             value={review}
+            rows='10'
+            cols={`50`}
             placeholder='Leave your review here...'
             onChange={e => setReview(e.target.value)}
             />
-                <input
-                type='number'
-                min={0}
-                max={5}
-                value={stars}
-                onChange={e => setStars(e.target.value)} ></input>
               <div className="rating-input">
               {[1, 2, 3, 4, 5].map((ele, i) => (
-                    <div className={ stars >= ele ? `filled` : `empty`}
-                    onMouseEnter={() => setStars(ele)}
-                    onMouseLeave={() => setStars(stars)}
+                    <span className={`review-span`}
+                    // onMouseEnter={() => setStars(ele)}
+                    // onMouseLeave={() => setStars(stars)}
                     onClick={() => setStars(ele)}
-                    key={i} >
-                    <i className="fa-solid fa-star" key={ele}></i>
-                    </div>
+                    key={'star'+ele} >
+                    <i className={`fa-solid fa-star ${stars >= ele ? `review-filled` : `review-empty`}`} key={ele}></i>
+                    </span>
                 ))}
+                <span>Stars</span>
             </div>
             <button className='sbumit-button'
             disabled={disable}>Submit Your Review</button>

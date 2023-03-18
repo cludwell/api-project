@@ -56,6 +56,17 @@ module.exports = {
       description: `Guests staying at the Hotel Monte Vista are afforded the opportunity to explore all the wonders and beauty that Northern Arizona has to offer and come back to relax and enjoy the abundance of delicious food and fantastic entertainment and shopping right outside the doors of our historic community hotel.`,
       price: 115.00,
     },
+    { ownerId: 6,
+      address: '135 Church St',
+      city: 'Charleston',
+      state: 'SC',
+      country: 'USA',
+      lat: 32.77833854613232,
+      lng:  -79.92951956441799,
+      name: 'Dock St Theatre',
+      description: `One of the oldest theaters in America, this site in downtown Charleston has racked up a lot of tumult and history over the years. After a fire burned down the original theater, the Planters Inn was built on the spot; it was converted back to a theater in the 1930s. The most flamboyant ghost here is Nettie Dickerson, who, legend has it, was struck by lightning while standing on the balcony of the hotel. Her shadow has been reported gliding along the second floor of the theater, dressed in a red gown. Also in otherworldly attendance: Junius Brutus Booth, a renowned 19th-century actor (and the father of Lincoln assassin John Wilkes) who used to frequent the inn. `,
+      price: 44.00,
+    },
    ])
   },
 

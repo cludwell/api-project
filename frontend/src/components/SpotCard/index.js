@@ -17,7 +17,7 @@ export default function SpotCard({ spot }) {
             <img src={`${spot.previewImage}`} alt='preview' className="spot-image"/>
             <div className="top-line">
                 <span className="city">{spot.city}, {spot.state}</span>
-                <span className="rating"><i className="fa-solid fa-star"></i>{spot.avgRating}</span>
+                <span className="rating"><i className="fa-solid fa-star star"></i>{spot.avgRating}</span>
             </div>
             <p className='spot-card-text'>{spot.description}</p>
             <p className='spot-card-text price'>${parseInt(spot.price).toFixed(2)} night</p>

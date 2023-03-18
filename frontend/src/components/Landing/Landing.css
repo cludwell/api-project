@@ -1,6 +1,6 @@
 .spot-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     margin-top: 7rem;
+    max-width: 110;
 }

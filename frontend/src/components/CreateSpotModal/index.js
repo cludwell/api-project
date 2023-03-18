@@ -139,6 +139,8 @@ export default function CreateSpotModal() {
                 <textarea
                 type='text'
                 value={description}
+                rows='10'
+                cols={`50`}
                 placeholder='Please write at least 30 characters'
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>

@@ -63,15 +63,23 @@ export default function SpotDetails() {
         <div className='spot-details'>
             <h1 className='spot-name'>{singleSpot.name}</h1>
             <h2 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h2>
-            <div className='detail-images'>
+            <div className='detail-space'>
 
+            <div className='detail-images-left'>
+            <img src={singleSpot.SpotImages[0].url}
+                alt='main'
+                key={`detail-image-1`}
+                className={`detail-image detail-image-0`}></img>
+            </div>
+            <div className='detail-images-right'>
             {singleSpot.SpotImages.map((ele, i) => (
                 //only display the first 5 images
-                i < 6 ? <img src={ele.url}
+                i > 1 && i < 6 ? <img src={ele.url}
                 alt='main'
                 key={`detail-image-${i}`}
                 className={`detail-image detail-image-${i}`}></img> : null
             ))}
+            </div>
 
             </div>
             <h1 className='hosted-by'>Hosted by {singleSpot.Owner.firstName} {singleSpot.Owner.lastName}</h1>
@@ -81,10 +89,10 @@ export default function SpotDetails() {
                 <span className='reserve-right'>
             { //either the spot is new with no reviews, or numReviews is displayed
             singleSpot.numReviews === 0 ? (<>
-            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star star"></i>
             New!
             </>) : (<>
-            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star star"></i>
             {averageRating}
              ●
             { //either plural or singular number of reviews
@@ -99,10 +107,10 @@ export default function SpotDetails() {
         <hr className='rounded'/>
         <div className='reviews-printed'>
             <h1>{singleSpot.numReviews === 0 ? (<>
-            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star star"></i>
             New!
             </>) : (<>
-            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star star"></i>
             {averageRating}
              ●
             {singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
