@@ -96,6 +96,26 @@ return queryInterface.bulkInsert(options, [
   url: 'https://i.imgur.com/OkO5Sh2.jpg',
   preview: true
   },
+  {spotId: 6,
+  url: 'https://i.imgur.com/vlZXLmP.jpg',
+  preview: true
+  },
+  {spotId: 6,
+  url: 'https://i.imgur.com/robWL1T.jpg',
+  preview: true
+  },
+  {spotId: 6,
+  url: 'https://i.imgur.com/6e80evr.jpg',
+  preview: true
+  },
+  {spotId: 6,
+  url: 'https://i.imgur.com/Fu4Kt5t.jpg',
+  preview: true
+  },
+  {spotId: 6,
+  url: 'https://i.imgur.com/nSsh0Bq.jpg',
+  preview: true
+  },
 ]);
   },
 
@@ -126,6 +146,11 @@ return queryInterface.bulkInsert(options, [
         'https://i.imgur.com/agLWxG4.jpg',
         'https://i.imgur.com/aEcjBTb.jpg',
         'https://i.imgur.com/OkO5Sh2.jpg',
+        'https://i.imgur.com/vlZXLmP.jpg',
+        'https://i.imgur.com/robWL1T.jpg',
+        'https://i.imgur.com/6e80evr.jpg',
+        'https://i.imgur.com/Fu4Kt5t.jpg',
+        'https://i.imgur.com/nSsh0Bq.jpg',
     ]}
     }, {});
   }

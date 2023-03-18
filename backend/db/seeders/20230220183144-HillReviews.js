@@ -47,6 +47,16 @@ module.exports = {
       review: "Great front desk service!  We were here for dinner and the little man (my 1yr old) was fidgety.  Went downstairs to get some chips, but the coffee shop was closed. The front desk pair, Shashank and Mia, went out of their way to make sure I got what I needed.  She even paid for the chips out​ of her own pocket!  Great service!",
       stars: 5
       },
+      {spotId: 5,
+      userId: 1,
+      review: "A truly creepy place with great historical value. Didn't see anything myself, but I hope to return and hopefully I'll have better luck next time!",
+      stars: 3
+      },
+      {spotId: 7,
+      userId: 7,
+      review: "We really liked our stay at Farnsworth. We requested the two most haunted rooms because we love to ghost hunt and Our rooms didn’t disappoint. The period decor is lovely and the staff is super friendly. Stella, our breakfast waitress, was great. We enjoyed meeting Cindy and we were able to see the attic and the cellar. We took the house tour with Mr Schultz. He is an amazing man and you can tell he loves the place. We also did the Tormented and Lost Souls tour with Ken and it was amazing. (I did a separate review on the tour). The only minor annoyance was the back staircase with incredibly narrow steps. My husband has sciatic back problems and big feet so it was problem for him. All in all it was a great stay though.",
+      stars: 5
+      },
     ])
   },
 
@@ -54,7 +64,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1, 2, 3, 4, 5, 6] }
+      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8] }
     }, {});
   }
 };

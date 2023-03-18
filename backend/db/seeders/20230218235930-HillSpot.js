@@ -67,6 +67,18 @@ module.exports = {
       description: `One of the oldest theaters in America, this site in downtown Charleston has racked up a lot of tumult and history over the years. After a fire burned down the original theater, the Planters Inn was built on the spot; it was converted back to a theater in the 1930s. The most flamboyant ghost here is Nettie Dickerson, who, legend has it, was struck by lightning while standing on the balcony of the hotel. Her shadow has been reported gliding along the second floor of the theater, dressed in a red gown. Also in otherworldly attendance: Junius Brutus Booth, a renowned 19th-century actor (and the father of Lincoln assassin John Wilkes) who used to frequent the inn. `,
       price: 44.00,
     },
+    { ownerId: 6,
+      address: '401 Baltimore St',
+      city: 'Gettysburg',
+      state: 'PA',
+      country: 'USA',
+      lat: 39.8261086812285,
+      lng:  -77.23151869204263,
+      name: 'Farnsworth House',
+      description: `The famous Civil War battle at Gettysburg was one of the bloodiest in its four-year history. Farnsworth House, named for Brigadier General Elon J. Farnsworth, was home to Confederate sharpshooters during the conflict and acquired at least 100 bullet holes as a result.
+      It later operated as a makeshift hospital, and currently functions as a 10-room bed and breakfast. Fourteen ghosts are rumored to haunt the premises, including a midwife called Mary who likes to comfort guests by sitting on their beds.`,
+      price: 145.00,
+    },
    ])
   },
 
@@ -74,7 +86,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Bodie California Ghost Town', 'Old Cahawba Archaeological Park & Ghost Town', 'Crescent Hotel & Spa', 'Hotel Monte Vista',] }
+      name: { [Op.in]: ['Bodie California Ghost Town', 'Old Cahawba Archaeological Park & Ghost Town', 'Crescent Hotel & Spa', 'Hotel Monte Vista', 'Dock St Theatre', 'Farnsworth House',] }
     }, {});
   }
 };
