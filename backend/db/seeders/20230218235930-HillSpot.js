@@ -79,6 +79,17 @@ module.exports = {
       It later operated as a makeshift hospital, and currently functions as a 10-room bed and breakfast. Fourteen ghosts are rumored to haunt the premises, including a midwife called Mary who likes to comfort guests by sitting on their beds.`,
       price: 145.00,
     },
+    { ownerId: 3,
+      address: '525 S Winchester Blvd',
+      city: 'San Jose',
+      state: 'CA',
+      country: 'USA',
+      lat: 37.31851096053106,
+      lng: -121.95099545739906,
+      name: 'Winchester House',
+      description: `It's as if original owner Sarah Winchester wanted her home to be haunted. The eccentric widow of William Winchester, founder of Winchester rifles, held nightly seances to gain guidance from spirits and her dead husband for the home’s design. The end result? A maze-like structure that took 38 years to build and includes twisting and turning hallways, dead ends, secret panels, a window built into a floor, staircases leading to nowhere, doors that open to walls, upside-down columns and rooms built, then intentionally closed off  — all to ward off and confuse evil spirits.`,
+      price: 45.00,
+    },
    ])
   },
 
@@ -86,7 +97,15 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Bodie California Ghost Town', 'Old Cahawba Archaeological Park & Ghost Town', 'Crescent Hotel & Spa', 'Hotel Monte Vista', 'Dock St Theatre', 'Farnsworth House',] }
+      name: { [Op.in]: [
+        'Bodie California Ghost Town',
+        'Old Cahawba Archaeological Park & Ghost Town',
+        'Crescent Hotel & Spa',
+        'Hotel Monte Vista',
+        'Dock St Theatre',
+        'Farnsworth House',
+        'Winchester House',
+      ] }
     }, {});
   }
 };
