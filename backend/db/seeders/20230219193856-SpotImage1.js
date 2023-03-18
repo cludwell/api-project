@@ -136,6 +136,26 @@ return queryInterface.bulkInsert(options, [
   url: 'https://i.imgur.com/DF81BuO.jpg',
   preview: true
   },
+  {spotId: 8,
+  url: 'https://i.imgur.com/bHTysu7.jpg',
+  preview: true
+  },
+  {spotId: 8,
+  url: 'https://i.imgur.com/WzATkv8.jpg',
+  preview: true
+  },
+  {spotId: 8,
+  url: 'https://i.imgur.com/aDtjpCu.jpg',
+  preview: true
+  },
+  {spotId: 8,
+  url: 'https://i.imgur.com/wigrxOC.jpg',
+  preview: true
+  },
+  {spotId: 8,
+  url: 'https://i.imgur.com/aDtjpCu.jpg',
+  preview: true
+  },
 ]);
   },
 
@@ -158,8 +178,8 @@ return queryInterface.bulkInsert(options, [
         'https://i.imgur.com/rFILXlK.jpg',
         'https://i.imgur.com/OGAH0v4.jpg',
         'https://i.imgur.com/dWpZnPx.jpg',
-        'https://i.imgur.com/sU4i9fF.jpg',
         'https://i.imgur.com/hlC2faH.jpg',
+        'https://i.imgur.com/sU4i9fF.jpg',
         'https://i.imgur.com/TsKe4Gk.jpg',
         'https://i.imgur.com/SlV6orF.jpg',
         'https://i.imgur.com/rShVoE4.jpg',
@@ -176,6 +196,11 @@ return queryInterface.bulkInsert(options, [
         'https://i.imgur.com/vaoBEke.jpg',
         'https://i.imgur.com/Yo7F6AQ.jpg',
         'https://i.imgur.com/DF81BuO.jpg',
+        'https://i.imgur.com/bHTysu7.jpg',
+        'https://i.imgur.com/WzATkv8.jpg',
+        'https://i.imgur.com/aDtjpCu.jpg',
+        'https://i.imgur.com/wigrxOC.jpg',
+        'https://i.imgur.com/aDtjpCu.jpg',
     ]}
     }, {});
   }

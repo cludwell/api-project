@@ -62,6 +62,21 @@ module.exports = {
       review: "I paid $45 a ticket for 2 tours. But I would go on their website and book your tour in advance. It's worth the money you have to pay to see this house. I had a great time. Pictures can only be taken of the outside of the house. That's not a problem because the outside is as beautiful as the inside. I hope everyone enjoy's this house as much as I did.",
       stars: 5
       },
+      {spotId: 8,
+      userId: 1,
+      review: "I paid $45 a ticket for 2 tours. But I would go on their website and book your tour in advance. It's worth the money you have to pay to see this house. I had a great time. Pictures can only be taken of the outside of the house. That's not a problem because the outside is as beautiful as the inside. I hope everyone enjoy's this house as much as I did.",
+      stars: 5
+      },
+      {spotId: 8,
+      userId: 2,
+      review: "My stay at the Queen Mary Hotel was great, but I had a strange experience during the night. I woke up in the middle of the night to see a figure standing at the foot of my bed. It was a woman dressed in old-fashioned clothing, and she disappeared as soon as I turned on the light. I asked the staff about it the next day and they told me that the ship is rumored to be haunted. Despite the experience, I still enjoyed my stay and would recommend it to anyone interested in the paranormal.",
+      stars: 2
+      },
+      {spotId: 8,
+      userId: 5,
+      review: "I recently stayed at the Queen Mary Hotel and was impressed with the historical significance of the ship. The room was cozy and had all the amenities I needed. The staff were friendly and helpful, and the restaurant had a good selection of food. I especially enjoyed the ghost tour, where we learned about the ship's haunted history. I would recommend the tour to anyone interested in the paranormal, but be warned, it can be quite spooky!",
+      stars: 5
+      },
     ])
   },
 
@@ -69,7 +84,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
     }, {});
   }
 };

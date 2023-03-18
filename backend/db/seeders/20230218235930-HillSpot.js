@@ -87,8 +87,23 @@ module.exports = {
       lat: 37.31851096053106,
       lng: -121.95099545739906,
       name: 'Winchester House',
-      description: `It's as if original owner Sarah Winchester wanted her home to be haunted. The eccentric widow of William Winchester, founder of Winchester rifles, held nightly seances to gain guidance from spirits and her dead husband for the home’s design. The end result? A maze-like structure that took 38 years to build and includes twisting and turning hallways, dead ends, secret panels, a window built into a floor, staircases leading to nowhere, doors that open to walls, upside-down columns and rooms built, then intentionally closed off  — all to ward off and confuse evil spirits.`,
+      description: `It's as if original owner Sarah Winchester wanted her home to be haunted. The eccentric widow of William Winchester, founder of Winchester rifles, held nightly seances to gain guidance from spirits and her dead husband for the home's design. The end result? A maze-like structure that took 38 years to build and includes twisting and turning hallways, dead ends, secret panels, a window built into a floor, staircases leading to nowhere, doors that open to walls, upside-down columns and rooms built, then intentionally closed off  — all to ward off and confuse evil spirits.`,
       price: 45.00,
+    },
+    { ownerId: 7,
+      address: '1126 Queens Hwy',
+      city: 'Long Beach',
+      state: 'CA',
+      country: 'USA',
+      lat: 33.75287643187356,
+      lng: -118.19033423047264,
+      name: 'RMS Queen Mary Hotel',
+      description: `With such a varied and intriguing past it's not surprising that the Queen Mary has been voted one of the Top 10 Most Haunted Places in America by Time magazine.
+      Get a detailed overview of the Queen Mary's most haunted areas and paranormal hotspots. Explore the ship inside and out and hear stories about the ship's most famous reported apparitions.
+      Among the ghosts reportedly still hanging around is an engineer in the ship's engine room, a "lady in white," and various children located throughout the ship including the 1st Class Pool (the tour stops at the entrance doors to the swimming pool, but does not go inside the pool area due to ongoing restoration projects).
+      Haunted Encounters is offered only during the day...but when the sun goes down, the spirits aboard the Queen Mary come out to play. Explore the legendary ship with a series of twilight tours and séances that explore the haunted past and paranormal activity that the Queen Mary is known for. We also offerTours at Night - including Dining With the Spirits, Paranormal Investigation and Paranormal Ship Walk.
+      `,
+      price: 134.00,
     },
    ])
   },
@@ -105,6 +120,7 @@ module.exports = {
         'Dock St Theatre',
         'Farnsworth House',
         'Winchester House',
+        'RMS Queen Mary Hotel',
       ] }
     }, {});
   }
