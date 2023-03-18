@@ -42,7 +42,7 @@ export default function SpotDetails() {
 
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
-    // console.log('SINGLGE SPOT', singleSpot)
+    console.log('SINGLGE SPOT', singleSpot.SpotImages)
     const spotReviews = useSelector(state => state.reviews)
     // console.log('SPOT REVIEWS IN DETAILS', spotReviews)
     const user = useSelector(store => store.session.user)
@@ -74,7 +74,7 @@ export default function SpotDetails() {
             <div className='detail-images-right'>
             {singleSpot.SpotImages.map((ele, i) => (
                 //only display the first 5 images
-                i > 1 && i < 6 ? <img src={ele.url}
+                i > 0 && i < 5 ? <img src={ele.url}
                 alt='main'
                 key={`detail-image-${i}`}
                 className={`detail-image detail-image-${i}`}></img> : null
@@ -86,6 +86,7 @@ export default function SpotDetails() {
             <div className='description'>
             <p className='description'>{singleSpot.description}</p>
             <div className='price-review-reserve'>
+                <div className='reserve-text'>
                 <span className='reserve-left'>${singleSpot.price} night</span>
                 <span className='reserve-right'>
             { //either the spot is new with no reviews, or numReviews is displayed
@@ -101,11 +102,12 @@ export default function SpotDetails() {
             :singleSpot.numReviews + ' Reviews'}
         </>)}
                 </span>
+              </div>
                 <button className='reserve-button'
                 onClick={featureAlert}>Reserve</button>
             </div>
         </div>
-        
+
         </div>
 
         <hr className='rounded'/>
@@ -123,6 +125,7 @@ export default function SpotDetails() {
             {//ternary logic for if user is logged in and has no review for this spot but also there are no reviews yet
             user && user.id !== singleSpot.ownerId && !spotReviews.length ?
             (<OpenModalMenuItem
+                className="post-review-button"
                 itemText={`Post Your Review`}
                 onClick={openMenu}
                 onItemClick={closeMenu}
@@ -130,6 +133,7 @@ export default function SpotDetails() {
             //if user is logged, doesnt own spot but there are reviews, check to see if user has posted a review already
                 : user && !spotReviews.some(r => r.userId === user.id) ?
             (<OpenModalMenuItem
+                className="post-review-button"
                 itemText={`Post Your Review`}
                 onClick={openMenu}
                 onItemClick={closeMenu}

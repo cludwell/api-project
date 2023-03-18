@@ -76,7 +76,7 @@ export default function PostReviewModal({ spotId }) {
                 ))}
                 <span>Stars</span>
             </div>
-            <button className='sbumit-button'
+            <button className='submit-button'
             disabled={disable}>Submit Your Review</button>
             </form>
         </div>
