@@ -16,8 +16,9 @@
 .detail-images-right {
     max-width: 40rem;
     max-height: 40rem;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
     object-fit: contain;
 }
 .detail-images-right img {
@@ -25,11 +26,7 @@
     height: 19.8rem;
     object-fit: cover;
 }
-/* .detail-image-1,
-.detail-image-2,
-.detail-image-3,
-.detail-image-4 {
-} */
+
 .spot-name, .spot-subtitle, .hosted-by{
     font-family: 'Mulish', sans-serif;
 }
@@ -44,5 +41,20 @@ h1, h3, h4 {
 }
 .price-review-reserve {
     font-family: 'Montserrat', sans-serif;
-
+    border: solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20rem;
+    height: 5rem;
+}
+.reserve-button{
+    border-radius: 0rem;
+    width: 15rem;
+    height: 2rem;
+    background-color: #957DAD;
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    justify-content: center;
 }
