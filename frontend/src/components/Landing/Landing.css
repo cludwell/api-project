@@ -3,4 +3,31 @@
     grid-template-columns: auto auto auto auto;
     margin-top: 7rem;
     max-width: 110;
+    gap: .5rem
+}
+
+@media only screen and (max-width: 85rem){
+    .spot-cards {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        justify-content: center;
+    }
+
+}
+@media only screen and (max-width: 65rem){
+    .spot-cards {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: center;
+    }
+
+}
+
+@media only screen and (max-width: 45rem){
+    .spot-cards {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
 }
