@@ -69,7 +69,7 @@ export default function PostReviewModal({ spotId }) {
                 value={stars}
                 onChange={e => setStars(e.target.value)} ></input>
               <div className="rating-input">
-              {/* {[1, 2, 3, 4, 5].map((ele, i) => (
+              {[1, 2, 3, 4, 5].map((ele, i) => (
                     <div className={ stars >= ele ? `filled` : `empty`}
                     onMouseEnter={() => setStars(ele)}
                     onMouseLeave={() => setStars(stars)}
@@ -77,7 +77,7 @@ export default function PostReviewModal({ spotId }) {
                     key={i} >
                     <i className="fa-solid fa-star" key={ele}></i>
                     </div>
-                ))} */}
+                ))}
             </div>
             <button className='sbumit-button'
             disabled={disable}>Submit Your Review</button>
