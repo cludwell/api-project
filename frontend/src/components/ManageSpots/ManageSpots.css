@@ -1,3 +1,35 @@
 .manage-spots-div{
     margin-top: 7rem;
 }
+.manage-landing {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 110;
+    gap: .5rem
+}
+
+/* @media only screen and (max-width: 85rem){
+    .manage-landing {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        justify-content: center;
+    }
+
+}
+@media only screen and (max-width: 65rem){
+    .manage-landing {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: center;
+    }
+
+}
+
+@media only screen and (max-width: 45rem){
+    .manage-landing {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+} */

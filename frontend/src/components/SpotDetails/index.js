@@ -57,7 +57,7 @@ export default function SpotDetails() {
 
     const featureAlert = () => alert('Feature coming soon')
 
-    console.log('TERNARY LOGIC', user, 'ID', user.id, 'singleSpot.ownerId', singleSpot.ownerId)
+    // console.log('TERNARY LOGIC', user, 'ID', user.id, 'singleSpot.ownerId', singleSpot.ownerId)
     return (
     <>
         <div className='spot-details'>
