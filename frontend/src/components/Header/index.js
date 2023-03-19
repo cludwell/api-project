@@ -40,10 +40,13 @@ function Header({ props, isLoaded }) {
         <div className='header'>
 
         {/* <div className='logo-side'> */}
+        <Link to={`/`} >
             <img src={logo} alt='logo' className='planchette'/>
-            <Link to={`/`} className='logo'>
+        </Link>
+
+        <Link to={`/`} className='logo'>
             <span className='logo'>scarebnb</span>
-            </Link>
+        </Link>
         {/* </div> */}
             <div className='navigation-corner'>
                 {user ? (

@@ -242,7 +242,8 @@ export default function CreateSpotModal() {
             ></input>
                 <p className='errors'>{errors.img5}</p>
             <button
-            type='submit'>Create Spot</button>
+            type='submit'
+            className='submit-button'>Create Spot</button>
             </form>
         </div>
     )

@@ -57,6 +57,7 @@ export default function PostReviewModal({ spotId }) {
                 <p className='errors'>{errors.stars}</p>
                 <p className='errors'>{errors.review}</p>
             <textarea
+            className='post-review'
             type='text'
             value={review}
             rows='10'

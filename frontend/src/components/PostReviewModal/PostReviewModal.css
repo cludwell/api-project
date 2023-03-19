@@ -4,7 +4,9 @@
 .review-empty {
     color: #A0A7B2;
 }
-
+.post-review {
+    margin: 1rem;
+}
 .submit-button{
     border: none;
     border-radius: 0rem;

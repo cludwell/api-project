@@ -2,7 +2,7 @@
     max-height: 85vh;
     max-width: 80vw;
     overflow: auto;
-    margin-top: 8rem;
+    margin-top: 4rem;
 }
 .create-spot-modal > input {
     margin: 0rem;
@@ -58,4 +58,25 @@ p.errors, span.errors{
 .guests {
     color: black;
     max-width: 25rem;
+}
+.submit-button {
+    border: none;
+    border-radius: 0rem;
+    width: 15rem;
+    height: 2rem;
+    background-color: #957DAD;
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    justify-content: center;
+
+    margin: 1rem;
+
+}
+.submit-button:active {
+    background-color: #4a2173;
+    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
+}
+.submit-button:hover {
+    border: 2px #D291BC solid;
 }
