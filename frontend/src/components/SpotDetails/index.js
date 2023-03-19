@@ -57,7 +57,7 @@ export default function SpotDetails() {
 
     const featureAlert = () => alert('Feature coming soon')
 
-    // console.log('TERNARY LOGIC', user, 'ID', user.id, 'spotReviews', spotReviews.length)
+    console.log('TERNARY LOGIC', user, 'ID', user.id, 'singleSpot.ownerId', singleSpot.ownerId)
     return (
     <>
         <div className='spot-details'>
@@ -131,7 +131,7 @@ export default function SpotDetails() {
                 onItemClick={closeMenu}
                 modalComponent={<PostReviewModal spotId={singleSpot.id}/>}/>)
             //if user is logged, doesnt own spot but there are reviews, check to see if user has posted a review already
-                : user && !spotReviews.some(r => r.userId === user.id) ?
+                : user && user.id !== singleSpot.ownerId && !spotReviews.some(r => r.userId === user.id) ?
             (<OpenModalMenuItem
                 className="post-review-button"
                 itemText={`Post Your Review`}

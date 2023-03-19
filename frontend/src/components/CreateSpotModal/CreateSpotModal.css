@@ -1,3 +1,33 @@
 .errors {
     color: red
 }
+.create-spot-modal{
+    max-height: 85vh;
+    max-width: 80vw;
+    overflow: auto;
+}
+.create-spot-modal > input {
+    margin: 0rem;
+}
+.create-subtitle {
+    margin: .5rem;
+}
+textarea {
+    align-items: center;
+}
+label {
+    font-size: .8rem;
+}
+p.errors{
+    font-size: .8rem;
+    margin: .2rem;
+}
+.create-input {
+    width: 25rem;
+}
+.create-segment{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: row;
+    width: 25rem;
+}

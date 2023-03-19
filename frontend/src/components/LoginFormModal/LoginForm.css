@@ -1,14 +1,35 @@
-.log-in{
+form {
     font-family: 'Mulish', sans-serif;
     color: #4a355e;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
+input {
+    margin: .5rem
+}
+.login-button, .demo-user{
+    border: none;
+    border-radius: 0rem;
+    width: 15rem;
+    height: 2rem;
+    background-color: #957DAD;
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    justify-content: center;
 
-.form {
-    font-family: 'Montserrat', sans-serif
+    margin: 1rem;
+
 }
-.log-in-modal {
-    border-radius: 1rem;
-    padding: 2rem;
+.login-button:active, .demo-user:active {
+    background-color: #4a2173;
+    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
+}
+.login-button:hover, .demo-user:hover {
+    border: 2px #D291BC solid;
+}
+form > p {
+    color: red;
+    margin: 1rem;
 }
