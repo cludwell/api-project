@@ -73,9 +73,7 @@ p.errors, span.errors{
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     justify-content: center;
-
     margin: 1rem;
-
 }
 .submit-button:active {
     background-color: #4a2173;
