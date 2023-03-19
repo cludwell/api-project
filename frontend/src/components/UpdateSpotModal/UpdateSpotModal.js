@@ -97,70 +97,81 @@ export default function UpdateSpotModal({ spot }) {
             <form onSubmit={handleSubmit} >
             <h1 className='create-spot'>Update Your Spot</h1>
             <h3 className='create-subtitle'>Where's your place located?</h3>
-            <p>Guests will only get your exact address once they booked a reservation.</p>
-            <label>Country</label>
+            <p className='guests'>Guests will only get your exact address once they booked a reservation.</p>
+
+            <label className='create-label'>Country</label>
                 <span className='errors'>{errors.country}</span>
                 <input
-                className='create-input'
+                className='create-input create-country'
                 type='text'
                 value={country}
                 placeholder='Country'
                 onChange={e => setCountry(e.target.value)}
                 ></input>
 
-              <label>Street Address</label>
+              <label className='create-label'>Street Address</label>
                 <span className='errors'>{errors.street}</span>
               <input
-              className='create-input'
+              className='create-input create-address'
                 type='text'
                 value={address}
                 placeholder='Address'
                 onChange={e => setStreet(e.target.value)}
                 ></input>
             <div className='create-segment'>
-                <label>City</label>
+               <div>
+                <label className='create-half'>City</label>
             <span className='errors'>{errors.city}</span>
                 <input
-
+                className='create-input create-city'
                 type='text'
                 value={city}
                 placeholder='City'
                 onChange={e => setCity(e.target.value)}
                 ></input>
-
+                </div>
+            <div>
                 <label>State</label>
             <span className='errors'>{errors.state}</span>
                 <input
+                className='create-input create-state'
                 type='text'
                 value={state}
                 placeholder='State'
                 onChange={e => setState(e.target.value)}
                 ></input>
-
-
+                </div>
+            <div>
             <label>Latitude </label>
             <span className='errors'>{errors.lat}</span>
                 <input
+                className='create-lat create-input'
                 type='number'
                 value={lat}
                 placeholder='Latitude'
                 onChange={e => setLat(e.target.value)}
                 ></input>
+                </div>
 
-
+        <div>
             <label>Longitude</label>
             <span className='errors'>{errors.lng}</span>
                 <input
+                className='create-input create-lng'
                 type='number'
                 value={lng}
                 placeholder='Longitude'
                 onChange={e => setLng(e.target.value)}
                 ></input>
             </div>
+            </div>
             <hr/>
-            <h3 className='create-subtitle create-desc'>Describe your place to guests</h3>
-            <label>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
+
+            <h3 className='create-subtitle'>Describe your place to guests</h3>
+            <label
+            className='create-label'>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
                 <textarea
+                className='create-input create-desc'
                 type='text'
                 value={description}
                 placeholder='Please write at least 30 characters'
@@ -172,7 +183,8 @@ export default function UpdateSpotModal({ spot }) {
             </label>
             <hr/>
             <h3 className='create-subtitle create-title'>Create a title for your spot</h3>
-            <label>Catch guests' attention with a spot title that highlights what makes your place special.
+
+            <label className='create-label'>Catch guests' attention with a spot title that highlights what makes your place special.
              </label>
                 <input
                 className='create-input'
@@ -183,11 +195,11 @@ export default function UpdateSpotModal({ spot }) {
                 ></input>
                 <p className='errors'>{errors.title}</p>
             <hr/>
-            <h3 className='create-price'>Set a base price for your spot</h3>
-            <label>Competetive pricing can help your listing stand out and rank higher in search results.
+            <h3 className='create-price create-subtitle'>Set a base price for your spot</h3>
+            <label className='create-label'>Competetive pricing can help your listing stand out and rank higher in search results.
            </label>
             <input
-                className='create-input'
+                className='create-input create-price'
                 type='number'
                 min={0.00}
                 step={0.01}
@@ -196,7 +208,7 @@ export default function UpdateSpotModal({ spot }) {
                 onChange={e => setPrice(e.target.value)}
             ></input>
                 <p className='errors'>{errors.price}</p>
-            <hr/>
+
             {/* <h2>Liven up your spot with photos</h2>
             <label>Submit a link to at least one photo to publish your spot
                 <input

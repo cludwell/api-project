@@ -1,16 +1,16 @@
-.errors {
-    color: red
-}
 .create-spot-modal{
     max-height: 85vh;
     max-width: 80vw;
     overflow: auto;
+    margin-top: 8rem;
 }
 .create-spot-modal > input {
     margin: 0rem;
 }
 .create-subtitle {
-    margin: .5rem;
+    display: flex;
+    margin: 0rem;
+    text-align: left;
 }
 textarea {
     align-items: center;
@@ -18,9 +18,12 @@ textarea {
 label {
     font-size: .8rem;
 }
-p.errors{
+p.errors, span.errors{
+    display: block;
+    text-align: left;
     font-size: .8rem;
     margin: .2rem;
+    color: red
 }
 .create-input {
     width: 25rem;
@@ -30,4 +33,29 @@ p.errors{
     flex-direction: column;
     flex-wrap: row;
     width: 25rem;
+}
+.create-country, .create-address {
+    display: flex;
+    flex-direction: column;
+}
+.create-city, .create-state,.create-lat, .create-lng {
+    width: 11rem;
+}
+.create-state {
+    width: 11rem;
+}
+.create-label {
+    max-width: 25rem;
+    text-align: left;
+}
+.create-half {
+    width: 5rem
+}
+.create-segment {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.guests {
+    color: black;
+    max-width: 25rem;
 }

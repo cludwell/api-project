@@ -39,12 +39,12 @@ function Header({ props, isLoaded }) {
         <>
         <div className='header'>
 
-        <div className='logo-side'>
-            <Link to={`/`}>
+        {/* <div className='logo-side'> */}
             <img src={logo} alt='logo' className='planchette'/>
+            <Link to={`/`} className='logo'>
             <span className='logo'>scarebnb</span>
             </Link>
-        </div>
+        {/* </div> */}
             <div className='navigation-corner'>
                 {user ? (
                     <OpenModalMenuItem
