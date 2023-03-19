@@ -52,10 +52,12 @@ export default function UpdateSpotModal({ spot }) {
         if (!address) err.address = 'Address is required'
         if (!city) err.city = 'City is required'
         if (!state) err.state = 'State is required'
+        if (!price) err.price = 'Price must be equal to or greater than 0'
         if (!lat) err.lat = 'Latitude is required'
         if (!lng) err.lng = 'Longitude is required'
         if (description.length < 30 || !description) err.description = 'Description needs a minimum of 30 characters'
         if (name.length < 4 || !name) err.name = 'Name is required'
+
 
         //want logic to accept default or empty string
         //otherwise url must be a url
@@ -95,7 +97,7 @@ export default function UpdateSpotModal({ spot }) {
     return (
         <div className='create-spot-modal'>
             <form onSubmit={handleSubmit} >
-            <h1 className='create-spot'>Update Your Spot</h1>
+            <h2 className='create-spot'>Update Your Spot</h2>
             <h3 className='create-subtitle'>Where's your place located?</h3>
             <p className='guests'>Guests will only get your exact address once they booked a reservation.</p>
 
@@ -110,7 +112,7 @@ export default function UpdateSpotModal({ spot }) {
                 ></input>
 
               <label className='create-label'>Street Address</label>
-                <span className='errors'>{errors.street}</span>
+                <span className='errors'>{errors.address}</span>
               <input
               className='create-input create-address'
                 type='text'
@@ -179,7 +181,7 @@ export default function UpdateSpotModal({ spot }) {
                 cols='50'
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>
-                <p className='errors'>{errors.desc}</p>
+                <p className='errors'>{errors.description}</p>
             </label>
             <hr/>
             <h3 className='create-subtitle create-title'>Create a title for your spot</h3>
@@ -193,7 +195,7 @@ export default function UpdateSpotModal({ spot }) {
                 placeholder='Name of your spot'
                 onChange={e => setTitle(e.target.value)}
                 ></input>
-                <p className='errors'>{errors.title}</p>
+                <p className='errors'>{errors.name}</p>
             <hr/>
             <h3 className='create-price create-subtitle'>Set a base price for your spot</h3>
             <label className='create-label'>Competetive pricing can help your listing stand out and rank higher in search results.

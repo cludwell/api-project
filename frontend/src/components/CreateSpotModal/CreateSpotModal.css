@@ -2,10 +2,14 @@
     max-height: 85vh;
     max-width: 80vw;
     overflow: auto;
-    margin-top: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 .create-spot-modal > input {
     margin: 0rem;
+}
+.create-form {
+    max-height: 70vh;
 }
 .create-subtitle {
     display: flex;
