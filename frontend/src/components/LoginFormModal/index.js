@@ -49,6 +49,7 @@ function LoginFormModal() {
           ))}
 
           <input
+          className="login-input"
             type="text"
             value={credential}
             placeholder='Username or Email'
@@ -56,6 +57,7 @@ function LoginFormModal() {
             required
           />
           <input
+          className="login-input"
             type="password"
             value={password}
             placeholder='Password'
