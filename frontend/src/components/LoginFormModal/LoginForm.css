@@ -26,11 +26,11 @@ form {
     margin: 1rem;
 
 }
-.login-button:active, .demo-user:active {
+.login-button:active:enabled, .demo-user:active:enabled {
     background-color: #4a2173;
     box-shadow: 0rem 0rem 3rem .2rem lightslategray;
 }
-.login-button:hover, .demo-user:hover {
+.login-button:hover:enabled, .demo-user:hover:enabled {
     border: 2px #D291BC solid;
 }
 form > p {

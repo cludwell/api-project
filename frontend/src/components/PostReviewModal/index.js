@@ -18,7 +18,7 @@ export default function PostReviewModal({ spotId }) {
 
     useEffect(() => {
     if (review.length > 10) setDisable(false)
-    else setDisable(true)
+    else if (review.length < 10) setDisable(true)
     }, [review])
 
     useEffect(()=> {
@@ -77,7 +77,7 @@ export default function PostReviewModal({ spotId }) {
                 ))}
                 <span>Stars</span>
             </div>
-            <button className='submit-button'
+            <button className='review-button'
             disabled={disable}>Submit Your Review</button>
             </form>
         </div>

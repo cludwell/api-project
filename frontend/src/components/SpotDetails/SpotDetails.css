@@ -72,11 +72,11 @@ h1, h3, h4 {
     font-weight: bold;
     justify-content: center;
 }
-.reserve-button:active, .post-review-button:active {
+.reserve-button:active, .post-review-button:active:enabled {
     background-color: #4a2173;
     box-shadow: 0rem 0rem 3rem .2rem lightslategray;
 }
-.reserve-button:hover, .post-review-button:hover {
+.reserve-button:hover, .post-review-button:hover:enabled {
     border: 2px #D291BC solid;
 }
 

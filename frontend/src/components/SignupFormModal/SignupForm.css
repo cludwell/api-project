@@ -16,11 +16,11 @@
     justify-content: center;
     margin: 1rem;
 }
-.signup-button:active {
+.signup-button:active:enabled {
     background-color: #4a2173;
     box-shadow: 0rem 0rem 3rem .2rem lightslategray;
 }
-.signup-button:hover {
+.signup-button:hover:enabled {
     border: 2px #D291BC solid;
 }
 .signup-input {

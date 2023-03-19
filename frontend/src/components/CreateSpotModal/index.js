@@ -47,7 +47,7 @@ export default function CreateSpotModal() {
         if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
         if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
         if (img5 && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
-        console.log('IMAGES', [prev, img2, img3, img4, img5])
+        console.log('IMAGES', [err, prev, img2, img3, img4, img5])
         setErrors(err)
     }
 

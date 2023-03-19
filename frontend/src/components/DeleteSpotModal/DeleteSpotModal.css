@@ -1,6 +1,50 @@
+.delete-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+.green-button, .grey-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .green-button {
+    border: none;
+    border-radius: 0rem;
+    width: 15rem;
+    height: 2rem;
     background-color: #77dd77;
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    justify-content: center;
+    margin: 1rem;
+}
+.green-button:active {
+    background-color: #328932;
+    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
+}
+.green-button:hover {
+    border: 2px #D291BC solid;
 }
 .grey-button {
+    border: none;
+    border-radius: 0rem;
+    width: 15rem;
+    height: 2rem;
     background-color: #A0A7B2;
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    justify-content: center;
+    margin: 1rem;
+}
+.grey-button:active {
+    background-color: #575b61;
+    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
+}
+.grey-button:hover {
+    border: 2px #D291BC solid;
 }

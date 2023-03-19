@@ -12,6 +12,9 @@ export default function Landing() {
     })
     const spots = useSelector(state => state.spots.allSpots)
 
+    useEffect(() => {
+        dispatch(initialSpots());
+    }, [spots, dispatch])
     //if thunk hasnt returned spot data
     if (!spots) return null
 

@@ -52,6 +52,7 @@ export default function SpotDetails() {
     //rerender page without refresh
     useEffect(() => {
         dispatch(findSpotReviews(spotId))
+        dispatch(findSingleSpot(spotId))
     }, [dispatch, spotId, spotReviews])
     if (!Object.entries(singleSpot).length) return null;
 

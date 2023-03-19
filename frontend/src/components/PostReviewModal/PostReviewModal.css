@@ -7,7 +7,7 @@
 .post-review {
     margin: 1rem;
 }
-.submit-button{
+.review-button{
     border: none;
     border-radius: 0rem;
     width: 15rem;
@@ -17,11 +17,18 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     justify-content: center;
+    margin: .5rem;
 }
-.submit-button:hover {
+.review-button:hover:enabled {
     border: 2px #D291BC solid;
 }
-.submit-button:active {
+.review-button:active:enabled {
     background-color: #4a2173;
     box-shadow: 0rem 0rem 3rem .2rem lightslategray;
+}
+.post-review-modal {
+    margin: .3rem;
+}
+.rating-input{
+    margin: .3rem;
 }
