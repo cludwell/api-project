@@ -9,13 +9,23 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {spotId: 1,
       userId: 4,
-      review: "Amazing piece of history, on site camping was available. Nature was absolutely stunning.",
+      review: "Bodie is a must-visit for anyone interested in the history of the Wild West. This well-preserved ghost town provides a fascinating glimpse into the past and offers a unique perspective on life in a gold mining boomtown. I highly recommend taking a guided tour to get the full experience!",
       stars: 5
       },
       {spotId: 1,
       userId: 5,
-      review: "Incredible place that felt like walking through history. Cant wait to return and continue to explore",
+      review: "I was blown away by the eerie atmosphere of Bodie. The abandoned buildings and empty streets give the town a haunting quality that's hard to describe. I couldn't shake the feeling that I was being watched the entire time I was there. Definitely a creepy and unforgettable experience.",
       stars: 4
+      },
+      {spotId: 1,
+      userId: 7,
+      review: "I've always been interested in the paranormal, so I was excited to visit Bodie and see if I could experience anything supernatural. As soon as I entered the town, I felt a strange energy that I couldn't explain. During the tour, I heard unexplained footsteps and saw shadowy figures in the corners of my eye. I even captured some strange orbs on my camera. I can't say for sure if it was ghosts or just my imagination, but it was definitely a thrilling experience.",
+      stars: 5
+      },
+      {spotId: 1,
+      userId: 8,
+      review: "Bodie is a fascinating historical site, but be warned that it's not for everyone. The town is in a state of decay and some of the buildings are structurally unsafe. If you're not comfortable with heights or climbing over uneven terrain, you may want to skip this one. That being said, if you're up for an adventure, the views from the top of the hill are stunning and the old mining equipment is a photographer's dream.",
+      stars: 3
       },
       {spotId: 2,
       userId: 6,
@@ -84,7 +94,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      id: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16] }
     }, {});
   }
 };
