@@ -16,7 +16,8 @@
     font-family: 'Mulish', sans-serif;
     font-size: 2rem;
     color: #4a355e;
-    justify-content: center;
+    margin-top: 2rem;
+    flex-grow: 1;
 }
 
 .logo-side {
