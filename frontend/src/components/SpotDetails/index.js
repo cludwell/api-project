@@ -42,7 +42,7 @@ export default function SpotDetails() {
 
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
-    console.log('SINGLGE SPOT', singleSpot.SpotImages)
+    // console.log('SINGLGE SPOT', singleSpot.SpotImages)
     const spotReviews = useSelector(state => state.reviews)
     // console.log('SPOT REVIEWS IN DETAILS', spotReviews)
     const user = useSelector(store => store.session.user)
