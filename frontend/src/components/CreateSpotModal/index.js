@@ -34,6 +34,7 @@ export default function CreateSpotModal() {
         if (!address) err.address = 'Address is required'
         if (!city) err.city = 'City is required'
         if (!state) err.state = 'State is required'
+        if (!price) err.price = 'Price must be equal to or greater than 0'
         if (!lat) err.lat = 'Latitude is required'
         if (!lng) err.lng = 'Longitude is required'
         if (description.length < 30 || !description) err.description = 'Description needs a minimum of 30 characters'
@@ -98,7 +99,7 @@ export default function CreateSpotModal() {
                 ></input>
 
               <label className='create-label'>Street Address</label>
-                <span className='errors'>{errors.street}</span>
+                <span className='errors'>{errors.address}</span>
               <input
               className='create-input create-address'
                 type='text'
@@ -167,7 +168,7 @@ export default function CreateSpotModal() {
                 cols='50'
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>
-                <p className='errors'>{errors.desc}</p>
+                <p className='errors'>{errors.description}</p>
             </label>
             <hr/>
             <h3 className='create-subtitle create-title'>Create a title for your spot</h3>
@@ -181,7 +182,7 @@ export default function CreateSpotModal() {
                 placeholder='Name of your spot'
                 onChange={e => setTitle(e.target.value)}
                 ></input>
-                <p className='errors'>{errors.title}</p>
+                <p className='errors'>{errors.name}</p>
             <hr/>
             <h3 className='create-price create-subtitle'>Set a base price for your spot</h3>
             <label className='create-label'>Competetive pricing can help your listing stand out and rank higher in search results.

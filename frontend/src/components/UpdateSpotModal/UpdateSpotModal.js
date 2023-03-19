@@ -256,7 +256,8 @@ export default function UpdateSpotModal({ spot }) {
                 <p className='errors'>{errors.img5}</p>
             </label> */}
             <button
-            type='submit'>Update Your Spot</button>
+            type='submit'
+            className='submit-button'>Update Your Spot</button>
             </form>
         </div>
     )
