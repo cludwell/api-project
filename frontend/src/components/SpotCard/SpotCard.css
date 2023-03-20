@@ -16,8 +16,8 @@
     text-align: right;
 }
 .spot-card-text {
-    margin-top: .5rem;
-    margin-bottom: .5rem;
+    margin-top: .2rem;
+    margin-bottom: .1rem;
     font-family: 'Montserrat', sans-serif;
     color: grey;
     overflow: hidden;
@@ -75,4 +75,5 @@
     flex-direction: row;
     justify-content: space-between;
     margin-right: 1rem;
+    margin-bottom: 0;
 }
