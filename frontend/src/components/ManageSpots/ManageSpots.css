@@ -2,13 +2,13 @@
     margin-top: 7rem;
 }
 .manage-landing {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     max-width: 110;
     gap: .5rem
 }
 
-/* @media only screen and (max-width: 85rem){
+@media only screen and (max-width: 85rem){
     .manage-landing {
         display: grid;
         grid-template-columns: auto auto auto;
@@ -32,4 +32,4 @@
         justify-content: center;
     }
 
-} */
+}
