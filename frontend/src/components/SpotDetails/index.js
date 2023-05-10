@@ -113,16 +113,21 @@ export default function SpotDetails() {
 
         <hr className='rounded'/>
         <div className='reviews-printed'>
-            <h1>{singleSpot.numReviews === 0 ? (<>
+            <h1>{singleSpot.numReviews === 0 ? (
+        <>
             <i className="fa-solid fa-star star"></i>
             New!
-            </>) : (<>
+        </>
+            ) : (
+         <>
             <i className="fa-solid fa-star star"></i>
             {averageRating}
              ●
             {singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
             :singleSpot.numReviews + ' Reviews'}
-         </>)}</h1>
+         </>
+         )}
+         </h1>
             {//ternary logic for if user is logged in and has no review for this spot but also there are no reviews yet
             user && user.id !== singleSpot.ownerId && !spotReviews.length ?
             (<OpenModalMenuItem

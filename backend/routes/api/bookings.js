@@ -12,21 +12,21 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Get all of the Current User's Bookings
 router.get('/current', requireAuth, async (req, res) => {
-    let bookings = await Booking.findAll({
+    const bookings = await Booking.findAll({
         where: {userId: req.user.id}
     })
-    let bookingPayload = []
-    for (let book of bookings) {
-        let spot = await Spot.findOne({
-            where: {id: book.spotId},
-            attributes: {exclude: ['description', 'createdAt', 'updatedAt']}
+    const bookingPayload = []
+    for (const book of bookings) {
+        const spot = await Spot.findOne({
+            where: { id: book.spotId },
+            attributes: { exclude: ['description', 'createdAt', 'updatedAt' ] }
         })
-        let bookdata = {}, spotData = {}
+        const bookdata = {}, spotData = {}
         for (let key in book.dataValues) bookdata[key] = book[key]
         for (let key in spot.dataValues) spotData[key] = spot[key]
 
-        let previewImageData = await SpotImage.findOne({
-            where: {spotId: spot["id"]},
+        const previewImageData = await SpotImage.findOne({
+            where: { spotId: spot["id"]},
             attributes: ['url']
         })
         bookdata.Spot = spotData
@@ -45,9 +45,9 @@ router.get('/current', requireAuth, async (req, res) => {
 
 //Edit a Booking
 router.put('/:bookingId', requireAuth, async (req, res) => {
-    let {startDate, endDate} = req.body
-    let bookingQuery = await Booking.findByPk(req.params.bookingId)
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    const {startDate, endDate} = req.body
+    const bookingQuery = await Booking.findByPk(req.params.bookingId)
+    const parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (!bookingQuery) {
         return res.status(404).json({
       "message": "Booking couldn't be found",
@@ -66,8 +66,8 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             "statusCode": 403
         })
     }
-    let spot = await Spot.findOne({
-        where: {id: bookingQuery.spotId}
+    const spot = await Spot.findOne({
+        where: { id: bookingQuery.spotId }
     })
     if (parsedEnd <= parsedStart) {
         return res.status(400).json({
@@ -78,16 +78,19 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             }
           })
     }
-    let bookings = await Booking.findAll({
+    const bookings = await Booking.findAll({
         where: {spotId: spot.id, id: { [Op.ne]: req.params.bookingId}},
         attributes: ['startDate', 'endDate']
     })
-    let  errors = {}
+    const errors = {}
     let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
         .sort((a,b) => a[0] - b[0])
+
+        
     let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
     let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
     let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
+
     if (fallsWithin.length) {
         errors.startDate = "Start date conflicts with an existing booking"
         errors.endDate = "End date conflicts with an existing booking"

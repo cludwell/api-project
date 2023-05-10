@@ -52,9 +52,6 @@ function SignupFormModal() {
     <div className="signup-div">
       <h1 className="signup-title">Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors?.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
           <input
           className="signup-input"
           placeholder="Email"

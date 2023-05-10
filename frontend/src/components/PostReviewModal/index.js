@@ -68,8 +68,7 @@ export default function PostReviewModal({ spotId }) {
               <div className="rating-input">
               {[1, 2, 3, 4, 5].map((ele, i) => (
                     <span className={`review-span`}
-                    // onMouseEnter={() => setStars(ele)}
-                    // onMouseLeave={() => setStars(stars)}
+
                     onClick={() => setStars(ele)}
                     key={'star'+ele} >
                     <i className={`fa-solid fa-star ${stars >= ele ? `review-filled` : `review-empty`}`} key={ele}></i>
