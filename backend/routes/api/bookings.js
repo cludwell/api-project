@@ -83,27 +83,44 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         attributes: ['startDate', 'endDate']
     })
     const errors = {}
-    let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
-        .sort((a,b) => a[0] - b[0])
 
-        
-    let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
-    let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
-    let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
+    bookings.forEach(ele => {
+        // start date conflicts
+        if (ele[0] <= parsedStart && parsedStart <= ele[1]) {
+            errors.startDate = "Start date conflicts with an existing booking"
+        }
+        // end date conflicts
+        if (ele[0] <= parsedEnd && parsedEnd <= ele[1]) {
+            errors.endDate = "End date conflicts with an existing booking"
+        }
+        // falls within another booking's dates conflicts
+        if (parsedStart <= ele[0] && ele[1] <= parsedEnd) {
+            errors.startDate = "Start date conflicts with an existing booking"
+            errors.endDate = "End date conflicts with an existing booking"
+        }
+    })
 
-    if (fallsWithin.length) {
-        errors.startDate = "Start date conflicts with an existing booking"
-        errors.endDate = "End date conflicts with an existing booking"
-    }
-    if (startingConflicts.length) {
-        errors.startDate = "Start date conflicts with an existing booking"
-    }
-    if (endingConflicts.length) {
-        errors.endDate = "End date conflicts with an existing booking"
-    }
+    // let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
+    //     .sort((a,b) => a[0] - b[0])
 
 
-    if (startingConflicts.length || endingConflicts.length || fallsWithin.length ) {
+    // let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
+    // let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+    // let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
+
+    // if (fallsWithin.length) {
+    //     errors.startDate = "Start date conflicts with an existing booking"
+    //     errors.endDate = "End date conflicts with an existing booking"
+    // }
+    // if (startingConflicts.length) {
+    //     errors.startDate = "Start date conflicts with an existing booking"
+    // }
+    // if (endingConflicts.length) {
+    //     errors.endDate = "End date conflicts with an existing booking"
+    // }
+
+
+    if (Object.values(errors).length) {
         return res.status(403).json({
             "title": "Booking conflict",
             "message": "Sorry, this spot is already booked for the specified dates",
