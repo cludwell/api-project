@@ -6,7 +6,7 @@
     justify-content: center;
     transition: .2s ease-in-out;
 }
-.profileburger :hover {
+.profile-button :hover {
     box-shadow: 0rem 0rem min(1vmin, .5rem) darkgray;
 }
 .fa-bars,

@@ -373,7 +373,7 @@ router.get('/:id', async (req, res, next) => {
 //Get all Spots
 router.get('/', async (req, res, next) => {
     let {page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng} = req.query
-    let where = {}, errors = {}, pagination = {}
+    const where = {}, errors = {}, pagination = {}
 
     size = !size || parseInt(size) > 20 ? size = 20
     : parseInt(size)
@@ -408,24 +408,24 @@ router.get('/', async (req, res, next) => {
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
     if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.maxLng = "Minimum longitude is invalid"
 
-    let Spots = []
+    const Spots = []
     const spotsData = await Spot.findAll( {
         where,
         ...pagination
     })
 
     //lazy loading associated model data
-    for (let spot of spotsData) {
-        let spotsReviews = await Review.findAll({
+    for (const spot of spotsData) {
+        const spotsReviews = await Review.findAll({
             where: {spotId: spot["id"]}
         })
-        let previewImageData = await SpotImage.findOne({
+        const previewImageData = await SpotImage.findOne({
             where: {spotId: spot["id"], preview: true},
             attributes: ['url']
         })
-        let payload = {}
-        let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
-        for (let key in spot.dataValues) payload[key] = spot[key]
+        const payload = {}
+        const reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
+        for (const key in spot.dataValues) payload[key] = spot[key]
         payload.avgRating = spotsReviews.length ? (reviewTotal / spotsReviews.length).toFixed(1) : 'New'
         payload.previewImage = previewImageData ? previewImageData.url
         : 'No preview available yet'
