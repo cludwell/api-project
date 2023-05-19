@@ -1,5 +1,5 @@
 .manage-spots-div{
-    margin-top: 7rem;
+    margin-top: min(10vmin, 7rem);
 }
 .manage-landing {
     display: grid;
@@ -8,6 +8,9 @@
     gap: .5rem
 }
 
+.manage-spots-title {
+    font-family: 'Mulish', sans-serif;
+}
 @media only screen and (max-width: 85rem){
     .manage-landing {
         display: grid;
