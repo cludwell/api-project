@@ -28,7 +28,6 @@ export const findSpotReviews = spotId => async dispatch => {
     const reviewResponse = await fetch(`/api/spots/${spotId}/reviews`);
     if (reviewResponse.ok) {
         const reviewData = await reviewResponse.json();
-        // console.log('REVIEW THUNK', reviewData)
         dispatch(populateReviews(reviewData));
         return reviewData;
     }
@@ -62,20 +61,14 @@ export default function reviewsReducer(state = initialState, action) {
         case POPULATE_REVIEWS:
             const newState = { ...state, reviews: action.reviewData.Reviews };
             newState.reviews = [action.reviewData.Reviews]
-            // console.log('REVIEW REDUCER', newState)
             return action.reviewData.Reviews;
         case DELETE_REVIEW:
             const withReview = [ ...state]
-            // console.log('REVIEW REDUCER WITH REVIEW', withReview)
             const withoutReview = withReview.filter(ele => ele.id !== action.reviewId)
-            // console.log('REVIEW REDUCER WITHOUT', withoutReview)
             return withoutReview
         case POST_REVIEW:
             const beforeReview = [ ...state ]
-            // console.log('IN REVIEW REDUCER: POST:', action.reviewData)
-            // console.log('IN REVIEW REDUCER: beforeReview:', beforeReview)
             const reviewIncluded = beforeReview.push(action.reviewData)
-            // console.log('IN THE REVIEW REDUCER: STATE', reviewIncluded)
             return reviewIncluded
         default:
             return state;

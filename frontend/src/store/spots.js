@@ -61,7 +61,6 @@ export const deleteSpotById = spotId => async dispatch => {
     if (response.ok) {
         const confirmation = await response.json();
         dispatch(deleteSpot(spotId));
-        // console.log('DELETE DISPATCH', spotId)
         return confirmation
     }
 }
@@ -71,7 +70,6 @@ export const updateSpotData = spotData => async dispatch => {
     const clone = response.clone()
     if (response.ok) {
         const confirmation = await response.json();
-        // console.log('HITTING THE THUNK', confirmation)
         dispatch(updateSpot(confirmation))
         return clone
     }
@@ -91,7 +89,6 @@ export default function spotsReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_SPOTS:
             const newState = {allSpots: {}, ...state }
-            console.log('FINDING ERRORS', action.spotData)
             action.spotData.Spots.forEach(s=> newState.allSpots[s.id] = s)
         return newState;
         case CREATE_SPOT:
@@ -99,17 +96,12 @@ export default function spotsReducer(state = initialState, action) {
             withNewSpot.allSpots[action.spotData.id] = action.spotData
         return withNewSpot;
         case DELETE_SPOT:
-            console.log('ACTION.SPOTID', action.spotId)
             const withoutDeleted = { ...state }
-            console.log('DELETING IN REDUCER', state)
             delete withoutDeleted.allSpots[action.spotId]
         return withoutDeleted;
         case UPDATE_SPOT:
             const updateState = { ...state }
-            // console.log('IN THE UPDATE REDUCER', action.spotData)
-            // console.log(updateState)
             updateState.allSpots[action.spotData.id] = {...action.spotData}
-            // console.log('IS THE UPDATE KEYING TO CORRECT PLACE', updateState.allSpots[action.spotData.id], action.spotData)
             return updateState;
         case GET_CURRENT:
             return {...state, currentUser: action.current.Spots}
