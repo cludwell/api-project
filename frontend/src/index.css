@@ -1,9 +1,16 @@
 /* TODO Add site wide styles */
-h1 {
+h1,
+.review-title-star {
     font-size: min(5vmin, 2rem);
 }
 h2 {
     font-size: min(4vmin, 1.7rem);
+}
+h3 {
+    font-size: min(3.5vmin, 1.5rem);
+}
+h4 {
+    font-size: min(3vmin, 1.3rem);
 }
 /* body {
     margin: 0rem;
@@ -11,4 +18,21 @@ h2 {
 } */
 .fa-star {
     font-size: min(3vmin, 1rem);
+}
+button {
+
+    padding: min(1vmin, .4rem);
+    justify-content: center;
+    transition: .2s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    transition: .2s ease-in-out;
+    font-weight: bold;
+    cursor: pointer;
+    /* background-color: rgb(214, 37, 75); */
+    background-color: #4a2173;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: min(2vmin, .8rem);
+    border: none;
 }

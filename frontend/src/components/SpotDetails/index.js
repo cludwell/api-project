@@ -59,6 +59,7 @@ export default function SpotDetails() {
 
     return (
     <div className='spot-details-page'>
+    <div className='spot-details-90'>
         <div className='spot-details'>
             <h1 className='spot-name'>{singleSpot.name}</h1>
             <h2 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h2>
@@ -90,10 +91,10 @@ export default function SpotDetails() {
                 <span className='reserve-right'>
             { //either the spot is new with no reviews, or numReviews is displayed
             singleSpot.numReviews === 0 ? (<>
-            <i className="fa-solid fa-star star"></i>
+            <i className="fa-solid fa-star star review-title-star"></i>
             New!
             </>) : (<>
-            <i className="fa-solid fa-star star"></i>
+            <i className="fa-solid fa-star star review-title-star"></i>
             {averageRating}
              ●
             { //either plural or singular number of reviews
@@ -160,8 +161,7 @@ export default function SpotDetails() {
                     .format(Date.parse(rev.createdAt))
                 }
                 </h4>
-                <p className='review-body'
-                key={'reviewbody' +i}>{rev.review}</p>
+                <p className='review-body' key={'reviewbody' +i}>{rev.review}</p>
                 {//ternary logic for review-owner to delete review
                 user && user.id === rev.userId ? (
                 <OpenModalMenuItem
@@ -173,11 +173,13 @@ export default function SpotDetails() {
                 />
 
                 ) : null}
+                <hr className='review-divider'></hr>
             </div>
 
             )) : user && singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
                 : null}
         </div>
+    </div>
     </div>
     )
 }
