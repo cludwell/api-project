@@ -1,0 +1,14 @@
+#loading-lottie {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 30rem;
+    margin: 15vw;
+    margin-top: 20vmin;
+    padding: 10vmin;
+}

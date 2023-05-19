@@ -30,7 +30,7 @@ function Header({ props, isLoaded }) {
         document.addEventListener('click', closeMenu);
         return () =>document.removeEventListener('click', closeMenu);
     }, [showMenu]);
-    
+
     const closeMenu = () => setShowMenu(false)
     const user = useSelector(store => store.session.user)
     // console.log('HERE IS THE USER', user)
@@ -70,3 +70,5 @@ function Header({ props, isLoaded }) {
 }
 
 export default Header
+
+
