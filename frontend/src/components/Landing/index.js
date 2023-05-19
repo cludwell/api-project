@@ -1,14 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import './Landing.css'
 import { initialSpots } from "../../store/spots";
 import SpotCard from "../SpotCard";
 
 export default function Landing() {
-
     const dispatch = useDispatch();
+    const [ hasLoaded, setHasLoaded ] = useState(false)
     useEffect(() => {
-        dispatch(initialSpots())
+        const loadData = async () => {
+            await dispatch(initialSpots())
+            return setHasLoaded(true)
+        }
+        loadData()
     })
     const spots = useSelector(state => state.spots.allSpots)
     //if thunk hasnt returned spot data
