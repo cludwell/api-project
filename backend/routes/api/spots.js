@@ -405,24 +405,24 @@ router.get('/', async (req, res, next) => {
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
     if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.maxLng = "Minimum longitude is invalid"
 
-    const Spots = []
+    let Spots = []
     const spotsData = await Spot.findAll( {
         where,
         ...pagination
     })
 
     //lazy loading associated model data
-    for (const spot of spotsData) {
-        const spotsReviews = await Review.findAll({
+    for (let spot of spotsData) {
+        let spotsReviews = await Review.findAll({
             where: {spotId: spot["id"]}
         })
-        const previewImageData = await SpotImage.findOne({
+        let previewImageData = await SpotImage.findOne({
             where: {spotId: spot["id"], preview: true},
             attributes: ['url']
         })
-        const payload = {}
-        const reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
-        for (const key in spot.dataValues) payload[key] = spot[key]
+        let payload = {}
+        let reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
+        for (let key in spot.dataValues) payload[key] = spot[key]
         payload.avgRating = spotsReviews.length ? (reviewTotal / spotsReviews.length).toFixed(1) : 'New'
         payload.previewImage = previewImageData ? previewImageData.url
         : 'No preview available yet'
@@ -437,7 +437,7 @@ router.get('/', async (req, res, next) => {
         })
     }
 
-    return res.status(200).json({Spots: Spots, page: page + 1, size})
+    res.status(200).json({Spots: Spots, page: page + 1, size})
 })
 
 
