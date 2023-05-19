@@ -1,68 +1,65 @@
 const express = require('express')
-const { User, Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
-const { check, Result } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { Spot, SpotImage, Review, ReviewImage } = require('../../db/models');
 const router = express.Router();
-const {sequelize, Op} = require('sequelize');
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth')
 
 //Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
-    let review = await Review.findByPk(req.params.reviewId)
+    const review = await Review.findByPk(req.params.reviewId)
 
     if (!review) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Review couldn't be found",
             "statusCode": 404
           })
     }
-    let existingReviewImages = await ReviewImage.findAll({
+    const existingReviewImages = await ReviewImage.findAll({
         where: {reviewId: review.id}
     })
     if (existingReviewImages.length > 9) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Maximum number of images for this resource was reached",
             "statusCode": 403
           })
     } else if (review.userId !== req.user.id) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
           })
     } else {
-        let newImage = ReviewImage.create({
+        const newImage = ReviewImage.create({
             url: req.body.url,
             reviewId: review.id
         })
 
         //see notes for Spots -create review, for why this approach is being used
-        let reviewImages = await ReviewImage.findAll()
-        let maxId = reviewImages.sort((a, b) => b.id - a.id)[0].id
+        const reviewImages = await ReviewImage.findAll()
+        const maxId = reviewImages.sort((a, b) => b.id - a.id)[0].id
         maxId++
-        let payload = {
+        const payload = {
             id: maxId,
             url: req.body.url
         }
-        res.status(200).json(payload)
+        return res.status(200).json(payload)
     }
 })
 
 //Delete a Review
 router.delete('/:reviewId', requireAuth, async (req, res) => {
-    let reviewToDelete = await Review.findByPk(req.params.reviewId)
+    const reviewToDelete = await Review.findByPk(req.params.reviewId)
     if(!reviewToDelete) {
-        res.status(404).json({
+        return res.status(404).json({
             "message": "Review couldn't be found",
             "statusCode": 404
           })
     } else if (req.user.id !== reviewToDelete.userId) {
-        res.status(403).json({
+        return res.status(403).json({
             "message": "Forbidden",
             "statusCode": 403
           })
     } else {
         await reviewToDelete.destroy()
-        res.status(200).json({
+        return es.status(200).json({
             "message": "Successfully deleted",
             "statusCode": 200
           })

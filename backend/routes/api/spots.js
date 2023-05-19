@@ -1,17 +1,15 @@
 const express = require('express')
 const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
-const {sequelize, Op} = require('sequelize');
-const csrf = require('csurf');
+const { Op} = require('sequelize');
 const cookieParser = require('cookie-parser');
+const {  requireAuth } = require('../../utils/auth')
+
 router.use(cookieParser())
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
-    let spotQuery= await Spot.findByPk(req.params.spotId)
+    const spotQuery= await Spot.findByPk(req.params.spotId)
     if (!spotQuery || !req.params.spotId) {
         return res.status(404).json({
             "message": "Spot couldn't be found",
@@ -19,12 +17,12 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
         })
     }
     if (req.user.id === spotQuery.ownerId) {
-        let bookings = await Booking.findAll({
+        const bookings = await Booking.findAll({
             where: {spotId: spotQuery.id}
         })
-        let bookingPayload = [];
+        const bookingPayload = [];
         for (let book of bookings) {
-            let bookedUser = await User.findByPk(book.userId, {attributes:['id', 'firstName', 'lastName']})
+            const bookedUser = await User.findByPk(book.userId, {attributes:['id', 'firstName', 'lastName']})
             let bookData = {}
             bookData.User = bookedUser
             for (let key in book.dataValues) bookData[key] = book[key]
@@ -32,7 +30,7 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
         }
         return res.status(200).json({Bookings: bookingPayload})
     } else if (req.user.id !== spotQuery.ownerId) {
-        let bookings = await Booking.findAll({
+        const bookings = await Booking.findAll({
             where: {spotId: spotQuery.id},
             attributes: ['spotId', 'startDate', 'endDate']
         })
@@ -42,9 +40,9 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
 
 //Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
-    let {startDate, endDate} = req.body
-    let spot = await Spot.findByPk(req.params.spotId)
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    const {startDate, endDate} = req.body
+    const spot = await Spot.findByPk(req.params.spotId)
+    const parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (!spot) {
         return res.status(404).json({
             "message": "Spot couldn't be found",
@@ -66,7 +64,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             "statusCode": 403
           })
     }
-    let bookings = await Booking.findAll({
+    const bookings = await Booking.findAll({
         where: {spotId: spot.id},
         attributes: ['startDate', 'endDate']
     })

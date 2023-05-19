@@ -1,14 +1,13 @@
 const express = require('express')
-
-const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
+const { Spot, SpotImage, Booking } = require('../../db/models');
 const { check, Result } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 const {sequelize, Op} = require('sequelize');
-const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
+const { requireAuth } = require('../../utils/auth')
+
 router.use(cookieParser())
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Get all of the Current User's Bookings
 router.get('/current', requireAuth, async (req, res) => {

@@ -12,14 +12,14 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
 
 //Delete a Spot Image
 router.delete('/:imageId', restoreUser, async (req, res) => {
-    let spotimage = await SpotImage.findByPk(req.params.imageId)
+    const spotimage = await SpotImage.findByPk(req.params.imageId)
     if (!spotimage) {
       return res.status(404).json({
         "message": "Spot Image couldn't be found",
         "statusCode": 404
       })
     }
-    let spotTiedToImage = await Spot.findOne({where : {id: spotimage.spotId, ownerId: req.user.id}})
+    const spotTiedToImage = await Spot.findOne({where : {id: spotimage.spotId, ownerId: req.user.id}})
     if (!spotTiedToImage) {
         return res.status(403).json({
           "message": "Forbidden",
@@ -27,7 +27,7 @@ router.delete('/:imageId', restoreUser, async (req, res) => {
         })
     } else {
         await spotimage.destroy()
-        res.status(200).json({
+        return res.status(200).json({
             "message": "Successfully deleted",
             "statusCode": 200
           })
