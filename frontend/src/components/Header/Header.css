@@ -14,19 +14,17 @@
   }
 .logo {
     font-family: 'Special Elite', cursive;
-    font-size: 2.5rem;
+    font-size: min(5vmin, 2.5rem);
     align-self: center;
     color: #4a355e;
-    margin-left: .5rem;
-    flex-grow: 1;
 }
 
 .logo-side {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5rem;
-    /* margin-left: 3rem; */
+    margin-left: 10vmin;
+    gap: 4vmin;
 }
 .header a {
     text-decoration: none;
@@ -40,9 +38,8 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-right: 2rem;
+    margin-right: 10vmin;
 }
 .planchette {
-    margin-left: 2rem;
-    height: 4rem;
+    height: min(7vmin, 4rem);
 }

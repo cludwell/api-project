@@ -22,7 +22,10 @@ i {
     color: #A0A7B2
 }
 .fa-user-circle {
-    font-size: 1.5rem;
+    font-size: min(4vmin, 1.5rem);
+}
+.fa-bars {
+    font-size: min(3vmin, 1rem);
 }
 .hidden {
     display: none;

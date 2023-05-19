@@ -10,7 +10,7 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem'
 import CreateSpotModal from '../CreateSpotModal'
 import { useState } from 'react'
 
-function Header({ props, isLoaded }) {
+function Header({ isLoaded }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -37,10 +37,10 @@ function Header({ props, isLoaded }) {
     const yourHome = (<span className='scarebnb-home'>Scarebnb your home</span>)
 
     return (
-        <>
+        <div className='header-90'>
         <div className='header'>
 
-        {/* <div className='logo-side'> */}
+        <div className='logo-side'>
         <Link to={`/`} >
             <img src={logo} alt='logo' className='planchette'/>
         </Link>
@@ -48,7 +48,7 @@ function Header({ props, isLoaded }) {
         <Link to={`/`} className='logo'>
             <span className='logo'>scarebnb</span>
         </Link>
-        {/* </div> */}
+        </div>
             <div className='navigation-corner'>
                 {user ? (
                     <OpenModalMenuItem
@@ -65,10 +65,8 @@ function Header({ props, isLoaded }) {
                 )}
             </div>
         </div>
-        </>
+        </div>
     )
 }
 
 export default Header
-
-

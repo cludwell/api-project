@@ -9,11 +9,12 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import './SpotDetails.css'
 import { useRef } from 'react';
 import PostReviewModal from '../PostReviewModal';
+import LoadingIcon from '../LoadingIcon';
 
 export default function SpotDetails() {
-    const {spotId} = useParams()
+    const { spotId } = useParams()
     const dispatch = useDispatch();
-
+    const [ hasLoaded, setHasLoaded ] = useState(false)
     //modal functionality
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef();
@@ -32,11 +33,14 @@ export default function SpotDetails() {
     }, [showMenu])
     const closeMenu = () => setShowMenu(false)
 
-    //retrieval of all relevant state data
     useEffect(() => {
-        dispatch(findSingleSpot(spotId));
-        dispatch(findSpotReviews(spotId));
-        dispatch(restoreUser());
+        const loadData = async () => {
+            await dispatch(findSingleSpot(spotId));
+            await dispatch(findSpotReviews(spotId));
+            await dispatch(restoreUser());
+            return setHasLoaded(true)
+        }
+        loadData()
     }, [dispatch, spotId])
 
 
@@ -49,25 +53,19 @@ export default function SpotDetails() {
     // console.log('USER', user)
     const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
 
-    //rerender page without refresh
-    useEffect(() => {
-        dispatch(findSpotReviews(spotId))
-        dispatch(findSingleSpot(spotId))
-    }, [dispatch, spotId, spotReviews])
-    if (!Object.entries(singleSpot).length) return null;
+    if (!hasLoaded) return <LoadingIcon />;
 
     const featureAlert = () => alert('Feature coming soon')
 
-    // console.log('TERNARY LOGIC', user, 'ID', user.id, 'singleSpot.ownerId', singleSpot.ownerId)
     return (
-    <>
+    <div className='spot-details-page'>
         <div className='spot-details'>
             <h1 className='spot-name'>{singleSpot.name}</h1>
             <h2 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h2>
             <div className='detail-space'>
 
             <div className='detail-images-left'>
-            <img src={singleSpot.SpotImages[0].url}
+            <img src={singleSpot && singleSpot.SpotImages && singleSpot?.SpotImages[0]?.url }
                 alt='main'
                 key={`detail-image-1`}
                 className={`detail-image detail-image-0`}></img>
@@ -180,6 +178,6 @@ export default function SpotDetails() {
             )) : user && singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
                 : null}
         </div>
-    </>
+    </div>
     )
 }
