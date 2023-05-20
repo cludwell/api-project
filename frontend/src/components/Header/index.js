@@ -66,6 +66,7 @@ function Header({ isLoaded }) {
                 )}
             </div>
         </div>
+        
         </div>
     )
 }
