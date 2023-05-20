@@ -56,7 +56,9 @@ function Header({ isLoaded }) {
                     onItemClick={closeMenu}
                     modalComponent={<CreateSpotModal/>}
                     />) : yourHome}
+                <div className="header-globe">
                 <i className="fa-solid fa-globe"></i>
+                </div>
                 <Navigation isLoaded={isLoaded} />
                 {isLoaded && (
                     <Switch>

@@ -1,15 +1,14 @@
 .spot-card {
     display: grid;
-    height: 28rem;
-    width: 20rem;
+    width: 100%;
     border-radius: 1rem;
     flex-wrap: row;
     visibility: visible;
 }
 .spot-image {
-    width: 20rem;
-    height: 20rem;
-    border-radius: 1rem;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: min(2vmin, 1rem);
     object-fit: cover;
 }
 .rating {
@@ -25,18 +24,22 @@
 .city {
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
+font-size: min(2.5vmin, 1rem)
 }
 .rating {
     font-family: 'Montserrat', sans-serif;
     text-align: right;
     font-weight: 600;
+font-size: min(2.5vmin, 1rem)
 }
 .price {
     color: black;
     font-weight: 600;
+font-size: min(2.5vmin, 1rem)
 }
 .star {
     color: gold;
+    font-size: min(3vmin, 1rem)
 }
 .spot-tooltip {
     visibility: hidden;

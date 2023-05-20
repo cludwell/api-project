@@ -84,8 +84,8 @@
 .reserve-button{
     border: none;
     border-radius: 0rem;
-    width: min(15vmin, 15rem);
-    height: min(4vmin, 2.3rem);
+    width: min(20vmin, 15rem);
+    height: min(5vmin, 2.3rem);
     font-size: min(2vmin, 1rem);
     background-color: #957DAD;
     color:white;

@@ -20,8 +20,7 @@ h4 {
     font-size: min(3vmin, 1rem);
 }
 button {
-
-    padding: min(1vmin, .4rem);
+    padding: min(3vmin, .4rem);
     justify-content: center;
     transition: .2s ease-in-out;
     display: flex;
@@ -35,4 +34,5 @@ button {
     font-family: 'Montserrat', sans-serif;
     font-size: min(2vmin, .8rem);
     border: none;
+    width: fit-content;
 }
