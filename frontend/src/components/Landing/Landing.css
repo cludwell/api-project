@@ -54,6 +54,8 @@
 @media only screen and (max-width: 768px){
     .spot-cards {
         grid-template-columns: repeat(3, 1fr);
+        margin-top: min(15vmin, 7rem);
+
     }
     .icon-title {
         display: none;
@@ -65,9 +67,8 @@
         display: none;
     }
     .icon-banner {
-        height: min(8vmin, 5rem);
-        margin-top: min(10vmin, 7rem);
-
+        height: min(10vmin, 5rem);
+        display: none;
     }
 }
 @media only screen and (max-width: 480px){
