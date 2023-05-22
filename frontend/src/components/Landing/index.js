@@ -26,7 +26,18 @@ export default function Landing() {
         loadData()
     })
     const spots = useSelector(state => state.spots.allSpots)
-
+    const icons = [
+        [luxe, 'Luxe'],
+        [cabin, 'Cabin'],
+        [mansions, 'Mansions'],
+        [boats, 'Boats'],
+        [natpark, 'National Park'],
+        [bednbreak, 'Bed And Breakfast'],
+        [trending, 'Trending'],
+        [amazingviews, 'Amazing Views'],
+        [castles, 'Castles'],
+        [historical, 'Historical'],
+        [countryside, 'Country Side']  ]
     if (!hasLoaded) return <LoadingIcon />
 
     //array of spot objeccts
@@ -34,30 +45,20 @@ export default function Landing() {
     return (
         <div className="landing">
         <div className="icon-banner">
-        {[[luxe, 'Luxe'],
-        [cabin, 'Cabin'],
-        [mansions, 'Mansions'],
-        [boats, 'Boats'],
-        [natpark, 'National Park'],
-        [bednbreak, 'Bead And Breakfast'],
-        [trending, 'Trending'],
-        [amazingviews, 'Amazing Views'],
-        [castles, 'Castles'],
-        [historical, 'Historical'],
-        [countryside, 'Country Side']  ].map((ele, i) => (
+
+        {icons.map((ele, i) => (
         <div className="icon-container" key={i}>
         <img src={ele[0]} alt="" className={`banner-icon banner-icons-${i}`}  key={i}></img>
         <div className="icon-title" key={i}>{ele[1]}</div>
         </div>
-
         )) }
-
+        
         </div>
 
         <div className="spot-cards">
-
             {data.map(spot => (<SpotCard spot={spot} key={spot.id}/>) )}
         </div>
+
         </div>
     )
 }

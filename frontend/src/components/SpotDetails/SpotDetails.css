@@ -33,7 +33,7 @@
 }
 .detail-images-right img {
     box-sizing: border-box;
-    width: 21vw;
+    width: 22vw;
     height: 100%;
     object-fit: cover;
     height: 22vw;
@@ -123,4 +123,5 @@
     .price-review-reserve {
         width: fit-content;
     }
+
 }
