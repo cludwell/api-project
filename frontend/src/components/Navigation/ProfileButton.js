@@ -47,8 +47,8 @@ function ProfileButton({ user }) {
   return (
     <>
     <div className="profileburger">
-      <button className="profile-button" onClick={openMenu}>
-        <i className="fa-solid fa-bars"></i>
+      <button className="profile-button" onClick={openMenu} id='profile-button'>
+        <i className="fa-solid fa-bars" />
         <i className="fas fa-user-circle" />
       </button>
     </div>

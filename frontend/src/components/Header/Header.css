@@ -9,9 +9,13 @@
     width: 100%;
     height: min(10vmin, 6rem);
     border-bottom: 1px solid #ccc;
-    z-index: 100;
-    background-color: white;
-  }
+    z-index: 1;
+    background-color: inherit;
+    overflow: hidden;
+    isolation: isolate;
+    background-color: #fff;
+
+}
 .logo {
     font-family: 'Special Elite', cursive;
     font-size: min(5vmin, 2.5rem);
@@ -43,4 +47,3 @@
 .planchette {
     height: min(7vmin, 4rem);
 }
-

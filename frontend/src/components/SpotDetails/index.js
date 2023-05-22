@@ -37,9 +37,9 @@ export default function SpotDetails() {
         const loadData = async () => {
             await dispatch(findSingleSpot(spotId));
             await dispatch(findSpotReviews(spotId));
-            await dispatch(restoreUser());
             return setHasLoaded(true)
         }
+        dispatch(restoreUser());
         loadData()
     }, [dispatch, spotId])
 

@@ -47,21 +47,22 @@ font-size: min(2.5vmin, 1rem)
     background-color: white;
     border-radius: 1rem;
     color: black;
-    padding: .4rem;
+    padding: min(1vmin, .4rem);
     border-radius: .4rem;
     position: absolute;
     z-index: 1;
-    margin-top: .5rem;
-    margin-left: .5rem;
+    margin-top: min(2vmin, .5rem);
+    margin-left: min(2vmin, .5rem);
     opacity: 0;
     transition: opacity 0.3s;
-    box-shadow: 3rem;
+    box-shadow: min(2vmin, 2rem);
     margin-left: 1rem;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
+    font-size: min(2vmin, .8rem);
 }
 .fa-solid.fa-ghost{
-    font-size: 1.5rem;
+    font-size: min(2.5vmin, 1rem);
     color: #4a355e;
 }
 .spot-tooltip::after {

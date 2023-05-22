@@ -36,3 +36,27 @@ button {
     border: none;
     width: fit-content;
 }
+button:hover {
+    background-color: #8253b0;
+}
+::-webkit-scrollbar {
+    width: .7rem;
+}
+::-webkit-scrollbar-track {
+    background-color: #ceafed;
+    margin-block: 3vmin;
+    border-radius: 2vmin;
+
+}
+::-webkit-scrollbar-thumb {
+    background-color: #4a2173;
+    border-radius: 2vmin;
+    margin-block: 1vmin;
+    border: solid .15rem #ceafed;
+}
+@supports (scrollbar-color: #4a2173 #ceafed) {
+    * {
+        scrollbar-color: #4a2173 #ceafed;
+        scrollbar-width: auto;
+    }
+}

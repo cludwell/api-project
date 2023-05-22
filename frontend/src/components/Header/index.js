@@ -36,7 +36,7 @@ function Header({ isLoaded }) {
     const yourHome = (<span className='scarebnb-home'>Scarebnb your home</span>)
 
     return (
-        <div className='header-90'>
+        <div id='header-90'>
         <div className='header'>
 
         <div className='logo-side'>
@@ -66,7 +66,7 @@ function Header({ isLoaded }) {
                 )}
             </div>
         </div>
-        
+
         </div>
     )
 }
