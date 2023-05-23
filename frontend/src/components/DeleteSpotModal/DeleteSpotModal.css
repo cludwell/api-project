@@ -22,13 +22,7 @@
     justify-content: center;
     margin: 1rem;
 }
-.green-button:active {
-    background-color: #328932;
-    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
-}
-.green-button:hover {
-    border: 2px #D291BC solid;
-}
+
 .grey-button {
     border: none;
     border-radius: 0rem;
@@ -44,7 +38,4 @@
 .grey-button:active {
     background-color: #575b61;
     box-shadow: 0rem 0rem 3rem .2rem lightslategray;
-}
-.grey-button:hover {
-    border: 2px #D291BC solid;
 }

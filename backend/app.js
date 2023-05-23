@@ -14,8 +14,8 @@ const routes = require('./routes');
 const app = express();
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
@@ -78,7 +78,7 @@ app.use((err, _req, res, _next) => {
     res.status(200).json({message: 'Temp Message, site is up and functional'})
   })
 
-  
+
   //resource not found error-handler
   app.use((_req, _res, next) => {
     const err = new Error("The requested resource couldn't be found.");

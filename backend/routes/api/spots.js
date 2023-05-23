@@ -7,7 +7,8 @@ const {sequelize, Op} = require('sequelize');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
+const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3');
 
 //Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
@@ -192,9 +193,13 @@ router.get('/:spotId/reviews', async (req, res) => {
 })
 
 //Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, async (req, res) => {
+router.post('/:spotId/images',
+requireAuth,
+singleMulterUpload("image"),
+ async (req, res) => {
     let spot = await Spot.findByPk(req.params.spotId)
-    let {url, preview} = req.body
+    let { preview } = req.body
+    const url = await singlePublicFileUpload(req.file)
     if (!spot) {
         return res.status(404).json({
             "message": "Spot couldn't be found",
@@ -216,7 +221,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
         url: url,
         preview: preview
     }
-    res.status(200).json(payload)
+    return res.status(200).json(payload)
 })
 
 //Get all Spots owned by the Current User

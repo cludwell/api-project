@@ -32,3 +32,12 @@
 .rating-input{
     margin: .3rem;
 }
+.review-empty,
+.review-filled {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+.review-empty:hover,
+.review-filled:hover {
+    scale: 1.40;
+}

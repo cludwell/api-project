@@ -11,10 +11,27 @@ export const createSpotImage = reviewData =>{
 
 //spot image thunks
 export const createSpotImageBackEnd = (spotId, imageData) => async dispatch => {
-    console.log(spotId, 'WHERE IS THE ID')
-    const spotImageResponse = await csrfFetch(`/api/spots/${spotId}/images`, {"method": "POST", "body": JSON.stringify(imageData)});
-    if (spotImageResponse.ok) {
-        const imageData = await spotImageResponse.json();
+    const { preview, urls, url } = imageData
+    const formData = new FormData();
+    formData.append("preview", preview);
+    formData.append("url", url)
+    formData.append("spotId", spotId)
+
+    if (urls && urls.length !== 0) {
+        for (var i = 0; i < urls.length; i++) {
+          formData.append("urls", urls[i]);
+        }
+      }
+
+      // for single file
+    if (url) formData.append("url", url);
+
+    const res = await csrfFetch(`/api/spots/${spotId}/images`,
+        {"method": "POST",
+        "headers": { "Content-Type": "multipart/form-data" },
+        "body": formData });
+    if (res.ok) {
+        const imageData = await res.json();
         dispatch(createSpotImage(imageData));
         return imageData;
     }
