@@ -58,8 +58,6 @@ export default function SpotDetails() {
 
     if (!hasLoaded) return <LoadingIcon />;
 
-    const featureAlert = () => alert('Feature coming soon')
-
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
@@ -108,10 +106,20 @@ export default function SpotDetails() {
               </div>
 
               <form className='reserve-spot'>
+
+                <div className='all-but-button'>
+
+                <div className='reserve-container checkin'>
                 <label className='reserve-checkin'>CHECK-IN</label>
-                <input className='reserve-start-date'></input>
+                <input className='reserve-start-date' type='date' value={checkin} on onChange={e => setCheckin(e.target.value)}></input>
+                </div>
+                <div className='reserve-container checkout'>
                 <label className='reserve-checkout'>CHECKOUT</label>
-                <input className='reserve-end-date'></input>
+                <input className='reserve-end-date' type='date' value={checkout} onChange={e => setCheckout(e.target.value)}></input>
+                </div>
+
+                </div>
+
                 <button className='reserve-button' >Reserve</button>
                 {}
               </form>

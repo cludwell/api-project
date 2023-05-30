@@ -16,12 +16,13 @@
     display: flex;
 }
 .detail-image {
-    border-radius: min(3vmin, 1rem);
+    /* border-radius: min(3vmin, 1rem); */
 }
 .detail-image-0 {
     width: 45vw;
     height: 45vw;
     object-fit: cover;
+    border-radius: min(3vmin, 1rem) 0 0 min(3vmin, 1rem);
 }
 .detail-images-right {
     max-width: 45vw;
@@ -30,6 +31,8 @@
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 1vmin;
     margin-left: 1vmin;
+    border-radius: 0 min(3vmin, 1rem) min(3vmin, 1rem) 0;
+    overflow: hidden;
 }
 .detail-images-right img {
     box-sizing: border-box;
@@ -53,7 +56,6 @@
 .review-container {
     display: flex;
     flex-direction: column;
-    margin-top: min(10vmin, 5rem);
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -64,14 +66,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: min(30vw, 15rem);
+    min-width: min(fit-content, 15rem);
     height: fit-content;
     box-shadow: 0rem 0rem .3rem grey;
     margin: min(2vmin, 1rem);
     font-size: min(2.5vmin, 1rem);
     padding: min(2vmin, 1rem);
 }
-
 .reserve-text {
     display: flex;
     margin-bottom: 1rem;
@@ -92,12 +93,10 @@
     font-weight: bold;
     justify-content: center;
 }
-.reserve-button:active, .post-review-button:active:enabled {
-    background-color: #4a2173;
-    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
-}
 .description {
     display: flexbox;
+    font-size: min(2.5vmin, 1rem);
+    line-height: min(3.5vmin, 1.5rem);
 }
 .review-divider,
 .review-body {
@@ -109,6 +108,8 @@
     align-content: center;
     margin: 0 auto;
     margin-bottom: 5vmin;
+    font-size: min(2.5vmin, 1rem);
+    line-height: min(3.5vmin, 1.5rem);
 }
 .review-date {
     color: rgb(119, 119, 119);
@@ -124,4 +125,28 @@
         width: fit-content;
     }
 
+}
+
+/* summer revisions */
+.reserve-spot {
+    display: flex;
+    flex-direction: column;
+    padding: min(1vmin, .5rem);
+}
+.reserve-spot label {
+    font-weight: bold;
+}
+.reserve-container {
+    padding: min(1vmin, .5rem);
+}
+.reserve-container.checkin {
+    border-right: 1px solid grey;
+}
+.all-but-button {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid grey;
+    border-radius: min(1.5vmin, .5rem);
+    overflow: hidden;
+    margin-bottom: min(2vmin, 1rem);
 }

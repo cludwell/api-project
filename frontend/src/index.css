@@ -39,6 +39,21 @@ button {
 button:hover {
     background-color: #8253b0;
 }
+input[type="date" i] {
+    font-family: 'Montserrat', sans-serif;
+    padding-inline-start: 1px;
+    cursor: default;
+    align-items: center;
+    display: inline-flex;
+    overflow: hidden;
+    padding: 0px;
+    border: none;
+}
+/* input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    -webkit-appearance: none;
+} */
 ::-webkit-scrollbar {
     width: .7rem;
 }
