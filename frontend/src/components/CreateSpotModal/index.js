@@ -51,11 +51,6 @@ export default function CreateSpotModal() {
         setErrors(err)
     }
 
-    // useEffect(() => {
-    //     dispatch(initialSpots())
-    // }, [dispatch])
-    // const spots = useSelector(state => state.spots.allSpots)
-
     //upon submission, do this
     const handleSubmit = async e => {
         e.preventDefault();
@@ -69,9 +64,11 @@ export default function CreateSpotModal() {
             })
 
         formData.append('image', url)
-        console.log(formData)
+        formData.append('preview', true)
+        formData.append('spotId', spot.id)
+
         //must send preview, other images are optional
-        dispatch(createSpotImageBackEnd(spot?.id, {formData, "preview": true}))
+        dispatch(createSpotImageBackEnd(spot?.id, formData))
         .then(() => {
             setUrl(null);
         })

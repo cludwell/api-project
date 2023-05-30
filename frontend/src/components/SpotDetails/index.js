@@ -15,6 +15,12 @@ export default function SpotDetails() {
     const { spotId } = useParams()
     const dispatch = useDispatch();
     const [ hasLoaded, setHasLoaded ] = useState(false)
+    const [ checkin, setCheckin ] = useState()
+    const [ checkout, setCheckout ] = useState()
+    const [ adults, setAdults ] = useState(1)
+    const [ children, setChildren ] = useState(0)
+    const [ infants, setInfants ] = useState(0)
+    const [ pets, setPets ] = useState(0)
     //modal functionality
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef();
@@ -46,11 +52,8 @@ export default function SpotDetails() {
 
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
-    // console.log('SINGLGE SPOT', singleSpot.SpotImages)
     const spotReviews = useSelector(state => state.reviews)
-    // console.log('SPOT REVIEWS IN DETAILS', spotReviews)
     const user = useSelector(store => store.session.user)
-    // console.log('USER', user)
     const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
 
     if (!hasLoaded) return <LoadingIcon />;
@@ -103,8 +106,15 @@ export default function SpotDetails() {
         </>)}
                 </span>
               </div>
-                <button className='reserve-button'
-                onClick={featureAlert}>Reserve</button>
+
+              <form className='reserve-spot'>
+                <label className='reserve-checkin'>CHECK-IN</label>
+                <input className='reserve-start-date'></input>
+                <label className='reserve-checkout'>CHECKOUT</label>
+                <input className='reserve-end-date'></input>
+                <button className='reserve-button' >Reserve</button>
+                {}
+              </form>
             </div>
         </div>
 
