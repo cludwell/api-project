@@ -11,7 +11,7 @@
 .manage-spots-title {
     font-family: 'Mulish', sans-serif;
 }
-@media only screen and (max-width: 85rem){
+/* @media only screen and (max-width: 85rem){
     .manage-landing {
         display: grid;
         grid-template-columns: auto auto auto;
@@ -35,4 +35,4 @@
         justify-content: center;
     }
 
-}
+} */

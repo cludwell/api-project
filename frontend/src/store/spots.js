@@ -92,9 +92,7 @@ export default function spotsReducer(state = initialState, action) {
             action.spotData.Spots.forEach(s=> newState.allSpots[s.id] = s)
         return newState;
         case CREATE_SPOT:
-            const withNewSpot = { ...state }
-            withNewSpot.allSpots[action.spotData.id] = action.spotData
-        return withNewSpot;
+        return { ...state, allSpots: { [action.spotData.id]: action.spotData} }
         case DELETE_SPOT:
             const withoutDeleted = { ...state }
             delete withoutDeleted.allSpots[action.spotId]

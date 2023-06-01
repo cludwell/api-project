@@ -7,16 +7,15 @@ import { useHistory } from 'react-router-dom'
 import { useModal } from '../../context/Modal'
 
 export default function CreateSpotModal() {
-    const formData = new FormData();
     const [country, setCountry] = useState('')
     const [address, setStreet] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-    const [lat, setLat] = useState('')
-    const [lng, setLng] = useState('')
+    const [lat, setLat] = useState(0)
+    const [lng, setLng] = useState(0)
     const [description, setDesc] = useState('')
     const [name, setTitle] = useState('')
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState(0)
     const [url, setUrl] = useState(null)
     // const [img2, setImg2] = useState('')
     // const [img3, setImg3] = useState('')
@@ -43,7 +42,7 @@ export default function CreateSpotModal() {
 
         //want logic to accept default or empty string
         //otherwise url must be a url
-        if (!url || (!url.endsWith('.png') || !url.endsWith('.jpg') || !url.endsWith('.jpeg')) ) err.prev = 'Preview Image is required'
+        if (!url) err.prev = 'Preview Image is required'
         // if (img2 && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
         // if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
         // if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
@@ -57,26 +56,25 @@ export default function CreateSpotModal() {
         validate();
         let newErrors = []
         if (Object.values(errors).length) return;
-        const spot = await dispatch(createSpotBackEnd({ country, address, state, city, lat, lng, description, name, price}))
+        const spot = await dispatch(createSpotBackEnd({
+            country, address, state, city, lat, lng, description, name, price}))
             .then(res =>{
                 const clone = res.clone();
                 if (clone.ok) return clone.json();
             })
 
-        formData.append('image', url)
-        formData.append('preview', true)
-        formData.append('spotId', spot.id)
 
-        //must send preview, other images are optional
-        dispatch(createSpotImageBackEnd(spot?.id, formData))
+        //must send url1, other images are optional
+        dispatch(createSpotImageBackEnd({spotId: spot?.id, preview: true, url: url}))
         .then(() => {
             setUrl(null);
         })
         .catch(async (res) => {
             const data = await res.json();
-            if (data && data.errors);
+            if (data && data.errors) {
             newErrors = data.errors
             setErrors(newErrors)
+            }
         })
         // if (img2) dispatch(createSpotImageBackEnd(spot?.id, {url: img2, "preview": true}))
         // if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))
@@ -85,6 +83,11 @@ export default function CreateSpotModal() {
         closeModal()
         history.push(`/spotsfe/${spot?.id}`)
     }
+
+    const updateFile = (e) => {
+        const file = e.target.files[0];
+        if (file) setUrl(e.target.files[0]);
+    };
 
     return (
         <div className='create-spot-modal'>
@@ -213,7 +216,7 @@ export default function CreateSpotModal() {
             <input
                 className='create-input aws-upload'
                 type='file'
-                value={url}
+                // value={url}
                 // placeholder='Preview Image URL'
                 accept='image/*'
                 name='spot image'

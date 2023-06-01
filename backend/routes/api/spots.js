@@ -3,12 +3,30 @@ const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../d
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
-const {sequelize, Op} = require('sequelize');
-const csrf = require('csurf');
+const { Op } = require('sequelize');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
+const { requireAuth } = require('../../utils/auth');
 const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3');
+
+//aws imports
+const { AWSConfig } = require('../../config');
+
+const AWS = require('aws-sdk');
+const accessKeyId = AWSConfig.AWS_ACCESS_KEY_ID;
+const secretAccessKey = AWSConfig.AWS_SECRET_ACCESS_KEY;
+const region = AWSConfig.AWS_REGION;
+
+// Set up AWS configuration
+AWS.config.update({
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
+    region: region,
+});
+
+// Create an instance of the AWS S3 service
+const s3 = new AWS.S3();
+
 
 //Get all Bookings for a Spot based on the Spot's id
 router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
@@ -195,10 +213,14 @@ router.get('/:spotId/reviews', async (req, res) => {
 //Add an Image to a Spot based on the Spot's id
 router.post('/:spotId/images',
 requireAuth,
-singleMulterUpload("image"),
+singleMulterUpload("url"),
  async (req, res) => {
-    let spot = await Spot.findByPk(req.params.spotId)
-    let { preview } = req.body
+console.log('=========================KEY ID', accessKeyId);
+console.log('=========================ACCESS KEY',secretAccessKey);
+console.log('=========================REGION', region);
+
+    const spot = await Spot.findByPk(req.params.spotId)
+    const { preview } = req.body
     const url = await singlePublicFileUpload(req.file)
     if (!spot) {
         return res.status(404).json({
@@ -212,11 +234,22 @@ singleMulterUpload("image"),
             "statusCode": 403
           })
     }
-    let spotImage = await SpotImage.create({
-        spotId: req.params.spotId, url, preview
+
+    // const uploadParams = {
+    //     Bucket: 'scarebnbaws',
+    //     Key: req.file.originalname,
+    //     Body: req.file.buffer,
+    //   };
+
+    // const s3UploadResult = await s3.upload(uploadParams).promise();
+    // const url = s3UploadResult.Location;
+    const spotImage = await SpotImage.create({
+        spotId: req.params.spotId,
+        url: url,
+        preview: preview
     })
 
-    let payload = {
+    const payload = {
         id: spotImage.id,
         url: url,
         preview: preview

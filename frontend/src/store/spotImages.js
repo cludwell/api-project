@@ -10,26 +10,26 @@ export const createSpotImage = image =>{
 }
 
 //spot image thunks
-export const createSpotImageBackEnd = (spotId, imageData) => async dispatch => {
-    // const { preview, urls, url } = imageData
-    // const formData = new FormData();
-    // formData.append("preview", preview);
-    // formData.append("url", url)
-    // formData.append("spotId", spotId)
+export const createSpotImageBackEnd = imageData => async dispatch => {
+    const { spotId, preview, urls, url } = imageData
+    const formData = new FormData();
+    formData.append("preview", preview);
+    formData.append("spotId", spotId)
 
-    // if (urls && urls.length !== 0) {
-    //     for (var i = 0; i < urls.length; i++) {
-    //       formData.append("urls", urls[i]);
-    //     }
-    //   }
+      // for multiple files
+    if (urls && urls.length !== 0) {
+        for (var i = 0; i < urls.length; i++) {
+          formData.append("urls", urls[i]);
+        }
+      }
 
-    //   // for single file
-    // if (url) formData.append("url", url);
+      // for single file
+    if (url) formData.append("url", url);
 
-    const res = await csrfFetch(`/api/spots/${spotId}/images`,
-        {"method": "POST",
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+        "method": "POST",
         "headers": { "Content-Type": "multipart/form-data" },
-        "body": imageData });
+        "body": formData });
     if (res.ok) {
         const image = await res.json();
         dispatch(createSpotImage(image));
