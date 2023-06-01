@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react'
 import './CardCarousel.css'
+import { NavLink } from 'react-router-dom'
 
-export default function CardCarousel({ images, chosenImage, setChosenImage }) {
+export default function CardCarousel({ spot, chosenImage, setChosenImage }) {
     const [ current, setCurrent ] = useState(0)
     const nextImage = () => {
-        setCurrent(current + 1)
-        setChosenImage(current + 1)
+        setCurrent(current < spot.images.length -1 ? current + 1
+            : spot.images.length -1)
+        setChosenImage(current < spot.images.length -1 ? current + 1
+            : spot.images.length -1)
     }
     const prevImage = () => {
-        setCurrent(current - 1)
-        setChosenImage(current - 1)
+        setCurrent(current > 0 ? current - 1 : 0)
+        setChosenImage(current > 0 ? current - 1 : 0)
+    }
+    const dotTicker = (i) => {
+        setChosenImage(i)
+        setCurrent(i)
     }
     useEffect(() => {
         setCurrent(chosenImage ? chosenImage
@@ -20,25 +27,25 @@ export default function CardCarousel({ images, chosenImage, setChosenImage }) {
     return (
     <div className='card-carousel'>
 
-    <div className='left-arrow' onClick={prevImage}>
+    <div className={current > 0 ? 'left-arrow' : 'hidden'} onClick={prevImage}>
     <i className="fa-solid fa-circle-left"/>
     </div>
 
-    <div className='right-arrow' onClick={nextImage}>
+    <div className={current < spot.images.length -1 ? 'right-arrow' : 'hidden'} onClick={nextImage}>
     <i className="fa-solid fa-circle-right"/>
     </div>
-
-    {images.map((img, i) => (
-        <>
+    {spot.images.map((img, i) => (
         <div className={i === current ? 'slide active' : 'slide'} key={`carousel${i}`}>
-            {i === current && (
-                <img src={img.url} className='slider-images' alt='' key={`img${i}`} />
-            )}
+        {i === current && (
+        <NavLink to={`/spotsfe/${spot.id}`} style={{"textDecoration": "none"}} spotId={spot.id}>
+        <img src={img.url} className='slider-images spot-image' alt='' key={`img${i}`} />
+        </NavLink>
+        )}
         </div>
-        <span className={i === current ? 'dot-ticker-chosen' : 'dot-ticker'}>•</span>
-        </>
     ))}
-
+    <div className='dot-ticker-div' >
+        {spot.images.map((ele, i) => <span className={i === current ? 'dot-ticker-chosen' : 'dot-ticker'} onClick={e => dotTicker(i)}>● </span>)}
+    </div>
     </div>
     )
 }

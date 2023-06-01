@@ -20,8 +20,6 @@
 .fa-bars,
 .fa-user-circle {
     box-shadow: none;
-}
-i {
     display: inline-block;
     vertical-align: middle;
     padding-inline: .3rem;

@@ -457,12 +457,14 @@ router.get('/', async (req, res, next) => {
             where: {spotId: spot["id"], preview: true},
             attributes: ['url']
         })
+        const spotImages = await SpotImage.findAll({ where: {spotId: spot['id']}})
         const payload = {}
         const reviewTotal = spotsReviews.reduce((acc,next) => acc + next["stars"], 0)
         for (const key in spot.dataValues) payload[key] = spot[key]
         payload.avgRating = spotsReviews.length ? (reviewTotal / spotsReviews.length).toFixed(1) : 'New'
         payload.previewImage = previewImageData ? previewImageData.url
         : 'No preview available yet'
+        payload.images = spotImages
         Spots.push(payload)
     }
 

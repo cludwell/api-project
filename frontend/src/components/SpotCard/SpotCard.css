@@ -21,16 +21,16 @@
     color: grey;
     overflow: hidden;
 }
-.city {
+.spot-card-city,
+.spot-card-rating {
     font-weight: 600;
     font-family: 'Montserrat', sans-serif;
-font-size: min(2.5vmin, 1rem)
+    font-size: min(2.5vmin, 1rem);
+    color: black;
+    overflow-wrap: anywhere;
 }
-.rating {
-    font-family: 'Montserrat', sans-serif;
+.spot-card-rating {
     text-align: right;
-    font-weight: 600;
-font-size: min(2.5vmin, 1rem)
 }
 .price {
     color: black;
@@ -77,6 +77,6 @@ font-size: min(2.5vmin, 1rem)
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
     margin-bottom: 0;
 }

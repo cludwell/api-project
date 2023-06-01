@@ -1,3 +1,47 @@
 .dot-ticker {
-    opacity: .6;
+    opacity: .5;
+}
+.left-arrow,
+.right-arrow {
+    font-size: min(3vw, 1.5rem);
+    color: white;
+    opacity: .8;
+    position: absolute;
+    top: min(50%, 15rem);
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 50%;
+}
+.right-arrow {
+    right: 1vw;
+}
+.left-arrow {
+    left: 1vw;
+}
+.slide {
+    opacity: 0;
+    transition-duration: 1s ease;
+}
+.slide.active {
+    opacity: 1;
+    transition-duration: 1s;
+    /* transform: scale(1.08); */
+}
+.card-carousel {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+}
+.dot-ticker-div {
+    position: absolute;
+    top: 87%;
+    display: flex;
+    justify-content: center;
+}
+.dot-ticker,
+.dot-ticker-chosen {
+    font-size: min(3vmin, 1.8rem);
+    color: white;
+    cursor: pointer;
 }
