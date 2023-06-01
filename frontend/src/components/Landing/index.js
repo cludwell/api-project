@@ -15,6 +15,8 @@ import amazingviews from '../../images/icons/amazing-views.png'
 import castles from '../../images/icons/castles.png'
 import historical from '../../images/icons/historical.png'
 import countryside from '../../images/icons/countryside.png'
+
+
 export default function Landing() {
     const dispatch = useDispatch();
     const [ hasLoaded, setHasLoaded ] = useState(false)
@@ -41,7 +43,8 @@ export default function Landing() {
     if (!hasLoaded) return <LoadingIcon />
 
     //array of spot objeccts
-    const data = Object.values(spots).sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
+    const data = Object.values(spots)
+        .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
     return (
         <div className="landing">
         <div className="icon-banner">
@@ -52,7 +55,7 @@ export default function Landing() {
         <div className="icon-title" key={i}>{ele[1]}</div>
         </div>
         )) }
-        
+
         </div>
 
         <div className="spot-cards">

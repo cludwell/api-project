@@ -215,10 +215,6 @@ router.post('/:spotId/images',
 requireAuth,
 singleMulterUpload("url"),
  async (req, res) => {
-console.log('=========================KEY ID', accessKeyId);
-console.log('=========================ACCESS KEY',secretAccessKey);
-console.log('=========================REGION', region);
-
     const spot = await Spot.findByPk(req.params.spotId)
     const { preview } = req.body
     const url = await singlePublicFileUpload(req.file)
@@ -422,7 +418,7 @@ router.get('/', async (req, res, next) => {
 
     if (size < 0) errors.size = "Size must be greater than or equal to 0"
     if(page < 0) errors.page = "Page must be greater than or equal to 0"
-    if (page >=1 && size >= 1){
+    if (page >= 1 && size >= 1){
         pagination.limit = size;
         pagination.offset = size * (page - 1)
     }
