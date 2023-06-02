@@ -75,9 +75,19 @@
 }
 .reserve-text {
     display: flex;
-    margin-bottom: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: min(2vmin, 1rem);
     font-size: min(2.5vmin, 1rem);
+    align-items: flex-end;
+    width: 100%;
 }
+
+.reserve-left-price {
+    font-weight: bold;
+    font-size: min(3vmin, 1.5rem);
+}
+
 .reserve-right,
 .review-body {
     font-size: min(2.5vmin, 1rem);

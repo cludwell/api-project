@@ -35,7 +35,7 @@
 .price {
     color: black;
     font-weight: 600;
-font-size: min(2.5vmin, 1rem)
+    font-size: min(2.5vmin, 1rem)
 }
 .star {
     color: gold;
@@ -78,6 +78,5 @@ font-size: min(2.5vmin, 1rem)
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    /* margin-right: 1rem; */
     margin-bottom: 0;
 }

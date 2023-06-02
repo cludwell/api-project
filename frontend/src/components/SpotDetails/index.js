@@ -55,7 +55,10 @@ export default function SpotDetails() {
     const spotReviews = useSelector(state => state.reviews)
     const user = useSelector(store => store.session.user)
     const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
-
+    const stayDuration = checkout - checkin
+    const today = new Date()
+    const minDate = `${String(today.getMonth()).padStart(2, '0')}:${String(today.getDate()).padStart(2, '0')}:${today.getFullYear().toString()}`
+    // const tomorrow = today +
     if (!hasLoaded) return <LoadingIcon />;
 
     return (
@@ -88,7 +91,9 @@ export default function SpotDetails() {
             <p className='description'>{singleSpot.description}</p>
             <div className='price-review-reserve'>
                 <div className='reserve-text'>
-                <span className='reserve-left'>${singleSpot.price} night</span>
+                <span className='reserve-left'>
+                    <span className='reserve-left-price'>${singleSpot.price} </span>  <span className='reserve-night'>night</span>
+                </span>
                 <span className='reserve-right'>
             { //either the spot is new with no reviews, or numReviews is displayed
             singleSpot.numReviews === 0 ? (<>
@@ -96,8 +101,7 @@ export default function SpotDetails() {
             New!
             </>) : (<>
             <i className="fa-solid fa-star star review-title-star"></i>
-            {averageRating}
-             ●
+            {averageRating} ●
             { //either plural or singular number of reviews
             singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
             :singleSpot.numReviews + ' Reviews'}
@@ -111,7 +115,7 @@ export default function SpotDetails() {
 
                 <div className='reserve-container checkin'>
                 <label className='reserve-checkin'>CHECK-IN</label>
-                <input className='reserve-start-date' type='date' value={checkin} on onChange={e => setCheckin(e.target.value)}></input>
+                <input className='reserve-start-date' type='date' value={checkin} on onChange={e => setCheckin(e.target.value)} min={`${today.getMonth().padStart(2, '0')}:${today.getDate().padStart(2, '0')}:${today.getFullYear()}`}></input>
                 </div>
                 <div className='reserve-container checkout'>
                 <label className='reserve-checkout'>CHECKOUT</label>
@@ -121,7 +125,8 @@ export default function SpotDetails() {
                 </div>
 
                 <button className='reserve-button' >Reserve</button>
-                {}
+                <p className='reserve-grey-text'>You won't be charged yet {minDate}</p>
+                <div className='reserve-breakdown'>{singleSpot.price} x {stayDuration}</div>
               </form>
             </div>
         </div>
@@ -168,10 +173,8 @@ export default function SpotDetails() {
             .map((rev, i) => (
 
             <div className='review-container' key={`review-container${i}`}>
-                <h3 className='username-title'
-                key={'username-iter'+i}>{rev.User.firstName}</h3>
-                <h4 className='review-date'
-                key={'created-iter'+i}>
+                <h3 className='username-title' key={'username-iter'+i}>{rev.User.firstName}</h3>
+                <h4 className='review-date' key={'created-iter'+i}>
                     {new Intl.DateTimeFormat('en-GB', {
                     year: "numeric",
                     month: "long",

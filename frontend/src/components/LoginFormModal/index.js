@@ -40,7 +40,7 @@ function LoginFormModal() {
     <div className="log-in-modal">
       <h1 className="log-in">Log In</h1>
       <form onSubmit={handleSubmit}
-      className='form'>
+      className='login-form'>
 
           {errors?.map((error, idx) => (
             <p

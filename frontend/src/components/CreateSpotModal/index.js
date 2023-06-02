@@ -16,11 +16,11 @@ export default function CreateSpotModal() {
     const [description, setDesc] = useState('')
     const [name, setTitle] = useState('')
     const [price, setPrice] = useState(0)
-    const [url, setUrl] = useState(null)
-    // const [img2, setImg2] = useState('')
-    // const [img3, setImg3] = useState('')
-    // const [img4, setImg4] = useState('')
-    // const [img5, setImg5] = useState('')
+    const [img1, setImg1] = useState(null)
+    const [img2, setImg2] = useState(null)
+    const [img3, setImg3] = useState(null)
+    const [img4, setImg4] = useState(null)
+    const [img5, setImg5] = useState(null)
     const [errors, setErrors] = useState({})
     const dispatch = useDispatch();
     const history = useHistory();
@@ -42,11 +42,11 @@ export default function CreateSpotModal() {
 
         //want logic to accept default or empty string
         //otherwise url must be a url
-        if (!url) err.prev = 'Preview Image is required'
-        // if (img2 && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        // if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        // if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        // if (img5 && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!img1) err.prev = 'Preview Image is required'
+        if (img2 && (!img2.endsWith('.png') || !img2.endsWith('.jpg') || !img2.endsWith('.jpeg')) ) err.img2 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img3 && (!img3.endsWith('.png') || !img3.endsWith('.jpg') || !img3.endsWith('.jpeg')) ) err.img3 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img4 && (!img4.endsWith('.png') || !img4.endsWith('.jpg') || !img4.endsWith('.jpeg')) ) err.img4 = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (img5 && (!img5.endsWith('.png') || !img5.endsWith('.jpg') || !img5.endsWith('.jpeg')) ) err.img5 = 'Image URL must end in .png, .jpg, or .jpeg'
         setErrors(err)
     }
 
@@ -65,9 +65,9 @@ export default function CreateSpotModal() {
 
 
         //must send url1, other images are optional
-        dispatch(createSpotImageBackEnd({spotId: spot?.id, preview: true, url: url}))
+        dispatch(createSpotImageBackEnd({spotId: spot?.id, preview: true, url: img1}))
         .then(() => {
-            setUrl(null);
+            setImg1(null);
         })
         .catch(async (res) => {
             const data = await res.json();
@@ -76,24 +76,17 @@ export default function CreateSpotModal() {
             setErrors(newErrors)
             }
         })
-        // if (img2) dispatch(createSpotImageBackEnd(spot?.id, {url: img2, "preview": true}))
-        // if (img3) dispatch(createSpotImageBackEnd(spot?.id, {url: img3, "preview": true}))
-        // if (img4) dispatch(createSpotImageBackEnd(spot?.id, {url: img4, "preview": true}))
-        // if (img5) dispatch(createSpotImageBackEnd(spot?.id, {url: img5, "preview": true}))
+        if (img2) dispatch(createSpotImageBackEnd({ spotId: spot.id, url: img2, "preview": true }))
+        if (img3) dispatch(createSpotImageBackEnd({ spotId: spot.id, url: img3, "preview": true }))
+        if (img4) dispatch(createSpotImageBackEnd({ spotId: spot.id, url: img4, "preview": true }))
+        if (img5) dispatch(createSpotImageBackEnd({ spotId: spot.id, url: img5, "preview": true }))
         closeModal()
         history.push(`/spotsfe/${spot?.id}`)
     }
 
-    const updateFile = (e) => {
-        const file = e.target.files[0];
-        if (file) setUrl(e.target.files[0]);
-    };
-
     return (
         <div className='create-spot-modal'>
-            <form
-            className='create-form'
-            onSubmit={handleSubmit} >
+            <form className='create-form' onSubmit={handleSubmit} >
             <h2 className='create-subtitle'>Create a New Spot</h2>
             <h3 className='create-subtitle'>Where's your place located?</h3>
             <p className='guests'>Guests will only get your exact address once they booked a reservation.</p>
@@ -167,8 +160,8 @@ export default function CreateSpotModal() {
             <hr/>
 
             <h3 className='create-subtitle'>Describe your place to guests</h3>
-            <label
-            className='create-label'>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
+            <label className='create-label'>
+                Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
                 <textarea
                 className='create-input create-desc'
                 type='text'
@@ -216,46 +209,53 @@ export default function CreateSpotModal() {
             <input
                 className='create-input aws-upload'
                 type='file'
-                // value={url}
-                // placeholder='Preview Image URL'
                 accept='image/*'
                 name='spot image'
-                onChange={e => setUrl(e.target.files[0])}
+                onChange={e => setImg1(e.target.files[0])}
            ></input>
+                <p className='errors'>{errors.img1}</p>
            </div>
-                <p className='errors'>{errors.prev}</p>
-            {/* <input
-                className='create-input'
-                type='url'
-                value={img2}
-                placeholder='Image URL'
-                onChange={e => setImg2(e.target.value)}
+            <div className='aws'>
+            <input
+                className='create-input aws-upload'
+                type='file'
+                accept='image/*'
+                name='spot image'
+                onChange={e => setImg2(e.target.files[1])}
             ></input>
                 <p className='errors'>{errors.img2}</p>
+            </div>
+            <div className='aws'>
             <input
-                className='create-input'
-                type='url'
-                value={img3}
-                placeholder='Image URL'
-                onChange={e => setImg3(e.target.value)}
+                className='create-input aws-upload'
+                type='file'
+                accept='image/*'
+                name='spot image'
+                onChange={e => setImg3(e.target.files[2])}
             ></input>
                 <p className='errors'>{errors.img3}</p>
+            </div>
+            <div className='aws'>
             <input
-                className='create-input'
-                type='url'
-                value={img4}
-                placeholder='Image URL'
-                onChange={e => setImg4(e.target.value)}
+                className='create-input aws-upload'
+                type='file'
+                accept='image/*'
+                name='spot image'
+                onChange={e => setImg4(e.target.files[3])}
                 ></input>
                 <p className='errors'>{errors.img4}</p>
+            </div>
+            <div className='aws'>
             <input
-                className='create-input'
-                type='url'
-                value={img5}
-                placeholder='Image URL'
-                onChange={e => setImg5(e.target.value)}
-            ></input> */}
-                {/* <p className='errors'>{errors.img5}</p> */}
+                className='create-input aws-upload'
+                type='file'
+                accept='image/*'
+                name='spot image'
+                onChange={e => setImg5(e.target.files[4])}
+            ></input>
+                <p className='errors'>{errors.img5}</p>
+            </div>
+
             <button
             type='submit'
             className='submit-button'>Create Spot</button>

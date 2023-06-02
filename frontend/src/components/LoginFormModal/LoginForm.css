@@ -36,7 +36,7 @@ form {
 .login-button:hover:enabled, .demo-user:hover:enabled {
     border: 2px #D291BC solid;
 }
-form > p {
+.login-form > p {
     color: red;
     margin: 1rem;
 }
