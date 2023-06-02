@@ -115,7 +115,8 @@ export default function SpotDetails() {
 
                 <div className='reserve-container checkin'>
                 <label className='reserve-checkin'>CHECK-IN</label>
-                <input className='reserve-start-date' type='date' value={checkin} on onChange={e => setCheckin(e.target.value)} min={`${today.getMonth().padStart(2, '0')}:${today.getDate().padStart(2, '0')}:${today.getFullYear()}`}></input>
+                <input className='reserve-start-date' type='date' value={checkin} on onChange={e => setCheckin(e.target.value)}
+                ></input>
                 </div>
                 <div className='reserve-container checkout'>
                 <label className='reserve-checkout'>CHECKOUT</label>
