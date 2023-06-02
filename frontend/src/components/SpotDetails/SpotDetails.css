@@ -1,4 +1,4 @@
-.spot-details{
+.spot-details {
     margin-top: min(10vmin, 7rem);
 }
 .spot-details-page {
@@ -9,37 +9,35 @@
     align-content: center;
 }
 .spot-details-90 {
-    width: 90vw;
-
+    width: min(95vw, 75rem);
 }
 .detail-space{
     display: flex;
-}
-.detail-image {
-    /* border-radius: min(3vmin, 1rem); */
+    width: 100%;
 }
 .detail-image-0 {
-    width: 45vw;
-    height: 45vw;
+    width: 100%;
+    aspect-ratio: 1;
     object-fit: cover;
     border-radius: min(3vmin, 1rem) 0 0 min(3vmin, 1rem);
 }
+.detail-images-left {
+    width: 50%;
+}
 .detail-images-right {
-    max-width: 45vw;
+    width: 50%;
+    aspect-ratio: 1;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     grid-gap: 1vmin;
     margin-left: 1vmin;
     border-radius: 0 min(3vmin, 1rem) min(3vmin, 1rem) 0;
     overflow: hidden;
 }
 .detail-images-right img {
-    box-sizing: border-box;
-    width: 22vw;
-    height: 100%;
+    width: 100%;
+    aspect-ratio: 1;
     object-fit: cover;
-    height: 22vw;
 }
 
 .spot-name,
