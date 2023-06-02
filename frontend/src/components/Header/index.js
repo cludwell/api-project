@@ -60,10 +60,6 @@ function Header({ isLoaded }) {
                 <i className="fa-solid fa-globe"></i>
                 </div>
                 <Navigation isLoaded={isLoaded} />
-                {isLoaded && (
-                    <Switch>
-                    </Switch>
-                )}
             </div>
         </div>
 

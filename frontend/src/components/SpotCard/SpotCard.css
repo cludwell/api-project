@@ -1,5 +1,4 @@
 .spot-card {
-    display: grid;
     width: 100%;
     border-radius: 1rem;
     flex-wrap: row;
@@ -18,12 +17,14 @@
     margin-top: .2rem;
     margin-bottom: .1rem;
     font-family: 'Montserrat', sans-serif;
-    color: grey;
+    color: rgb(94, 94, 94);
     overflow: hidden;
+}
+.spot-card-text.price {
+    font-weight: bold;
 }
 .spot-card-city,
 .spot-card-rating {
-    font-weight: 600;
     font-family: 'Montserrat', sans-serif;
     font-size: min(2.5vmin, 1rem);
     color: black;

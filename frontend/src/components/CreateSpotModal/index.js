@@ -162,17 +162,15 @@ export default function CreateSpotModal() {
             <h3 className='create-subtitle'>Describe your place to guests</h3>
             <label className='create-label'>
                 Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
+            </label>
                 <textarea
                 className='create-input create-desc'
                 type='text'
                 value={description}
                 placeholder='Please write at least 30 characters'
-                rows={'7'}
-                cols='50'
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>
                 <p className='errors'>{errors.description}</p>
-            </label>
             <hr/>
             <h3 className='create-subtitle create-title'>Create a title for your spot</h3>
 
@@ -203,7 +201,7 @@ export default function CreateSpotModal() {
 
             <hr/>
             <h3 className='create-subtitle'>Liven up your spot with photos</h3>
-            <label className='create-label'>Submit a link to at least one photo to publish your spot
+            <label className='create-label'>Submit at least one photo to publish your spot
                 </label>
             <div className='aws'>
             <input

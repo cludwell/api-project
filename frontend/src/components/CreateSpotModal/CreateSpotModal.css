@@ -1,12 +1,12 @@
 .create-spot-modal{
-    max-height: 85vh;
-    max-width: 80vw;
+    height: 85vh;
+    width: 80vw;
     overflow: auto;
-    margin: 1rem;
+    margin: min(2vmin, 1rem);
     margin-bottom: 2rem;
 }
 .create-spot-modal > input {
-    margin: 1rem;
+    margin: min(2vmin, 1rem);
 }
 .create-form {
     max-height: 70vh;
@@ -18,47 +18,50 @@
 }
 textarea {
     align-items: center;
+    height: min(15vmin, 8rem);
+    font-family: 'Montserrat', sans-serif;
+}
+input {
+    font-family: 'Montserrat', sans-serif;
 }
 label {
-    font-size: .8rem;
+    font-size: min(2vmin, .8rem);
 }
-p.errors, span.errors{
+p.errors, span.errors {
     display: block;
     text-align: left;
-    font-size: .8rem;
+    font-size: min(2vmin, .8rem);
     margin: .2rem;
     color: red
 }
 .create-input {
-    width: 25rem;
+    width: min(90%, 24rem);
 }
-.create-segment{
+.create-segment {
     display: flex;
     flex-direction: column;
     flex-wrap: row;
-    width: 25rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1vmin;
+    width: min(90%, 24rem);
+}
+.create-segment input {
+    width: 98%;
 }
 .create-country, .create-address {
     display: flex;
     flex-direction: column;
 }
-.create-city, .create-state,.create-lat, .create-lng {
-    width: 11rem;
-}
-.create-state {
-    width: 11rem;
-}
+
 .create-label {
-    max-width: 25rem;
+    width: min(90%, 24rem);
     text-align: left;
 }
 .create-half {
     width: 5rem
 }
-.create-segment {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
+
 .guests {
     color: black;
     max-width: 25rem;

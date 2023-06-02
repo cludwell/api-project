@@ -21,7 +21,7 @@ export default function SpotCard({ spot }) {
                 <span className="spot-card-rating"><i className="fa-solid fa-star star"></i>{spot.avgRating}</span>
             </div>
             {/* <p className='spot-card-text'>{spot.description}</p> */}
-            <p className='spot-card-text price'>${parseInt(spot.price).toFixed(2)} night</p>
+            <span className='spot-card-text price'>${parseInt(spot.price).toFixed(2)}</span><span className='spot-card-text'> night</span>
         </NavLink>
         </div>
     )
