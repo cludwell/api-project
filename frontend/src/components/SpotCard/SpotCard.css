@@ -64,6 +64,7 @@ font-size: min(2.5vmin, 1rem)
 .fa-solid.fa-ghost{
     font-size: min(2.5vmin, 1rem);
     color: #4a355e;
+    margin-right: min(1vmin, .5rem);
 }
 .spot-tooltip::after {
     content: '';
