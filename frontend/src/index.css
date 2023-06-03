@@ -22,13 +22,11 @@ h4 {
 button {
     padding: min(3vmin, .4rem);
     justify-content: center;
-    transition: .2s ease-in-out;
     display: flex;
     flex-direction: row;
     transition: .2s ease-in-out;
     font-weight: bold;
     cursor: pointer;
-    /* background-color: rgb(214, 37, 75); */
     background-color: #4a2173;
     color: white;
     font-family: 'Montserrat', sans-serif;
@@ -48,6 +46,10 @@ input[type="date" i] {
     overflow: hidden;
     padding: 0px;
     border: none;
+}
+hr {
+    color: rgb(180, 180, 180);
+    margin: min(5vmin, 3rem) 0;
 }
 /* input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
