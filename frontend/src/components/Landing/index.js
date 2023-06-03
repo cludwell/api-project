@@ -50,16 +50,16 @@ export default function Landing() {
         <div className="icon-banner">
 
         {icons.map((ele, i) => (
-        <div className="icon-container" key={i}>
-        <img src={ele[0]} alt="" className={`banner-icon banner-icons-${i}`}  key={i}></img>
-        <div className="icon-title" key={i}>{ele[1]}</div>
+        <div className="icon-container" key={`container${i}`}>
+        <img src={ele[0]} alt="" className={`banner-icon banner-icons-${i}`}  key={`icon${i}`}></img>
+        <div className="icon-title" key={`icontitle${i}`}>{ele[1]}</div>
         </div>
         )) }
 
         </div>
 
         <div className="spot-cards">
-            {data.map(spot => (<SpotCard spot={spot} key={spot.id}/>) )}
+            {data.map(spot => (<SpotCard spot={spot} key={`spotcard${spot.id}`}/>) )}
         </div>
 
         </div>
