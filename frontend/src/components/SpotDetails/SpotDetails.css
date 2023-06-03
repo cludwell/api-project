@@ -117,6 +117,23 @@
 .reserve-total-price {
     float: right;
 }
+.spot-accolade {
+    display: flex;
+    flex-direction: row;
+    margin: min(3vmin, 1.5rem);
+}
+.spot-accolade i,
+.spot-offers i {
+    color: rgb(79, 79, 79);
+    margin-right: min(2.5vmin, 1rem);
+    font-size: min(3vmin, 1.5rem);
+}
+.spot-offers {
+    margin: min(3vmin, 1.5rem);
+}
+.bold-text {
+    font-weight: bold;
+}
 .description {
     display: flexbox;
     font-size: min(2.5vmin, 1rem);
