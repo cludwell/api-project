@@ -25,7 +25,7 @@ export default function CardCarousel({ spot, chosenImage, setChosenImage }) {
     }, [chosenImage, current])
 
     return (
-    <div className='card-carousel'>
+    <div className='card-carousel' key={`${spot.name}`}>
 
     <div className={current > 0 ? 'left-arrow' : 'hidden'} onClick={prevImage}>
     <i className="fa-solid fa-circle-left"/>

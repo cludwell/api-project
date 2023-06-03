@@ -98,24 +98,54 @@ export default function SpotDetails() {
             <div className='description-text'>
             <div className='spot-accolades'>
             <hr></hr>
+
             <div className='dedicated-workspace spot-accolade'>
-                <div className='icon'><i class="fa-solid fa-house-laptop"></i></div>
+                <div className='icon'><i className="fa-solid fa-house-laptop"></i></div>
                 <div className='accolade-text'>
-                    <span className='bold-text'>Dedicated Workspace</span>
-                    <span className='accolade-grey-text'>A room with wifi that's well-suited for working</span>
+                <div className='bold-text'>Dedicated Workspace</div>
+                <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div>
                 </div>
             </div>
             <div className='self-checkin spot-accolade'>
                 <div className='icon'><i class="fa-solid fa-door-open"></i></div>
                 <div className='accolade-text'>
-                    <span className='bold-text'>Dedicated Workspace</span>
-                    <span className='accolade-grey-text'>A room with wifi that's well-suited for working</span>
+                <div className='bold-text'>Dedicated Workspace</div>
+                <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div>
+                </div>
+            </div>
+            <div className='self-checkin spot-accolade'>
+                <div className='icon'><i className="fa-regular fa-calendar"></i></div>
+                <div className='accolade-text'>
+                <div className='bold-text'>Free cancellation</div>
+                <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div>
                 </div>
             </div>
 
             <hr></hr>
             </div>
             <p className='description'>{singleSpot.description}</p>
+            <hr></hr>
+            <h3>What this place offers</h3>
+
+            <div className='spot-offers'>
+            <i className="fa-solid fa-mountain"></i>
+            <span>Wonderful views</span>
+            </div>
+
+            <div className='spot-offers'>
+            <i className="fa-solid fa-kitchen-set"></i>
+            <span>Kitchen</span>
+            </div>
+
+            <div className='spot-offers'>
+            <i className="fa-solid fa-wifi"></i>
+            <span>Wifi</span>
+            </div>
+
+            <div className='spot-offers'>
+            <i className="fa-solid fa-car"></i>
+            <span>Free on-site parking</span>
+            </div>
 
             </div>
             <div className='price-review-reserve'>
@@ -249,6 +279,8 @@ export default function SpotDetails() {
             )) : user && singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
                 : null}
         </div>
+        
+
     </div>
     </div>
     )
