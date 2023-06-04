@@ -79,7 +79,7 @@ export default function SpotDetails() {
             : ` ${singleSpot.numReviews} Reviews`}
         </>
         )}
-        
+
     if (!hasLoaded) return <LoadingIcon />;
 
     return (
@@ -87,8 +87,8 @@ export default function SpotDetails() {
     <div className='spot-details-90'>
         <div className='spot-details'>
             <h1 className='spot-name'>{singleSpot.name}</h1>
-            <h2 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h2>
-            <h4>{reviewLogic()}</h4>
+            {/* <h2 className='spot-subtitle'></h2> */}
+            <h5>{reviewLogic()} ● {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h5>
             <div className='detail-space'>
 
             <div className='detail-images-left'>
