@@ -56,18 +56,20 @@
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
 }
-
+.review-divider {
+    width: 70vw;
+}
 .price-review-reserve {
     font-family: 'Montserrat', sans-serif;
-    border: none;
+    border: 1px rgb(207, 207, 207) solid;
     border-radius: min(1vmin,.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     min-width: min(fit-content, 15rem);
     height: fit-content;
-    box-shadow: 0rem 0rem .3rem grey;
-    margin: min(2vmin, 1rem);
+    box-shadow: 0rem 0rem min(3vmin, 1rem) rgb(207, 207, 207);
+    margin: min(5vmin, 3rem) 0 min(5vmin, 3rem) min(5vmin, 3rem);
     font-size: min(2.5vmin, 1rem);
     padding: min(2vmin, 1rem);
 }
@@ -91,24 +93,53 @@
     font-size: min(2.5vmin, 1rem);
 }
 .reserve-button{
-    border: none;
-    border-radius: 0rem;
     width: min(20vmin, 15rem);
-    height: min(5vmin, 2.3rem);
-    font-size: min(2vmin, 1rem);
-    color:white;
-    font-family: 'Montserrat', sans-serif;
+}
+.reserve-breakdown,
+.reserve-hr {
+    width: 100%;
+}
+.reserve-hr {
+    margin: min(3vmin, 1.5rem)
+}
+.reserve-item {
+    text-decoration: underline;
+}
+.reserve-total-before-taxes {
     font-weight: bold;
-    justify-content: center;
+}
+.reserve-item-cost {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.reserve-total-before-taxes {
+    width: 100%;
+}
+.reserve-total-price {
+    float: right;
+}
+.spot-accolade {
+    display: flex;
+    flex-direction: row;
+    margin: min(3vmin, 1.5rem);
+}
+.spot-accolade i,
+.spot-offers i {
+    color: rgb(79, 79, 79);
+    margin-right: min(2.5vmin, 1rem);
+    font-size: min(3vmin, 1.5rem);
+}
+.spot-offers {
+    margin: min(3vmin, 1.5rem);
+}
+.bold-text {
+    font-weight: bold;
 }
 .description {
     display: flexbox;
     font-size: min(2.5vmin, 1rem);
     line-height: min(3.5vmin, 1.5rem);
-}
-.review-divider,
-.review-body {
-    width: 70vw;
 }
 .review-body {
     display: flex;
@@ -131,6 +162,8 @@
     }
     .price-review-reserve {
         width: fit-content;
+        margin: min(5vmin, 3rem) ;
+
     }
 
 }
