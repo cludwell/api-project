@@ -2,7 +2,6 @@
     width: 100%;
     aspect-ratio: 2/1;
     border-radius: min(3vmin, 1rem);
-    margin-bottom: 20vh;
+    margin-bottom: 3vh;
     font-size: min(2.5vmin, 1rem);
 }
-

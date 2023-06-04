@@ -65,7 +65,21 @@ export default function SpotDetails() {
     const stayDuration = Math.floor(staySeconds/ (3600*24)) / 1000
     const baseCost = (singleSpot.price * stayDuration).toFixed(0)
     const serviceFee = (singleSpot.price * stayDuration * .1).toFixed(0)
-    // const tomorrow = today +
+
+    const reviewLogic = () => {
+       return singleSpot.numReviews === 0 ? (
+         <>
+            <i className="fa-solid fa-star star"></i>
+            New!
+        </>) : (
+        <>
+            <i className="fa-solid fa-star star"></i>
+            {averageRating} ●
+            {singleSpot.numReviews === 1 ? ` ${singleSpot.numReviews} Review`
+            : ` ${singleSpot.numReviews} Reviews`}
+        </>
+        )}
+        
     if (!hasLoaded) return <LoadingIcon />;
 
     return (
@@ -74,6 +88,7 @@ export default function SpotDetails() {
         <div className='spot-details'>
             <h1 className='spot-name'>{singleSpot.name}</h1>
             <h2 className='spot-subtitle'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h2>
+            <h4>{reviewLogic()}</h4>
             <div className='detail-space'>
 
             <div className='detail-images-left'>
@@ -155,17 +170,7 @@ export default function SpotDetails() {
                     <span className='reserve-left-price'>${singleSpot.price} </span>  <span className='reserve-night'>night</span>
                 </span>
                 <span className='reserve-right'>
-            { //either the spot is new with no reviews, or numReviews is displayed
-            singleSpot.numReviews === 0 ? (<>
-            <i className="fa-solid fa-star star review-title-star"></i>
-            New!
-            </>) : (<>
-            <i className="fa-solid fa-star star review-title-star"></i>
-            {averageRating} ●
-            { //either plural or singular number of reviews
-            singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
-            :singleSpot.numReviews + ' Reviews'}
-        </>)}
+            {reviewLogic()}
                 </span>
               </div>
 
@@ -215,21 +220,8 @@ export default function SpotDetails() {
 
         <hr className='rounded'/>
         <div className='reviews-printed'>
-            <h1>{singleSpot.numReviews === 0 ? (
-        <>
-            <i className="fa-solid fa-star star"></i>
-            New!
-        </>
-            ) : (
-         <>
-            <i className="fa-solid fa-star star"></i>
-            {averageRating}
-             ●
-            {singleSpot.numReviews === 1 ? singleSpot.numReviews + ' Review'
-            :singleSpot.numReviews + ' Reviews'}
-         </>
-         )}
-         </h1>
+            <h4>{reviewLogic()}
+         </h4>
             {//ternary logic for if user is logged in and has no review for this spot but also there are no reviews yet
             user && user.id !== singleSpot.ownerId && !spotReviews.length ?
             (<OpenModalMenuItem
@@ -288,9 +280,11 @@ export default function SpotDetails() {
             )) : user && singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
                 : null}
         </div>
-        <h3>Where you'll be</h3>
-        <h4 className='grey where-youll-be'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h4>
+        <hr></hr>
+        <h4>Where you'll be</h4>
+        <h5 className='grey where-youll-be'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h5>
         <Map spot={singleSpot} />
+        <hr></hr>
     </div>
     </div>
     )

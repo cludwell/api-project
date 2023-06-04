@@ -39,8 +39,9 @@
     font-size: min(2.5vmin, 1rem)
 }
 .star {
-    color: gold;
-    font-size: min(3vmin, 1rem)
+    color: rgb(38, 38, 38);
+    font-size: min(3vmin, 1rem);
+    margin-right: min(1vmin, .7rem);
 }
 .spot-tooltip {
     visibility: hidden;

@@ -10,7 +10,7 @@ export default function Map({ spot }) {
     if (!isLoaded) return <LoadingIcon />
     if (loadError) return <div>Error loading GoogleMap</div>
     return (
-        <GoogleMap zoom={10} center={center} mapContainerClassName='google-map'>
+        <GoogleMap zoom={12} center={center} mapContainerClassName='google-map'>
         <Marker position={center} />
         </GoogleMap>
     )
