@@ -10,6 +10,7 @@ import './SpotDetails.css'
 import { useRef } from 'react';
 import PostReviewModal from '../PostReviewModal';
 import LoadingIcon from '../LoadingIcon';
+import Map from './Map';
 
 export default function SpotDetails() {
     const today = new Date().toISOString().slice(0, -14)
@@ -107,7 +108,7 @@ export default function SpotDetails() {
                 </div>
             </div>
             <div className='self-checkin spot-accolade'>
-                <div className='icon'><i class="fa-solid fa-door-open"></i></div>
+                <div className='icon'><i className="fa-solid fa-door-open"></i></div>
                 <div className='accolade-text'>
                 <div className='bold-text'>Dedicated Workspace</div>
                 <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div>
@@ -174,7 +175,7 @@ export default function SpotDetails() {
 
                 <div className='reserve-container checkin'>
                 <label className='reserve-checkin'>CHECK-IN</label>
-                <input className='reserve-start-date' type='date' value={checkin} on onChange={e => setCheckin(e.target.value)} min={today} ></input>
+                <input className='reserve-start-date' type='date' value={checkin} onChange={e => setCheckin(e.target.value)} min={today} ></input>
                 </div>
                 <div className='reserve-container checkout'>
                 <label className='reserve-checkout'>CHECKOUT</label>
@@ -252,35 +253,44 @@ export default function SpotDetails() {
             .map((rev, i) => (
 
             <div className='review-container' key={`review-container${i}`}>
-                <h3 className='username-title' key={'username-iter'+i}>{rev.User.firstName}</h3>
-                <h4 className='review-date' key={'created-iter'+i}>
+
+                <div className='review-user-info' key={`review-user-info${i}`}>
+                <img src='https://i.imgur.com/mMEwXsu.png' alt='user-icon' key={`icon${i}`} className='user-icon'/>
+
+                <div className='review-text'>
+                <div className='username-title' key={'username-iter'+i}>{rev.User.firstName}</div>
+                <div className='review-date' key={'created-iter'+i}>
                     {new Intl.DateTimeFormat('en-GB', {
                     year: "numeric",
                     month: "long",
                     timeZone: 'America/Los_Angeles' })
                     .format(Date.parse(rev.createdAt))
                 }
-                </h4>
+                </div>
+
+                </div>
+                </div>
+
                 <p className='review-body' key={'reviewbody' +i}>{rev.review}</p>
                 {//ternary logic for review-owner to delete review
                 user && user.id === rev.userId ? (
-                <OpenModalMenuItem
-                itemText={`Delete`}
-                onClick={openMenu}
-                onItemClick={closeMenu}
-                modalComponent={<DeleteReviewModal spotId={singleSpot.id} reviewId={rev.id} />}
-                key={`review-delete-button${rev.id}`}
-                />
-
-                ) : null}
-                <hr className='review-divider'></hr>
+                    <OpenModalMenuItem
+                    itemText={`Delete`}
+                    onClick={openMenu}
+                    onItemClick={closeMenu}
+                    modalComponent={<DeleteReviewModal spotId={singleSpot.id} reviewId={rev.id} />}
+                    key={`review-delete-button${rev.id}`}
+                    />
+                    ) : null}
+                {/* <hr className='review-divider'></hr> */}
             </div>
 
             )) : user && singleSpot.Owner.id !==  user.id ? <p>Be the first to post a review!</p>
                 : null}
         </div>
-
-
+        <h3>Where you'll be</h3>
+        <h4 className='grey where-youll-be'>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h4>
+        <Map spot={singleSpot} />
     </div>
     </div>
     )

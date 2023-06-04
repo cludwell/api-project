@@ -2,15 +2,18 @@
 h1,
 .review-title-star {
     font-size: min(5vmin, 2rem);
+    font-family: 'Montserrat', sans-serif;
 }
 h2 {
     font-size: min(4vmin, 1.7rem);
 }
 h3 {
     font-size: min(3.5vmin, 1.5rem);
+    font-family: 'Montserrat', sans-serif;
 }
 h4 {
     font-size: min(3vmin, 1.3rem);
+    font-family: 'Montserrat', sans-serif;
 }
 /* body {
     margin: 0rem;

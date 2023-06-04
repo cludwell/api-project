@@ -191,3 +191,17 @@
     overflow: hidden;
     margin-bottom: min(2vmin, 1rem);
 }
+.grey {
+    color: rgb(82, 82, 82);
+}
+.user-icon {
+    width: min(8vmin, 3rem);
+    height: min(8vmin, 3rem) ;
+    border-radius: 50%;
+    margin: 0 min(3vmin, 1rem) 0 0;
+}
+.review-user-info {
+    display: flex;
+    flex-direction: row;
+    margin: min(3vmin, 1rem) 0;
+}
