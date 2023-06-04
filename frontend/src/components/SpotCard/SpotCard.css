@@ -41,7 +41,7 @@
 .star {
     color: rgb(38, 38, 38);
     font-size: min(3vmin, 1rem);
-    margin-right: min(1vmin, .7rem);
+    margin-right: min(1vmin, .5rem);
 }
 .spot-tooltip {
     visibility: hidden;
