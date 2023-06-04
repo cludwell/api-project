@@ -271,7 +271,7 @@ export default function SpotDetails() {
                 </div>
                 </div>
 
-                <p className='review-body' key={'reviewbody' +i}>{rev.review}</p>
+                <span className='review-body' key={'reviewbody' +i}>{rev.review}</span>
                 {//ternary logic for review-owner to delete review
                 user && user.id === rev.userId ? (
                     <OpenModalMenuItem

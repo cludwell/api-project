@@ -143,9 +143,6 @@
 }
 .review-body {
     display: flex;
-    justify-content: center;
-    align-content: center;
-    margin: 0 auto;
     margin-bottom: 5vmin;
     font-size: min(2.5vmin, 1rem);
     line-height: min(3.5vmin, 1.5rem);
