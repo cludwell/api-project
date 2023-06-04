@@ -5,12 +5,13 @@
 .right-arrow {
     font-size: min(3vw, 1.5rem);
     color: white;
-    opacity: .8;
+    opacity: 0;
     position: absolute;
     top: min(50%, 15rem);
     cursor: pointer;
     z-index: 1;
     border-radius: 50%;
+    transition: .2s ease-in-out;
 }
 .right-arrow {
     right: 1vw;

@@ -56,7 +56,7 @@
     margin-top: min(2vmin, .5rem);
     margin-left: min(2vmin, .5rem);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.2s ease-in-out;
     box-shadow: min(2vmin, 2rem);
     margin-left: 1rem;
     font-family: 'Montserrat', sans-serif;
@@ -68,11 +68,15 @@
     color: #4a355e;
     margin-right: min(1vmin, .5rem);
 }
-.spot-tooltip::after {
+.spot-tooltip::after,
+.left-arrow::after,
+.right-arrow::after {
     content: '';
     position: absolute;
 }
-.spot-card:hover .spot-tooltip {
+.spot-card:hover .spot-tooltip,
+.spot-card:hover .left-arrow,
+.spot-card:hover .right-arrow {
     visibility: visible;
     opacity: 1;
 }
