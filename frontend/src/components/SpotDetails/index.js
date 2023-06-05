@@ -82,12 +82,14 @@ export default function SpotDetails() {
 
     if (!hasLoaded) return <LoadingIcon />;
 
+    const handleSubmit = () => {
+        
+    }
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
         <div className='spot-details'>
             <h1 className='spot-name'>{singleSpot.name}</h1>
-            {/* <h2 className='spot-subtitle'></h2> */}
             <h5>{reviewLogic()} ● {singleSpot.city}, {singleSpot.state}, {singleSpot.country}</h5>
             <div className='detail-space'>
 

@@ -111,7 +111,7 @@
 .reserve-item-cost {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .reserve-total-before-taxes {
     width: 100%;

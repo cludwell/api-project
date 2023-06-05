@@ -57,7 +57,7 @@
 @media only screen and (max-width: 768px){
     .spot-cards,
     .manage-spots {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         margin-top: min(15vmin, 7rem);
     }
     .icon-title {
