@@ -11,6 +11,7 @@ import { useRef } from 'react';
 import PostReviewModal from '../PostReviewModal';
 import LoadingIcon from '../LoadingIcon';
 import Map from './Map';
+import { bookingsBySpotId } from '../../store/bookings';
 
 export default function SpotDetails() {
     const today = new Date().toISOString().slice(0, -14)
@@ -51,11 +52,13 @@ export default function SpotDetails() {
             await dispatch(findSpotReviews(spotId));
             return setHasLoaded(true)
         }
+        dispatch(bookingsBySpotId(spotId))
         dispatch(restoreUser());
         loadData()
     }, [dispatch, spotId])
 
-
+    const bookings = useSelector(state => state.bookings)
+    console.log('BOOKINGS', bookings)
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
     const spotReviews = useSelector(state => state.reviews)
@@ -82,9 +85,9 @@ export default function SpotDetails() {
 
     if (!hasLoaded) return <LoadingIcon />;
 
-    const handleSubmit = () => {
-        
-    }
+    // const handleSubmit = () => {
+
+    // }
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
