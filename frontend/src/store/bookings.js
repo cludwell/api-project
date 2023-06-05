@@ -24,7 +24,7 @@ export default function bookingsReducer (state = initialState, action) {
     switch (action.type) {
         case POPULATE_BOOKINGS:
             console.log('in the bookings reducer', action)
-            return {...state, allBookings: { [action.bookings.spotId]: action.bookings} }
+            return {...state, allBookings: action.bookings }
         default:
             return state;
     }
