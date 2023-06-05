@@ -24,10 +24,11 @@ export default function SpotDetails() {
     const [ hasLoaded, setHasLoaded ] = useState(false)
     const [ checkin, setCheckin ] = useState(today)
     const [ checkout, setCheckout ] = useState(tomorrow)
-    const [ adults, setAdults ] = useState(1)
-    const [ children, setChildren ] = useState(0)
-    const [ infants, setInfants ] = useState(0)
-    const [ pets, setPets ] = useState(0)
+    const [ hasSubmitted, setHasSubmitted ] = useState(false)
+    // const [ adults, setAdults ] = useState(1)
+    // const [ children, setChildren ] = useState(0)
+    // const [ infants, setInfants ] = useState(0)
+    // const [ pets, setPets ] = useState(0)
     //modal functionality
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef();
@@ -50,14 +51,14 @@ export default function SpotDetails() {
         const loadData = async () => {
             await dispatch(findSingleSpot(spotId));
             await dispatch(findSpotReviews(spotId));
+            await dispatch(bookingsBySpotId(spotId))
             return setHasLoaded(true)
         }
-        dispatch(bookingsBySpotId(spotId))
         dispatch(restoreUser());
         loadData()
     }, [dispatch, spotId])
 
-    const bookings = useSelector(state => state.bookings)
+    const bookings = useSelector(state => state.bookings.allBookings.Bookings)
     console.log('BOOKINGS', bookings)
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
@@ -85,9 +86,15 @@ export default function SpotDetails() {
 
     if (!hasLoaded) return <LoadingIcon />;
 
-    // const handleSubmit = () => {
-
-    // }
+    const validate = dateString => {
+        const day = new Date(dateString)
+        return bookings.some(ele => day >= ele.startDate && day <= ele.endDate)
+    }
+    document.querySelector('input').onchange = evt => {
+        if (!validate(evt.target.value)) {
+          evt.target.value = '';
+        }
+      }
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
