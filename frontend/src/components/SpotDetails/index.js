@@ -60,8 +60,8 @@ export default function SpotDetails() {
         loadData()
     }, [dispatch, spotId])
 
+
     const bookings = useSelector(state => state.bookings.allBookings.Bookings)
-    console.log('BOOKINGS', bookings)
     //slices of state
     const singleSpot = useSelector(state => state.singleSpot)
     const spotReviews = useSelector(state => state.reviews)
@@ -73,7 +73,6 @@ export default function SpotDetails() {
     const serviceFee = (singleSpot.price * stayDuration * .1).toFixed(0)
     const unavailable = bookings?.map(ele => ({ start: new Date(ele.startDate), end: new Date(ele.endDate) }));
 
-    console.log('UNAVAILABLE', unavailable)
     const reviewLogic = () => {
        return singleSpot.numReviews === 0 ? (
          <>
@@ -90,16 +89,11 @@ export default function SpotDetails() {
 
     if (!hasLoaded) return <LoadingIcon />;
 
-    const changeCheckin = (date) => {
-        const checkinDate = Date.parse(date);
-        if (!isNaN(checkinDate)) {
-          setCheckin(new Date(checkinDate));
-          if (checkinDate >= Date.parse(checkout)) {
-            const checkoutDate = new Date(checkinDate + 86400000);
-            setCheckout(checkoutDate);
-          }
-        }
-      };
+    const handleCheckin = date => {
+        setCheckin(date)
+        if (date >= new Date(checkout)) setCheckout(Date.parse(date) + 86400000)
+    }
+    
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
@@ -201,13 +195,12 @@ export default function SpotDetails() {
                 className='reserve-start-date'
                 type='date'
                 dateFormat='yyyy/MM/dd'
-                selected={checkin ? parseISO(checkin) : null}
+                selected={checkin ? new Date(checkin) : null}
                 scrollableMonthYearDropdown
-                isClearable
                 excludeDateIntervals={unavailable}
-                onChange={date => changeCheckin(date)}
+                onChange={date => handleCheckin(date)}
                 minDate={new Date()}
-                maxDate={checkout}
+                // maxDate={checkout}
                 />
 
                 </div>
@@ -219,10 +212,9 @@ export default function SpotDetails() {
                 dateFormat={'yyyy/MM/dd'}
                 selected={checkout ? new Date(checkout) : null}
                 scrollableMonthYearDropdown
-                isClearable
                 excludeDateIntervals={unavailable}
                 onChange={date => setCheckout(date)}
-                minDate={checkin ? new Date(Date.parse(checkin) + 86400000) : null}
+                minDate={checkin}
                 />
                 </div>
 
