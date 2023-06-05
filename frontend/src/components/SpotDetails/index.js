@@ -12,19 +12,21 @@ import PostReviewModal from '../PostReviewModal';
 import LoadingIcon from '../LoadingIcon';
 import Map from './Map';
 import { bookingsBySpotId } from '../../store/bookings';
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { parseISO } from 'date-fns'
+
 
 export default function SpotDetails() {
     const today = new Date().toISOString().slice(0, -14)
-    const tomorrowData = new Date()
-    const day = tomorrowData.getDate() + 1
-    tomorrowData.setDate(day)
-    const tomorrow = tomorrowData.toISOString().slice(0, -14)
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
     const { spotId } = useParams()
     const dispatch = useDispatch();
     const [ hasLoaded, setHasLoaded ] = useState(false)
     const [ checkin, setCheckin ] = useState(today)
     const [ checkout, setCheckout ] = useState(tomorrow)
-    const [ hasSubmitted, setHasSubmitted ] = useState(false)
+    // const [ hasSubmitted, setHasSubmitted ] = useState(false)
     // const [ adults, setAdults ] = useState(1)
     // const [ children, setChildren ] = useState(0)
     // const [ infants, setInfants ] = useState(0)
@@ -69,7 +71,9 @@ export default function SpotDetails() {
     const stayDuration = Math.floor(staySeconds/ (3600*24)) / 1000
     const baseCost = (singleSpot.price * stayDuration).toFixed(0)
     const serviceFee = (singleSpot.price * stayDuration * .1).toFixed(0)
+    const unavailable = bookings?.map(ele => ({ start: new Date(ele.startDate), end: new Date(ele.endDate) }));
 
+    console.log('UNAVAILABLE', unavailable)
     const reviewLogic = () => {
        return singleSpot.numReviews === 0 ? (
          <>
@@ -86,15 +90,16 @@ export default function SpotDetails() {
 
     if (!hasLoaded) return <LoadingIcon />;
 
-    const validate = dateString => {
-        const day = new Date(dateString)
-        return bookings.some(ele => day >= ele.startDate && day <= ele.endDate)
-    }
-    document.querySelector('input').onchange = evt => {
-        if (!validate(evt.target.value)) {
-          evt.target.value = '';
+    const changeCheckin = (date) => {
+        const checkinDate = Date.parse(date);
+        if (!isNaN(checkinDate)) {
+          setCheckin(new Date(checkinDate));
+          if (checkinDate >= Date.parse(checkout)) {
+            const checkoutDate = new Date(checkinDate + 86400000);
+            setCheckout(checkoutDate);
+          }
         }
-      }
+      };
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
@@ -192,11 +197,33 @@ export default function SpotDetails() {
 
                 <div className='reserve-container checkin'>
                 <label className='reserve-checkin'>CHECK-IN</label>
-                <input className='reserve-start-date' type='date' value={checkin} onChange={e => setCheckin(e.target.value)} min={today} ></input>
+                <DatePicker
+                className='reserve-start-date'
+                type='date'
+                dateFormat='yyyy/MM/dd'
+                selected={checkin ? parseISO(checkin) : null}
+                scrollableMonthYearDropdown
+                isClearable
+                excludeDateIntervals={unavailable}
+                onChange={date => changeCheckin(date)}
+                minDate={new Date()}
+                maxDate={checkout}
+                />
+
                 </div>
                 <div className='reserve-container checkout'>
                 <label className='reserve-checkout'>CHECKOUT</label>
-                <input className='reserve-end-date' type='date' value={checkout} onChange={e => setCheckout(e.target.value)} min={tomorrow}></input>
+                <DatePicker
+                className='reserve-end-date'
+                type='date'
+                dateFormat={'yyyy/MM/dd'}
+                selected={checkout ? new Date(checkout) : null}
+                scrollableMonthYearDropdown
+                isClearable
+                excludeDateIntervals={unavailable}
+                onChange={date => setCheckout(date)}
+                minDate={checkin ? new Date(Date.parse(checkin) + 86400000) : null}
+                />
                 </div>
 
                 </div>
