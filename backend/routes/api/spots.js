@@ -62,8 +62,8 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
 //Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     let {startDate, endDate} = req.body
-    let spot = await Spot.findByPk(req.params.spotId)
-    let parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    const spot = await Spot.findByPk(req.params.spotId)
+    const parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
     if (!spot) {
         return res.status(404).json({
             "message": "Spot couldn't be found",
@@ -85,28 +85,44 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             "statusCode": 403
           })
     }
-    let bookings = await Booking.findAll({
+    const bookings = await Booking.findAll({
         where: {spotId: spot.id},
         attributes: ['startDate', 'endDate']
     })
 
-    let errors = {}
-    let bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
+    const errors = {}
+    const bookingsArray = bookings.map(ele => [Date.parse(ele.startDate), Date.parse(ele.endDate)])
         .sort((a,b) => a[0] - b[0])
-    let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
-    let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
-    let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
-    if (fallsWithin.length) {
-        errors.startDate = "Start date conflicts with an existing booking"
-        errors.endDate = "End date conflicts with an existing booking"
-    }
-    if (startingConflicts.length) {
-        errors.startDate = "Start date conflicts with an existing booking"
-    }
-    if (endingConflicts.length) {
-        errors.endDate = "End date conflicts with an existing booking"
-    }
-    if (startingConflicts.length || endingConflicts.length || fallsWithin.length) {
+
+    bookingsArray.forEach(ele => {
+            // start date conflicts
+            if (ele[0] <= parsedStart && parsedStart <= ele[1]) {
+                errors.startDate = "Start date conflicts with an existing booking"
+            }
+            // end date conflicts
+            if (ele[0] <= parsedEnd && parsedEnd <= ele[1]) {
+                errors.endDate = "End date conflicts with an existing booking"
+            }
+            // falls within another booking's dates conflicts
+            if (parsedStart <= ele[0] && ele[1] <= parsedEnd) {
+                errors.startDate = "Start date conflicts with an existing booking"
+                errors.endDate = "End date conflicts with an existing booking"
+            }
+        })
+    // let startingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedStart && parsedStart <= ele[1]))
+    // let endingConflicts = bookingsArray.filter(ele=> (ele[0] <= parsedEnd && parsedEnd <= ele[1]))
+    // let fallsWithin = bookingsArray.filter(ele=> (parsedStart <= ele[0] && ele[1] <= parsedEnd))
+    // if (fallsWithin.length) {
+    //     errors.startDate = "Start date conflicts with an existing booking"
+    //     errors.endDate = "End date conflicts with an existing booking"
+    // }
+    // if (startingConflicts.length) {
+    //     errors.startDate = "Start date conflicts with an existing booking"
+    // }
+    // if (endingConflicts.length) {
+    //     errors.endDate = "End date conflicts with an existing booking"
+    // }
+    if (errors.length) {
         return res.status(403).json({
             "title": "Booking conflict",
             "message": "Sorry, this spot is already booked for the specified dates",
@@ -114,7 +130,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             errors
         })
     } else {
-        let newBooking = await Booking.create({
+        const newBooking = await Booking.create({
             startDate,
             endDate,
             userId: req.user.id,
@@ -230,15 +246,6 @@ singleMulterUpload("url"),
             "statusCode": 403
           })
     }
-
-    // const uploadParams = {
-    //     Bucket: 'scarebnbaws',
-    //     Key: req.file.originalname,
-    //     Body: req.file.buffer,
-    //   };
-
-    // const s3UploadResult = await s3.upload(uploadParams).promise();
-    // const url = s3UploadResult.Location;
     const spotImage = await SpotImage.create({
         spotId: req.params.spotId,
         url: url,
