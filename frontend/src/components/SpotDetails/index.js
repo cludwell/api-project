@@ -11,7 +11,7 @@ import { useRef } from 'react';
 import PostReviewModal from '../PostReviewModal';
 import LoadingIcon from '../LoadingIcon';
 import Map from './Map';
-import { bookingsBySpotId } from '../../store/bookings';
+import { bookingsBySpotId, createBookingRequest } from '../../store/bookings';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { parseISO } from 'date-fns'
@@ -68,7 +68,7 @@ export default function SpotDetails() {
     const user = useSelector(store => store.session.user)
     const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
     const staySeconds = (Date.parse(checkout) - Date.parse(checkin))
-    const stayDuration = Math.floor(staySeconds/ (3600*24)) / 1000
+    let stayDuration = Math.floor(staySeconds/ (3600*24)) / 1000
     const baseCost = (singleSpot.price * stayDuration).toFixed(0)
     const serviceFee = (singleSpot.price * stayDuration * .1).toFixed(0)
     const unavailable = bookings?.map(ele => ({ start: new Date(ele.startDate), end: new Date(ele.endDate) }));
@@ -90,10 +90,15 @@ export default function SpotDetails() {
     if (!hasLoaded) return <LoadingIcon />;
 
     const handleCheckin = date => {
-        setCheckin(date)
-        if (date >= new Date(checkout)) setCheckout(Date.parse(date) + 86400000)
+        setCheckin(new Date(date))
+        if (new Date(date)  >= new Date(checkout)) setCheckout(new Date(Date.parse(date) + 86400000))
     }
 
+    const onSubmit = e => {
+        e.preventDefault()
+        createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId})
+        console.log('startdate', Date.parse(checkin), 'enddate', Date.parse(checkout))
+    }
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
@@ -219,7 +224,7 @@ export default function SpotDetails() {
 
                 </div>
 
-                <button className='reserve-button' >Reserve</button>
+                <button className='reserve-button' onSubmit={onSubmit} >Reserve</button>
               </form>
                 <p className='reserve-grey-text'>You won't be charged yet </p>
                 <table className='reserve-breakdown'>

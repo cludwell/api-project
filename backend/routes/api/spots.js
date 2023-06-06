@@ -64,6 +64,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     let {startDate, endDate} = req.body
     const spot = await Spot.findByPk(req.params.spotId)
     const parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
+    console.log('==============================PARSEDSTART', parsedStart)
     if (!spot) {
         return res.status(404).json({
             "message": "Spot couldn't be found",
