@@ -93,7 +93,7 @@ export default function SpotDetails() {
         setCheckin(date)
         if (date >= new Date(checkout)) setCheckout(Date.parse(date) + 86400000)
     }
-    
+
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
@@ -200,7 +200,6 @@ export default function SpotDetails() {
                 excludeDateIntervals={unavailable}
                 onChange={date => handleCheckin(date)}
                 minDate={new Date()}
-                // maxDate={checkout}
                 />
 
                 </div>
