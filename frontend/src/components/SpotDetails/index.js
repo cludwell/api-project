@@ -91,14 +91,15 @@ export default function SpotDetails() {
 
     const handleCheckin = date => {
         setCheckin(new Date(date))
-        if (new Date(date)  >= new Date(checkout)) setCheckout(new Date(Date.parse(date) + 86400000))
+        if (date  >= new Date(checkout)) setCheckout(new Date(Date.parse(date) + 86400000))
     }
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault()
-        createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId})
-        console.log('startdate', Date.parse(checkin), 'enddate', Date.parse(checkout))
+        console.log('ON SUBMIT', {startDate: checkin, endDate: checkout, spotId: spotId})
+        await  dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId}))
     }
+
     return (
     <div className='spot-details-page'>
     <div className='spot-details-90'>
@@ -190,7 +191,7 @@ export default function SpotDetails() {
                 </span>
               </div>
 
-              <form className='reserve-spot'>
+              <form className='reserve-spot' onSubmit={onSubmit}>
 
                 <div className='all-but-button'>
 
@@ -200,7 +201,7 @@ export default function SpotDetails() {
                 className='reserve-start-date'
                 type='date'
                 dateFormat='yyyy/MM/dd'
-                selected={checkin ? new Date(checkin) : null}
+                selected={checkin ? new Date(checkin) : new Date()}
                 scrollableMonthYearDropdown
                 excludeDateIntervals={unavailable}
                 onChange={date => handleCheckin(date)}
@@ -224,7 +225,7 @@ export default function SpotDetails() {
 
                 </div>
 
-                <button className='reserve-button' onSubmit={onSubmit} >Reserve</button>
+                <button className='reserve-button' >Reserve</button>
               </form>
                 <p className='reserve-grey-text'>You won't be charged yet </p>
                 <table className='reserve-breakdown'>

@@ -32,7 +32,7 @@ export const bookingsBySpotId = spotId => async dispatch => {
 }
 export const createBookingRequest = bookingData => async dispatch => {
     const response = await csrfFetch(`/api/spots/${bookingData.spotId}/bookings`,
-    {"method": "PUT", "body": JSON.stringify(bookingData)})
+    {"method": "POST", "body": JSON.stringify(bookingData)})
     if (response.ok) {
         const booking = await response.json()
         dispatch(createBooking(booking))
@@ -48,14 +48,15 @@ export const userBookingsRequest = () => async dispatch => {
     }
 }
 const initialState = {
-    allBookings: {}
+    allBookings: {},
+    userBookings: []
 }
 export default function bookingsReducer (state = initialState, action) {
     switch (action.type) {
         case POPULATE_BOOKINGS:
             return {...state, allBookings: action.bookings }
         case CREATE_BOOKING:
-            return {...state, userBookings: [...action.booking]}
+            return {...state, userBookings: [...state.userBookings, action.bookingData]}
         case USER_BOOKINGS:
             return {...state, userBookings: [...action.bookingData]}
         default:
