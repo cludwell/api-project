@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { User, Spot, SpotImage, Review, ReviewImage, Booking } = require('../../db/models');
+const { Spot, SpotImage, Booking } = require('../../db/models');
 const { check, Result } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -34,7 +34,7 @@ router.get('/current', requireAuth, async (req, res) => {
         : 'No preview available'
         bookingPayload.push(bookdata)
     }
-    if (!req.user.id || !bookings.length) {
+    if (!req.user.id) {
         return res.status(404).json({
             "message": "The requested resource could not be found",
             "statusCode": 404
