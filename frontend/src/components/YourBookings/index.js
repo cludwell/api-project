@@ -3,7 +3,8 @@ import './YourBookings'
 import { useDispatch, useSelector } from 'react-redux'
 import { userBookingsRequest } from '../../store/bookings'
 import LoadingIcon from '../LoadingIcon'
-
+import { GoogleMap, Marker } from '@react-google-maps/api'
+import BookingMap from './BookingMap.js'
 export default function YourBookings() {
     const dispatch = useDispatch()
     const [ isLoaded, setIsLoaded ] = useState(false)
@@ -27,6 +28,7 @@ export default function YourBookings() {
             <div className='book-city'>{book.Spot.city} </div>
             <div className='book-state'>{book.Spot.state}, {book.Spot.country} </div>
             </div>
+            <BookingMap spot={book.Spot} />
             </div>
             )) : null}
 
