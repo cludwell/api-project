@@ -8,24 +8,24 @@ const {sequelize, Op} = require('sequelize');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth')
 
 //Get all of the Current User's Bookings
 router.get('/current', requireAuth, async (req, res) => {
-    const bookings = await Booking.findAll({
+    let bookings = await Booking.findAll({
         where: {userId: req.user.id}
     })
-    const bookingPayload = []
+    let bookingPayload = []
     for (const book of bookings) {
-        const spot = await Spot.findOne({
+        let spot = await Spot.findOne({
             where: { id: book.spotId },
             attributes: { exclude: ['description', 'createdAt', 'updatedAt' ] }
         })
-        const bookdata = {}, spotData = {}
+        let bookdata = {}, spotData = {}
         for (let key in book.dataValues) bookdata[key] = book[key]
         for (let key in spot.dataValues) spotData[key] = spot[key]
 
-        const previewImageData = await SpotImage.findOne({
+        let previewImageData = await SpotImage.findOne({
             where: { spotId: spot["id"]},
             attributes: ['url']
         })

@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 import LoadingIcon from '../LoadingIcon'
-import './Map.css'
 export default function Map({ spot }) {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY

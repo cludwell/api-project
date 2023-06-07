@@ -8,24 +8,28 @@ import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import SpotCard from '../SpotCard';
 import UpdateSpotModal from '../UpdateSpotModal/UpdateSpotModal';
 import './ManageSpots.css'
+import YourBookings from '../YourBookings';
+import LoadingIcon from '../LoadingIcon';
 
 export default function ManageSpots() {
+    const [ hasLoaded, setHasLoaded ] = useState(false)
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(restoreUser());
-        dispatch(getCurrentUserSpots());
+        const loadData = async () => {
+            await dispatch(restoreUser());
+            await dispatch(getCurrentUserSpots());
+            return setHasLoaded(true)
+        }
+        loadData()
     }, [dispatch]);
-    const user = useSelector(state => state.session.user);
+    // const user = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots.currentUser)
-    // const spots = useSelector(state => state.spots.allSpots);
-    // let userSpots = spots && Object.values(spots) ? Object.values(spots).filter(ele => user.id === ele.ownerId) : (<h1>Loading...</h1>)
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
     const openMenu = () => {
         if (showMenu) return;
         setShowMenu(true);
     }
-
     useEffect(() => {
         if (!showMenu) return;
         const closeMenu = e => {
@@ -36,9 +40,7 @@ export default function ManageSpots() {
     }, [showMenu]);
     const closeMenu = () => setShowMenu(false);
 
-    useEffect(() => {
-        dispatch(getCurrentUserSpots())
-    }, [spots, dispatch])
+    if (!hasLoaded) return <LoadingIcon />
 
     return (
         <div className='manage-spots-div'>
@@ -84,6 +86,7 @@ export default function ManageSpots() {
             ))
            ) : null }
             </div>
+            <YourBookings/>
         </div>
     )
 }

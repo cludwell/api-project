@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
-import './YourBookings'
+import './YourBookings.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { userBookingsRequest } from '../../store/bookings'
 import LoadingIcon from '../LoadingIcon'
-import { GoogleMap, Marker } from '@react-google-maps/api'
 import BookingMap from './BookingMap.js'
 export default function YourBookings() {
     const dispatch = useDispatch()
-    const [ isLoaded, setIsLoaded ] = useState(false)
+    const [ hasLoaded, setHasLoaded ] = useState(false)
     useEffect(() => {
         const loadData = async () => {
             await dispatch(userBookingsRequest())
-            setIsLoaded(true)
+            return setHasLoaded(true)
         }
         loadData()
     })
     const bookings = useSelector(state => state.bookings.Bookings)
-    if (!isLoaded) return <LoadingIcon />
+    if (!hasLoaded) return <LoadingIcon />
 
     return (
         <div className='your-bookings'>
