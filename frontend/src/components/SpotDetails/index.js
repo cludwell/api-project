@@ -14,7 +14,6 @@ import Map from './Map';
 import { bookingsBySpotId, createBookingRequest } from '../../store/bookings';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { parseISO } from 'date-fns'
 
 
 export default function SpotDetails() {

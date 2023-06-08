@@ -22,7 +22,6 @@ export default function ManageSpots() {
         dispatch(restoreUser());
         loadData()
     }, [dispatch]);
-    // const user = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots.currentUser)
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -41,7 +40,6 @@ export default function ManageSpots() {
     const closeMenu = () => setShowMenu(false);
 
     if (!hasLoaded) return <LoadingIcon />
-    // console.log('bookings', bookings)
     return (
         <div className='manage-spots-div'>
             <h1 className='manage-spots-title'>Manage Spots</h1>
