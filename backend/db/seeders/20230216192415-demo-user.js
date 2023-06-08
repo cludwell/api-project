@@ -9,6 +9,7 @@ module.exports = {
     options.tableName = 'Users';
     return queryInterface.bulkInsert(options, [
       {
+        // user 1
         email: 'bobby@user.io',
         username: 'thatsmypurse',
         firstName: 'Bobby',
@@ -16,6 +17,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password')
       },
       {
+        // user 2
         email: 'hank@user.io',
         username: 'PropaneHank',
         firstName: 'Hank',
@@ -23,6 +25,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password2')
       },
       {
+        // user3
         email: 'peggy@user.io',
         username: 'PeggyEnEspanol',
         firstName: 'Peggy',
@@ -30,6 +33,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password3')
       },
       {
+        // user4
         email: 'bill@user.io',
         username: 'InfiniteWalrus',
         firstName: 'Bill',
@@ -37,6 +41,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password4')
       },
       {
+        // user5
         email: 'johnredcorn@user.io',
         username: 'RedCorn',
         firstName: 'John',
@@ -44,6 +49,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password5')
       },
       {
+        // user6
         email: 'luanne@user.io',
         username: 'HairArtiste',
         firstName: 'Luanne',
@@ -51,6 +57,7 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password6')
       },
       {
+        // user7
         email: 'bountyhunter@user.io',
         username: 'TruthOutThere',
         firstName: 'Dale',
@@ -58,10 +65,19 @@ module.exports = {
         hashedPassword: bcrypt.hashSync('password7')
       },
       {
+        // user8
         email: 'demo@user.io',
         username: 'demo',
         firstName: 'demo',
         lastName: 'user',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+      {
+        // user9
+        email: 'employer@user.io',
+        username: 'employer',
+        firstName: 'future',
+        lastName: 'boss',
         hashedPassword: bcrypt.hashSync('password')
       },
     ], {});

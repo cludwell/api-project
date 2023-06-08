@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
           if (val <= this.startDate) throw new Error(`Need valid duration.`)
         }
       }
+    },
+    cost: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
