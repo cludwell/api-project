@@ -28,6 +28,7 @@ function App() {
         <Route exact={true} path='/' component={Landing}/>
         <Route exact={true} path='/bookings' component={YourBookings} />
         <Route exact={true} path='/bookings/:bookingId' component={ReservationConfirmation} />
+        <Route exact={true} path='/bookings' component={YourBookings} />
       </Switch>
     </>
   );

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import './ReservationConfirmation.css'
 import { useEffect, useState } from 'react'
 import LoadingIcon from '../LoadingIcon'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { userBookingsRequest } from '../../store/bookings'
 
 export default function ReservationConfirmation() {
@@ -10,6 +10,7 @@ export default function ReservationConfirmation() {
     const dispatch = useDispatch()
     const { bookingId } = useParams()
     const [ hasLoaded, setHasLoaded ] = useState(false)
+    const history = useHistory()
 
     useEffect(() => {
         const loadData = async () => {
@@ -23,6 +24,9 @@ export default function ReservationConfirmation() {
     const booking = bookings && bookings.length ? bookings[0] : null
     const startDate = booking ? new Date(booking.startDate) : null
     const endDate = booking ? new Date(booking.endDate) : null
+    const onClick = e => {
+        history.push('/bookings')
+    }
     if (!hasLoaded) return <LoadingIcon />
 
     return (
@@ -60,7 +64,7 @@ export default function ReservationConfirmation() {
         <span className='checkout-deets'>Check-out 11am</span>
     </div>
     </div>
-    <div className='reservation-checkout'></div>
+    <div className='full-iternary' onClick={onClick}>View full iternary</div>
 
     </div>
 
