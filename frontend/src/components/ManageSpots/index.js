@@ -16,10 +16,10 @@ export default function ManageSpots() {
     const dispatch = useDispatch();
     useEffect(() => {
         const loadData = async () => {
-            await dispatch(restoreUser());
             await dispatch(getCurrentUserSpots());
             return setHasLoaded(true)
         }
+        dispatch(restoreUser());
         loadData()
     }, [dispatch]);
     // const user = useSelector(state => state.session.user);
@@ -41,7 +41,7 @@ export default function ManageSpots() {
     const closeMenu = () => setShowMenu(false);
 
     if (!hasLoaded) return <LoadingIcon />
-
+    // console.log('bookings', bookings)
     return (
         <div className='manage-spots-div'>
             <h1 className='manage-spots-title'>Manage Spots</h1>

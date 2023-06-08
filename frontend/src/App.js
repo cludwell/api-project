@@ -10,6 +10,7 @@ import Landing from "./components/Landing";
 import { Route } from "react-router-dom";
 import SpotDetails from './components/SpotDetails'
 import ManageSpots from "./components/ManageSpots";
+import YourBookings from "./components/YourBookings";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,8 +24,9 @@ function App() {
       <Header isLoaded={isLoaded}/>
       <Switch>
         <Route path='/spotsfe/:spotId' component={SpotDetails}/>
-        <Route exact path='/manage-spots' component={ManageSpots} />
-        <Route exact path='/' component={Landing}/>
+        <Route exact={true} path='/manage-spots' component={ManageSpots} />
+        <Route exact={true} path='/' component={Landing}/>
+        <Route exact={true} path='/bookings' component={YourBookings} />
       </Switch>
     </>
   );

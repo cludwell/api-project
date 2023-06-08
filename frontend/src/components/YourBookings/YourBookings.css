@@ -2,3 +2,8 @@
     width: min(25vmin, 30rem);
     aspect-ratio: 2/1;
 }
+.booking-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

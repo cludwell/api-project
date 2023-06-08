@@ -11,7 +11,11 @@ router.use(cookieParser())
 const { requireAuth } = require('../../utils/auth')
 
 //Get all of the Current User's Bookings
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/current', async (req, res) => {
+    // res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    // res.set('Pragma', 'no-cache');
+    // res.set('Expires', '0');
+
     let bookings = await Booking.findAll({
         where: {userId: req.user.id}
     })
@@ -25,13 +29,14 @@ router.get('/current', requireAuth, async (req, res) => {
         for (let key in book.dataValues) bookdata[key] = book[key]
         for (let key in spot.dataValues) spotData[key] = spot[key]
 
-        let previewImageData = await SpotImage.findOne({
+        let previewImageData = await SpotImage.findAll({
             where: { spotId: spot["id"]},
             attributes: ['url']
         })
         bookdata.Spot = spotData
-        bookdata.Spot.previewImage = previewImageData ? previewImageData.url
+        bookdata.Spot.previewImage = previewImageData ? previewImageData[0].url
         : 'No preview available'
+        bookdata.SpotImages = previewImageData
         bookingPayload.push(bookdata)
     }
     if (!req.user.id) {
@@ -40,7 +45,8 @@ router.get('/current', requireAuth, async (req, res) => {
             "statusCode": 404
         })
     }
-    res.status(200).json({Bookings: bookingPayload})
+
+    return res.json({Bookings: bookingPayload})
 })
 
 //Edit a Booking

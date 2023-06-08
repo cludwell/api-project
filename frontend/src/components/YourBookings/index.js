@@ -13,21 +13,25 @@ export default function YourBookings() {
             return setHasLoaded(true)
         }
         loadData()
-    })
-    const bookings = useSelector(state => state.bookings.Bookings)
+        // dispatch(userBookingsRequest())
+    }, [dispatch])
+    const bookings = useSelector(state => state.bookings.userBookings.Bookings)
     if (!hasLoaded) return <LoadingIcon />
 
     return (
         <div className='your-bookings'>
-            {bookings && bookings.length ? bookings.map(book => (
-            <div className='booking'>
-            <div className='booking-address'>
-            <div className='book-spot-name'>{book.Spot.name} </div>
-            <div className='book-street'>{book.Spot.address} </div>
-            <div className='book-city'>{book.Spot.city} </div>
-            <div className='book-state'>{book.Spot.state}, {book.Spot.country} </div>
+            {bookings.length ? bookings.map((book, i) => (
+            <div className='booking' key={`container${i}`}>
+            <div className='booking-row'>
+            <div className='booking-address' key={`address${i}`}>
+            <div className='book-spot-name' key={`name${i}`}>{book.Spot.name} </div>
+            <div className='book-street' key={`street${i}`}>{book.Spot.address} </div>
+            <div className='book-city' key={`city${i}`}>{book.Spot.city} </div>
+            <div className='book-state' key={`state${i}`}>{book.Spot.state}, {book.Spot.country} </div>
             </div>
-            <BookingMap spot={book.Spot} />
+            <BookingMap spot={book.Spot} key={`map${i}`}/>
+            </div>
+            <hr key={`hr${i}`}></hr>
             </div>
             )) : null}
 

@@ -19,6 +19,9 @@ h5 {
     font-size: min(2.5vmin, 1.1rem);
     font-family: 'Montserrat', sans-serif;
 }
+body {
+    font-family: 'Montserrat', sans-serif;
+}
 /* body {
     margin: 0rem;
     padding: 0rem;
@@ -35,7 +38,6 @@ button {
     transition: .2s ease-in-out;
     font-weight: bold;
     cursor: pointer;
-    /* background-color: rgb(214, 37, 75); */
     background-color: #4a2173;
     color: white;
     font-family: 'Montserrat', sans-serif;

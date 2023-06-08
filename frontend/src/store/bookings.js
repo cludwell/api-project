@@ -56,9 +56,9 @@ export default function bookingsReducer (state = initialState, action) {
         case POPULATE_BOOKINGS:
             return {...state, allBookings: action.bookings }
         case CREATE_BOOKING:
-            return {...state, userBookings: [...state.userBookings, action.bookingData]}
+            return {...state, userBookings: action.bookingData}
         case USER_BOOKINGS:
-            return {...state, userBookings: [...action.bookingData]}
+            return {...state, userBookings: action.bookingData}
         default:
             return state;
     }
