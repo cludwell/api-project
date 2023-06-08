@@ -31,6 +31,9 @@ module.exports = {
       endDate: {
         type: Sequelize.DATE
       },
+      cost: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -11,6 +11,7 @@ import { Route } from "react-router-dom";
 import SpotDetails from './components/SpotDetails'
 import ManageSpots from "./components/ManageSpots";
 import YourBookings from "./components/YourBookings";
+import ReservationConfirmation from "./components/ReservationConfirmation";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
         <Route exact={true} path='/manage-spots' component={ManageSpots} />
         <Route exact={true} path='/' component={Landing}/>
         <Route exact={true} path='/bookings' component={YourBookings} />
+        <Route exact={true} path='/bookings/:bookingId' component={ReservationConfirmation} />
       </Switch>
     </>
   );

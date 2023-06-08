@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { Spot, SpotImage, Booking } = require('../../db/models');
+const { Spot, SpotImage, Booking, User } = require('../../db/models');
 const { check, Result } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -16,27 +16,31 @@ router.get('/current', async (req, res) => {
     // res.set('Pragma', 'no-cache');
     // res.set('Expires', '0');
 
-    let bookings = await Booking.findAll({
+    const bookings = await Booking.findAll({
         where: {userId: req.user.id}
     })
-    let bookingPayload = []
+    const bookingPayload = []
     for (const book of bookings) {
-        let spot = await Spot.findOne({
+        const spot = await Spot.findOne({
             where: { id: book.spotId },
             attributes: { exclude: ['description', 'createdAt', 'updatedAt' ] }
         })
-        let bookdata = {}, spotData = {}
+        const bookdata = {}, spotData = {}
         for (let key in book.dataValues) bookdata[key] = book[key]
         for (let key in spot.dataValues) spotData[key] = spot[key]
 
-        let previewImageData = await SpotImage.findAll({
+        const previewImageData = await SpotImage.findAll({
             where: { spotId: spot["id"]},
             attributes: ['url']
+        })
+        const owner = await User.findOne({
+            where: { id: spot.ownerId}
         })
         bookdata.Spot = spotData
         bookdata.Spot.previewImage = previewImageData ? previewImageData[0].url
         : 'No preview available'
         bookdata.SpotImages = previewImageData
+        bookdata.Owner = owner
         bookingPayload.push(bookdata)
     }
     if (!req.user.id) {
