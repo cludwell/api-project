@@ -4,15 +4,15 @@
     align-items: center;
 }
 .your-reservation div {
-    font-size: min(2vmin, 1rem);
+    font-size: min(3vmin, 1rem);
 }
 .your-reservation span {
-    font-size: min(2vmin, 1rem);
+    font-size: min(3vmin, 1rem);
 }
 .reservation-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: min(3vmin, 1rem);
+    gap: min(3vmin, 3rem);
     width: min(95%, 75rem);
     margin-top: 10vmin;
 }
@@ -48,7 +48,8 @@
 .checkout-deets {
     float: right;
 }
-.reservation-checkin {
+.reservation-checkin,
+.reservation-subtitle {
     color: rgb(74, 74, 74);
     font-weight: bold;
 }
@@ -65,4 +66,17 @@
     margin: 2vmin 0rem;
     border-radius: .5vmin;
     cursor: pointer;
+}
+.reservation-subtitle div {
+    font-size: 2.5vmin;
+}
+.reservation-right hr {
+    margin: 2vmin 0rem;
+}
+@media only screen and (max-width: 768px){
+    .reservation-content {
+        display: flex;
+        flex-direction: column;
+    }
+
 }

@@ -69,10 +69,28 @@ export default function ReservationConfirmation() {
     </div>
 
     <div className='reservation-right'>
-        placeholder for now
+    <div className='reservation-subtitle'>Address</div>
+    <div className='reservation-address'>{booking.Spot.address}, {booking.Spot.city}, {booking.Spot.state}, {booking.Spot.country}</div>
+    <hr></hr>
+    <div className='reservation-subtitle'>Guests</div>
+    <div className='reservation-guests'>1</div>
+    <hr></hr>
+    <div className='reservation-subtitle'>Amount</div>
+    <div className='reservation-cost'>${booking.cost.toFixed(2)}</div>
+    <hr></hr>
+    <div className='reservation-subtitle'>Reservation Code</div>
+    <div className='reservation-code'>ACBDEFGH1234</div>
+    <hr></hr>
+    <div className='reservation-subtitle'>{booking.Owner.firstName} is your host</div>
+    <div>Contact {booking.Owner.firstName} to coordinate arrival time and key exchange.</div>
+    <hr></hr>
+    <div className='reservation-subtitle'>Know what to expect</div>
+    <div>Make sure to review the house rules and amenities.</div>
+    <hr></hr>
+    <div className='reservation-subtitle'>Customer Support</div>
+    <div>Contact our support team 24/7 from anywhere in the world</div>
     </div>
     </div>
-
 
     </div>
     )
