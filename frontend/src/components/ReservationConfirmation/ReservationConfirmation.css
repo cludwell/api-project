@@ -1,5 +1,47 @@
+.your-reservation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .reservation-content {
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr; */
-    /* width: min(95%, 75rem); */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: min(3vmin, 1rem);
+    width: min(95%, 75rem);
+    margin-top: 10vmin;
+}
+.reservation-img {
+    width: 100%;
+    aspect-ratio: 5/3;
+    object-fit: cover;
+}
+.reservation-intro {
+    font-weight: bold;
+}
+.reservation-grey-text {
+    color: rgb(74, 74, 74);
+    font-weight: bold;
+}
+.reservation-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: min(2.5vmin, 1rem) 0px;
+    font-size: min(2.5vmin, 1.4rem);
+}
+.reservation-user-icon {
+    border-radius: 50%;
+    width: min(6vmin, 4rem);
+    height: fit-content;
+}
+.reservation-title {
+    margin: min(2vmin, 1rem) 0rem;
+    color: rgb(75, 75, 75);
+}
+.checkout-deets {
+    float: right;
+}
+.reservation-checkin {
+    color: rgb(74, 74, 74);
+    font-weight: bold;
 }
