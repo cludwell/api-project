@@ -72,7 +72,7 @@ export default function SpotDetails() {
     const baseCost = (singleSpot.price * stayDuration).toFixed(0)
     const serviceFee = (singleSpot.price * stayDuration * .1).toFixed(0)
     const unavailable = bookings?.map(ele => ({ start: new Date(ele.startDate), end: new Date(ele.endDate) }));
-
+    const total = parseInt(baseCost) + parseInt(serviceFee) + 20
     const reviewLogic = () => {
        return singleSpot.numReviews === 0 ? (
          <>
@@ -96,7 +96,7 @@ export default function SpotDetails() {
 
     const onSubmit = async e => {
         e.preventDefault()
-        const booking = await dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId}))
+        const booking = await dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId, cost: total}))
         history.push(`/bookings/${booking.id}`)
     }
 
@@ -245,7 +245,7 @@ export default function SpotDetails() {
                 </tbody>
                 </table>
                 <hr className='reserve-hr'></hr>
-                <div className='reserve-total-before-taxes'><span>Total Before Taxes</span> <span className='reserve-total-price'>${parseInt(baseCost) + parseInt(serviceFee) + 20}</span></div>
+                <div className='reserve-total-before-taxes'><span>Total Before Taxes</span> <span className='reserve-total-price'>${total}</span></div>
 
 
 

@@ -21,14 +21,14 @@ export default function ReservationConfirmation() {
     }, [dispatch])
 
     const bookings = useSelector(state => state.bookings.userBookings.Bookings)
-    const booking = bookings && bookings.length ? bookings[bookings.length -1] : null
+    const booking = bookings && bookings.length ? bookings.find(b => b['id']=== parseInt(bookingId)) : null
     const startDate = booking ? new Date(booking.startDate) : null
     const endDate = booking ? new Date(booking.endDate) : null
     const onClick = e => {
         history.push('/bookings')
     }
-    if (!hasLoaded) return <LoadingIcon />
-
+    if (!hasLoaded || !booking) return <LoadingIcon />
+    console.log('BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOKINGS', bookings.find(b => b['id']=== parseInt(bookingId)))
     return (
 
     <div className='your-reservation'>

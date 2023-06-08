@@ -61,10 +61,9 @@ router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
 
 //Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, async (req, res) => {
-    let {startDate, endDate} = req.body
+    let {startDate, endDate, cost} = req.body
     const spot = await Spot.findByPk(req.params.spotId)
     const parsedStart = Date.parse(startDate), parsedEnd = Date.parse(endDate)
-    console.log('==============================PARSEDSTART', parsedStart)
     if (!spot) {
         return res.status(404).json({
             "message": "Spot couldn't be found",
@@ -134,6 +133,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         const newBooking = await Booking.create({
             startDate,
             endDate,
+            cost,
             userId: req.user.id,
             spotId: spot.id
         })
