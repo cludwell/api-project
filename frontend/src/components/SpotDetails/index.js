@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { findSpotReviews } from '../../store/reviews';
 import { restoreUser } from '../../store/session';
 import { findSingleSpot } from '../../store/singlespot';
@@ -25,6 +25,7 @@ export default function SpotDetails() {
     const [ hasLoaded, setHasLoaded ] = useState(false)
     const [ checkin, setCheckin ] = useState(today)
     const [ checkout, setCheckout ] = useState(tomorrow)
+    const history = useHistory()
     // const [ hasSubmitted, setHasSubmitted ] = useState(false)
     // const [ adults, setAdults ] = useState(1)
     // const [ children, setChildren ] = useState(0)
@@ -95,8 +96,8 @@ export default function SpotDetails() {
 
     const onSubmit = async e => {
         e.preventDefault()
-        console.log('ON SUBMIT', {startDate: checkin, endDate: checkout, spotId: spotId})
-        await  dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId}))
+        const booking = await dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId}))
+        history.push(`/bookings/${booking.id}`)
     }
 
     return (

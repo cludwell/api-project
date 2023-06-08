@@ -21,7 +21,7 @@ export default function ReservationConfirmation() {
     }, [dispatch])
 
     const bookings = useSelector(state => state.bookings.userBookings.Bookings)
-    const booking = bookings && bookings.length ? bookings[0] : null
+    const booking = bookings && bookings.length ? bookings[bookings.length -1] : null
     const startDate = booking ? new Date(booking.startDate) : null
     const endDate = booking ? new Date(booking.endDate) : null
     const onClick = e => {
