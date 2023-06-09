@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userBookingsRequest } from '../../store/bookings'
 import LoadingIcon from '../LoadingIcon'
 import BookingMap from './BookingMap.js'
+import { NavLink } from 'react-router-dom'
 export default function YourBookings() {
     const dispatch = useDispatch()
     const [ hasLoaded, setHasLoaded ] = useState(false)
@@ -19,36 +20,40 @@ export default function YourBookings() {
 
     return (
         <div className='your-bookings'>
+        <div className='your-bookings-content'>
+            <h3>Upcoming Reservations</h3>
+            <hr></hr>
             {bookings.length ? bookings.map((book, i) => (
-            <div className='booking' key={`container${i}`}>
+            <div className={i % 2 === 0 ?'booking' : 'grey-booking booking'} key={`container${i}`}>
             <div className='booking-row'>
-            <div className='booking-address' key={`address${i}`}>
-            <div className='book-spot-name' key={`name${i}`}>{book.Spot.name} {book.id}</div>
-            <div className='book-street' key={`street${i}`}>{book.Spot.address} </div>
-            <div className='book-city' key={`city${i}`}>{book.Spot.city} </div>
-            <div className='book-state' key={`state${i}`}>{book.Spot.state}, {book.Spot.country} </div>
-            <p></p>
-            {/* <div className='reservation-checkin your-bookings'>
-    <div>
-        <span className='checkin-deets'>{new Date(book.startDate).toString().split(' ')[0]},</span>
-        <span className='checkout-deets'>{new Date(book.endDate).toString().split(' ')[0]}</span>
-    </div>
-    <div>
-       <span className='checkin-deets'>{new Date(book.startDate).toString().slice(3, 15)}</span>
-       <span className='checkout-deets'>{new Date(book.endDate).toString().slice(3, 15)}</span>
-    </div>
-    <div>
-        <span className='checkin-deets'>Check-in time is 4pm-9pm</span>
-        <span className='checkout-deets'>Check-out 11am</span>
-    </div>
-    </div> */}
+            <div className='booking-text'>
+            <div className='booking-times'>
+            <div className='booking-checkin'>
+                <div className='booking-checkin-deets checkin-day'>{new Date(book.startDate).toString().split(' ')[0]}</div>
+                <div className='booking-checkin-deets checkin-month-day'>{new Date(book.startDate).toString().slice(3, 11)}</div>
+                <div className='booking-checkin-deets checkin-year'>{new Date(book.startDate).toString().slice(11, 15)}</div>
             </div>
+            <div className='booking-checkout'>
+                <div className='booking-checkout-deets checkout-day'>{new Date(book.endDate).toString().split(' ')[0]}</div>
+               <div className='booking-checkout-deets checkout-month-day'>{new Date(book.endDate).toString().slice(3, 11)}</div>
+               <div className='booking-checkout-deets checkout-year'>{new Date(book.endDate).toString().slice(11, 15)}</div>
+            </div>
+
+            </div>
+            <div className='booking-address'>
+            <div className='booking-spot-name' key={`name${i}`}>{book.Spot.name}</div>
+            <div>{book.Spot.address} </div>
+            <div>{book.Spot.city} {book.Spot.state}, {book.Spot.country} </div>
+            </div>
+                </div>
             <BookingMap spot={book.Spot} key={`map${i}`}/>
+
+
             </div>
-            <hr key={`hr${i}`}></hr>
+            {/* <hr key={`hr${i}`}></hr> */}
             </div>
             )) : null}
-
+        </div>
         </div>
     )
 }

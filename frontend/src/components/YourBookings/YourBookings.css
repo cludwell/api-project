@@ -1,14 +1,58 @@
+.your-bookings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: min(3vmin, 1rem);
+}
+.your-bookings-content {
+    width: min(90vw, 75rem);
+}
 .booking-map {
     width: min(35vmin, 30rem);
     aspect-ratio: 2/1;
     transition: .3s ease-in-out;
 }
-
+.booking,
+.grey-booking {
+    border-radius: 1vmin;
+    padding: 2vmin;
+}
+.grey-booking {
+    background-color: rgb(230, 230, 230);
+}
 .booking-row{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    margin: 1vmin;
 }
-.booking-address {
-    width: 90%;
+.booking-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+
+}
+
+.booking-checkin-deets,
+.booking-checkout-deets {
+    font-size: 2vmin;
+}
+.checkin-day,
+.checkout-day {
+    font-size: 2.5vmin;
+}
+.checkin-year,
+.checkout-year {
+    font-size: 1.5vmin;
+}
+.booking-times {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+}
+.your-bookings {
+    margin-top: 12vmin;
 }
