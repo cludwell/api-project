@@ -12,6 +12,7 @@
     width: min(35vmin, 30rem);
     aspect-ratio: 2/1;
     transition: .3s ease-in-out;
+    border-radius: .5vmin;
 }
 .booking,
 .grey-booking {
@@ -36,7 +37,8 @@
 }
 
 .booking-checkin-deets,
-.booking-checkout-deets {
+.booking-checkout-deets,
+.booking-spot-name {
     font-size: 2vmin;
 }
 .checkin-day,
