@@ -1,9 +1,14 @@
 .booking-map {
-    width: min(25vmin, 30rem);
+    width: min(35vmin, 30rem);
     aspect-ratio: 2/1;
+    transition: .3s ease-in-out;
 }
+
 .booking-row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+.booking-address {
+    width: 90%;
 }

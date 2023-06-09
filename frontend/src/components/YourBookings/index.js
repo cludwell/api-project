@@ -27,6 +27,21 @@ export default function YourBookings() {
             <div className='book-street' key={`street${i}`}>{book.Spot.address} </div>
             <div className='book-city' key={`city${i}`}>{book.Spot.city} </div>
             <div className='book-state' key={`state${i}`}>{book.Spot.state}, {book.Spot.country} </div>
+            <p></p>
+            {/* <div className='reservation-checkin your-bookings'>
+    <div>
+        <span className='checkin-deets'>{new Date(book.startDate).toString().split(' ')[0]},</span>
+        <span className='checkout-deets'>{new Date(book.endDate).toString().split(' ')[0]}</span>
+    </div>
+    <div>
+       <span className='checkin-deets'>{new Date(book.startDate).toString().slice(3, 15)}</span>
+       <span className='checkout-deets'>{new Date(book.endDate).toString().slice(3, 15)}</span>
+    </div>
+    <div>
+        <span className='checkin-deets'>Check-in time is 4pm-9pm</span>
+        <span className='checkout-deets'>Check-out 11am</span>
+    </div>
+    </div> */}
             </div>
             <BookingMap spot={book.Spot} key={`map${i}`}/>
             </div>

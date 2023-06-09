@@ -61,6 +61,7 @@ function ProfileButton({ user }) {
             <hr></hr>
             <p>{user.email}</p>
             <p><NavLink exact to={`/manage-spots`}>Manage Spots</NavLink></p>
+            <p><NavLink exact={true} to='/bookings' >Your Bookings</NavLink> </p>
             <hr></hr>
             <p>
               <button onClick={logout}>Log Out</button>

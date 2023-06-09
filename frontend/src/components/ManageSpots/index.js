@@ -84,7 +84,6 @@ export default function ManageSpots() {
             ))
            ) : null }
             </div>
-            <YourBookings/>
         </div>
     )
 }

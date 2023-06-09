@@ -44,6 +44,7 @@ button {
     font-size: min(2vmin, .8rem);
     border: none;
     width: fit-content;
+    margin: 1vmin;
 }
 button:hover {
     background-color: #8253b0;

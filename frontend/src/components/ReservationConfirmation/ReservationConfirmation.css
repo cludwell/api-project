@@ -14,7 +14,7 @@
     grid-template-columns: 1fr 1fr;
     gap: min(3vmin, 3rem);
     width: min(95%, 75rem);
-    margin-top: 10vmin;
+    margin-top: 11vmin;
 }
 .reservation-img {
     width: 100%;
@@ -42,8 +42,9 @@
     height: fit-content;
 }
 .reservation-title {
-    margin: min(2vmin, 1rem) 0rem;
+    margin: 0rem 0rem min(2vmin, 1rem) 0rem;
     color: rgb(75, 75, 75);
+
 }
 .checkout-deets {
     float: right;
