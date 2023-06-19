@@ -73,6 +73,7 @@ export default function SpotDetails() {
     const serviceFee = (singleSpot.price * stayDuration * .1).toFixed(0)
     const unavailable = bookings?.map(ele => ({ start: new Date(ele.startDate), end: new Date(ele.endDate) }));
     const total = parseInt(baseCost) + parseInt(serviceFee) + 20
+
     const reviewLogic = () => {
        return singleSpot.numReviews === 0 ? (
          <>
@@ -142,15 +143,15 @@ export default function SpotDetails() {
             <div className='self-checkin spot-accolade'>
                 <div className='icon'><i className="fa-solid fa-door-open"></i></div>
                 <div className='accolade-text'>
-                <div className='bold-text'>Dedicated Workspace</div>
-                <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div>
+                <div className='bold-text'>Self Check In</div>
+                <div className='accolade-grey-text'>Check yourself in with the keypad</div>
                 </div>
             </div>
             <div className='self-checkin spot-accolade'>
                 <div className='icon'><i className="fa-regular fa-calendar"></i></div>
                 <div className='accolade-text'>
                 <div className='bold-text'>Free cancellation</div>
-                <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div>
+                {/* <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div> */}
                 </div>
             </div>
 
@@ -225,7 +226,7 @@ export default function SpotDetails() {
 
                 </div>
 
-                <button className='reserve-button' >Reserve</button>
+                <button className='reserve-button' disabled={user ? false : true}>Reserve</button>
               </form>
                 <p className='reserve-grey-text'>You won't be charged yet </p>
                 <table className='reserve-breakdown'>

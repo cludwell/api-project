@@ -29,7 +29,7 @@ const s3 = new AWS.S3();
 
 
 //Get all Bookings for a Spot based on the Spot's id
-router.get('/:spotId/bookings', requireAuth, async (req,res) => { 'a'
+router.get('/:spotId/bookings', async (req,res) => { 'a'
     let spotQuery= await Spot.findByPk(req.params.spotId)
     if (!spotQuery || !req.params.spotId) {
         return res.status(404).json({
