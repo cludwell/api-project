@@ -2,26 +2,18 @@
     width: 20rem;
 }
 .signup-title{
-    margin-left: 1rem;
+    margin-left: min(2vmin, 1rem);
 }
 .signup-button {
     border: none;
     border-radius: 0rem;
     width: 15rem;
     height: 2rem;
-    background-color: #957DAD;
     color:white;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     justify-content: center;
     margin: 1rem;
-}
-.signup-button:active:enabled {
-    background-color: #4a2173;
-    box-shadow: 0rem 0rem 3rem .2rem lightslategray;
-}
-.signup-button:hover:enabled {
-    border: 2px #D291BC solid;
 }
 .signup-input {
     margin: .5rem;
