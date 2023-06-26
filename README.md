@@ -1,105 +1,110 @@
-scarebnb is a spoof of airbnb with a theme of haunted locations. The airbnb  logo has looked like a planchette to me, the part of a ouija board that the players guide. Keeping the theme while also trying to be work appropriate was quite a challenge, as there were many haunted locations that I wanted to include but the backstories were just to grisly.
+## SCAREBNB
+
+Scarebnb is a spoof of airbnb with a theme of haunted locations. The airbnb  logo has looked like a planchette to me, the part of a ouija board that the players guide. Keeping the theme while also trying to be work appropriate was quite a challenge, as there were many haunted locations that I wanted to include but the backstories were just to grisly.
+
+### TECHNOLOGIES
 
 Technologies used include,
--csrf
--express js
--React js
--Redux
-In addition to various other npm packages
+*Javascript
+*React.js/Redux.js
+*react-LOTTIE
+*Express.js
+*PostgreSQL
+*Sequelize
+
+### LAUNCHING APP
 
 To launch the app locally, cd into the authenticate-me directory. Create two terminals. Cd one into the back end folder and enter npm start in the terminal. The other should cd into the frontend directory, enter npm start into that terminal as well. The app should now open in your default internet browser.
 
 Showcase:
-![homepage]
-[homepage]: ./images/homepage.png
+
+![homepage](./images/homepage.png)
 
 
-Backend routes include
+### BACKEND ROUTES
 
-//Get all of the Current User's Bookings
-proxy/api/bookingscurrent
+    *Get all of the Current User's Bookings
+    'proxy/api/bookingscurrent'
 
-//Edit a Booking
-proxy/api/bookings:bookingId
+    *Edit a Booking
+    'proxy/api/bookings:bookingId'
 
-//Delete a Booking
-proxy/api/bookings:bookingId
+    *Delete a Booking
+    proxy/api/bookings:bookingId
 
-//Delete a Review Image
-proxy/api/review-images:imageId
+    *Delete a Review Image
+    'proxy/api/review-images:imageId'
 
-//Add an Image to a Review based on the Review's id
-proxy/api/reviews:reviewId/images
+    *Add an Image to a Review based on the Review's id
+    'proxy/api/reviews:reviewId/images'
 
-//Delete a Review
-proxy/api/reviews:reviewId
+    *Delete a Review
+    'proxy/api/reviews:reviewId'
 
-//Edit a Review
-proxy/api/reviews/:reviewId
+    *Edit a Review
+    'proxy/api/reviews/:reviewId'
 
-//Get all Reviews of the Current User
-proxy/api/reviews/current
+    *Get all Reviews of the Current User
+    'proxy/api/reviews/current'
 
+    *Get the Current User
+    'proxy/api/session/'
 
-//Get the Current User
-proxy/api/session/
+    *Login
+    'proxy/api/session/'
 
-//Login
-proxy/api/session/
+    *Logout
+    'proxy/api/session/'
 
-//Logout
-proxy/api/session/
+    *Restore User
+    'proxy/api/session/'
 
-//Restore User
-proxy/api/session/
+    *Signup
+    'proxy/api/users/'
 
-//Signup
-proxy/api/users/
+    *Delete a Spot Image
+    'proxy/api/spot-images/:imageId'
 
-//Delete a Spot Image
-proxy/api/spot-images/:imageId
+    *Get all Bookings for a Spot based on the Spot's id
+    'proxy/api/spots/:spotId/bookings'
 
-//Get all Bookings for a Spot based on the Spot's id
-proxy/api/spots/:spotId/bookings
+    *Create a Booking from a Spot based on the Spot's id
+    'proxy/api/spots/:spotId/bookings'
 
-//Create a Booking from a Spot based on the Spot's id
-proxy/api/spots/:spotId/bookings
+    *Create a Review for a Spot based on the Spot's id
+    'proxy/api/spots/:spotId/reviews'
 
-//Create a Review for a Spot based on the Spot's id
-proxy/api/spots/:spotId/reviews
+    *Get all Reviews by a Spot's id
+    'proxy/api/spots/:spotId/reviews'
 
-//Get all Reviews by a Spot's id
-proxy/api/spots/:spotId/reviews
+    *Add an Image to a Spot based on the Spot's id
+    'proxy/api/spots/:spotId/images'
 
-//Add an Image to a Spot based on the Spot's id
-proxy/api/spots/:spotId/images
+    *Get all Spots owned by the Current User
+    'proxy/api/spots/current'
 
-//Get all Spots owned by the Current User
-proxy/api/spots/current
+    *Edit a Spot
+    'proxy/api/spots/:spotId'
 
-//Edit a Spot
-proxy/api/spots/:spotId
+    *Delete a Spot
+    proxy/api/spots/:spotId
 
-//Delete a Spot
-proxy/api/spots/:spotId
+    *Create a Spot
+    'proxy/api/spots/'
 
-//Create a Spot
-proxy/api/spots/
+    *Get details of a Spot from an id
+    'proxy/api/spots/:id'
 
-//Get details of a Spot from an id
-proxy/api/spots/:id
+    *Get all Spots
+    'proxy/api/spots/'
 
-//Get all Spots
-proxy/api/spots/
+### DATABASE SCHEMA
 
 The database scheme looks like this
 
-![project-schema]
-[project-schema]: ./images/airbnb_dbdiagram.png
+![project-schema](./images/airbnb_dbdiagram.png)
 
-The shape of the redux store is located in the ./storeshape.js file.
-
-The majority of the store looks like this
+### REDUX STATE SHAPE
 
 const store = {
   session: {},
@@ -124,15 +129,17 @@ const store = {
   },
 }
 
+### THANK YOUS
+
 Many thanks to these authors and sources
 https://www.cntraveler.com/gallery/the-most-haunted-places-in-america
 https://www.nbcnews.com/business/markets/10-most-haunted-houses-us-flna1c6589514
 
 And to the businesses and customers who help foster a curiosity in the spooky!
 
+### ASSIGNMENT REQUIREMENTS
 
 Feature Checklist follows
-
 
 Mod 5 AirBnB Feature Checklist
 
