@@ -105,7 +105,7 @@ The database scheme looks like this
 ![project-schema](./images/airbnb_dbdiagram.png)
 
 ### REDUX STATE SHAPE
-
+```
 const store = {
   session: {},
   spots: {
@@ -128,7 +128,7 @@ const store = {
     },
   },
 }
-
+```
 ### THANK YOUS
 
 Many thanks to these authors and sources
