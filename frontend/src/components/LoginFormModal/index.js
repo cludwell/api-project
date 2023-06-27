@@ -12,10 +12,24 @@ function LoginFormModal() {
   const { closeModal } = useModal();
   const [ disable, setDisable] = useState(true)
 
+
+  const validate = () => {
+    const err = []
+    if (password.length < 6) err.push('Passwords are at least 6 characters')
+    else if (!password) err.push('Please enter your password')
+    if (credential.length < 4 || !credential) {
+      err.push('Credentials are at least 4 characters')
+      setDisable(true)
+    } else setDisable(true)
+    setErrors(err)
+    return err
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors([]);
-    return dispatch(sessionActions.login({ credential, password }))
+    validate();
+    if (errors.length) return
+    else dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(
         async (res) => {
@@ -25,10 +39,6 @@ function LoginFormModal() {
       );
   };
 
-  useEffect(() => {
-    if (credential.length >= 4 &&  password.length >= 6) setDisable(false)
-    else setDisable(true)
-  }, [credential, password])
 
   const demoUser = (e) => {
     setCredential('demo')
@@ -42,10 +52,7 @@ function LoginFormModal() {
       <form onSubmit={handleSubmit}
       className='login-form'>
 
-          {errors?.map((error, idx) => (
-            <p className='errors'
-            key={idx}>{error}</p>
-          ))}
+          {errors?.map((error, idx) => (<p className='errors' key={idx}>{error}</p>))}
 
           <input
           className="login-input"
