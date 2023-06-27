@@ -15,7 +15,7 @@
 .github-icon,
 .linkedin-icon,
 svg {
-    width: 2rem;
+    width: min(6vmin, 2rem);
     object-fit: cover;
     margin: 0 1vmin;
     transition: .2s ease-in-out;
