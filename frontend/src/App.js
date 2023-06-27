@@ -12,6 +12,7 @@ import SpotDetails from './components/SpotDetails'
 import ManageSpots from "./components/ManageSpots";
 import YourBookings from "./components/YourBookings";
 import ReservationConfirmation from "./components/ReservationConfirmation";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function App() {
         <Route exact={true} path='/bookings/:bookingId' component={ReservationConfirmation} />
         <Route exact={true} path='/bookings' component={YourBookings} />
       </Switch>
+      <Footer />
     </>
   );
 }
