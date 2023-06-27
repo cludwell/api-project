@@ -18,13 +18,12 @@ form {
 .login-button, .demo-user{
     border: none;
     border-radius: 0rem;
-    width: 15rem;
+    width: min(30vmin, 15rem);
     height: 2rem;
     color:white;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     justify-content: center;
-    margin: 1rem;
 }
 
 .login-form > p {
