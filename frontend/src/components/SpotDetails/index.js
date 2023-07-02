@@ -53,16 +53,16 @@ export default function SpotDetails() {
         const loadData = async () => {
             await dispatch(findSingleSpot(spotId));
             await dispatch(findSpotReviews(spotId));
-            await dispatch(bookingsBySpotId(spotId))
             return setHasLoaded(true)
         }
+        dispatch(bookingsBySpotId(spotId))
         dispatch(restoreUser());
         loadData()
     }, [dispatch, spotId])
 
 
-    const bookings = useSelector(state => state.bookings.allBookings.Bookings)
     //slices of state
+    const bookings = useSelector(state => state.bookings.allBookings.Bookings)
     const singleSpot = useSelector(state => state.singleSpot)
     const spotReviews = useSelector(state => state.reviews)
     const user = useSelector(store => store.session.user)
