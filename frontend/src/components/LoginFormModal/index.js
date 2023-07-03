@@ -8,19 +8,18 @@ function LoginFormModal() {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
-  const [ disable, setDisable] = useState(true)
 
 
   const validate = () => {
     const err = []
-    if (password.length < 6) err.push('Passwords are at least 6 characters')
-    else if (!password) err.push('Please enter your password')
+    if (password.length < 6) err.password = 'Passwords are at least 6 characters'
+    else if (!password) err.password = 'Please enter your password'
     if (credential.length < 4 || !credential) {
-      err.push('Credentials are at least 4 characters')
-      setDisable(true)
-    } else setDisable(true)
+      err.credential = 'Credentials are at least 4 characters'
+
+    }
     setErrors(err)
     return err
   }
@@ -52,7 +51,11 @@ function LoginFormModal() {
       <form onSubmit={handleSubmit}
       className='login-form'>
 
-          {errors?.map((error, idx) => (<p className='errors' key={idx}>{error}</p>))}
+          {errors.length ? errors?.map((error, idx) => (
+          <p className='errors' key={idx}>{error}</p>))
+          : typeof errors === 'object' ? Object.values(errors).map((error, idx) => (
+          <p className='errors' key={idx}>{error}</p>))
+          : null}
 
           <input
           className="login-input"
@@ -73,7 +76,7 @@ function LoginFormModal() {
         <button
         className="login-button"
         type="submit"
-        disabled={disable}>Log In</button>
+        >Log In</button>
         <button
         className="demo-user"
         onClick={demoUser}

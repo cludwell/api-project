@@ -26,11 +26,9 @@ export default function SpotDetails() {
     const [ checkin, setCheckin ] = useState(today)
     const [ checkout, setCheckout ] = useState(tomorrow)
     const history = useHistory()
-    // const [ hasSubmitted, setHasSubmitted ] = useState(false)
-    // const [ adults, setAdults ] = useState(1)
-    // const [ children, setChildren ] = useState(0)
-    // const [ infants, setInfants ] = useState(0)
-    // const [ pets, setPets ] = useState(0)
+    const [ errors, setErrors ] = useState({})
+    const [ hasSubmitted, setHasSubmitted ] = useState(false)
+
     //modal functionality
     const [showMenu, setShowMenu] = useState(false)
     const ulRef = useRef();
@@ -61,6 +59,7 @@ export default function SpotDetails() {
     }, [dispatch, spotId])
 
 
+
     //slices of state
     const bookings = useSelector(state => state.bookings.allBookings.Bookings)
     const singleSpot = useSelector(state => state.singleSpot)
@@ -88,6 +87,12 @@ export default function SpotDetails() {
         </>
         )}
 
+    useEffect(() => {
+        const err = {}
+        if (!user) err.user = 'Please sign in to make a reservation'
+        setErrors(err)
+    }, [user])
+
     if (!hasLoaded) return <LoadingIcon />;
 
     const handleCheckin = date => {
@@ -95,8 +100,12 @@ export default function SpotDetails() {
         if (date  >= new Date(checkout)) setCheckout(new Date(Date.parse(date) + 86400000))
     }
 
+
     const onSubmit = async e => {
         e.preventDefault()
+        setHasSubmitted(true)
+        console.log('ERRORS===========================', errors)
+        if (Object.values(errors)) return;
         const booking = await dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId, cost: total}))
         history.push(`/bookings/${booking.id}`)
     }
@@ -151,7 +160,7 @@ export default function SpotDetails() {
                 <div className='icon'><i className="fa-regular fa-calendar"></i></div>
                 <div className='accolade-text'>
                 <div className='bold-text'>Free cancellation</div>
-                {/* <div className='accolade-grey-text'>A room with wifi that's well-suited for working</div> */}
+
                 </div>
             </div>
 
@@ -212,6 +221,7 @@ export default function SpotDetails() {
                 </div>
                 <div className='reserve-container checkout'>
                 <label className='reserve-checkout'>CHECKOUT</label>
+
                 <DatePicker
                 className='reserve-end-date'
                 type='date'
@@ -228,7 +238,11 @@ export default function SpotDetails() {
 
                 <button className='reserve-button' disabled={user ? false : true}>Reserve</button>
               </form>
-                <p className='reserve-grey-text'>You won't be charged yet </p>
+                <p className='reserve-grey-text'>{hasSubmitted && errors.user ? (
+                    <span className='errors'>Please Login to Reserve</span>
+                ) : (
+                    <>You won't be charged yet</>
+                )} </p>
                 <table className='reserve-breakdown'>
                 <tbody>
                     <tr>
@@ -248,8 +262,6 @@ export default function SpotDetails() {
                 <hr className='reserve-hr'></hr>
                 <div className='reserve-total-before-taxes'><span>Total Before Taxes</span> <span className='reserve-total-price'>${total}</span></div>
 
-
-
             </div>
         </div>
 
@@ -257,8 +269,7 @@ export default function SpotDetails() {
 
         <hr className='rounded'/>
         <div className='reviews-printed'>
-            <h4>{reviewLogic()}
-         </h4>
+            <h4>{reviewLogic()}</h4>
             {//ternary logic for if user is logged in and has no review for this spot but also there are no reviews yet
             user && user.id !== singleSpot.ownerId && !spotReviews.length ?
             (<OpenModalMenuItem

@@ -1,4 +1,5 @@
-form {
+form,
+.login-form {
     font-family: 'Mulish', sans-serif;
     color: #4a355e;
     display: flex;
@@ -6,13 +7,13 @@ form {
     align-items: center;
 }
 .log-in-modal {
-    margin: 2rem;
+    margin: min(4vmin, 2rem);
 }
 .log-in {
-    margin-left: 1rem;
+    margin-left: min(2vmin, 1rem);
 }
 .login-input {
-    margin: .5rem;
+    margin: 1vmin;
     width: 15rem;
 }
 .login-button, .demo-user{

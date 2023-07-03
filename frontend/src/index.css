@@ -49,6 +49,14 @@ button {
 button:hover {
     background-color: #8253b0;
 }
+p.errors, span.errors {
+    display: block;
+    text-align: left;
+    font-size: min(2vmin, .8rem);
+    margin: inherit;
+    width: inherit;
+    color: red
+}
 input[type="date" i] {
     font-family: 'Montserrat', sans-serif;
     padding-inline-start: 1px;
