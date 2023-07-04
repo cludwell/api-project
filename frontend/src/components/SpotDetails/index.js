@@ -27,7 +27,6 @@ export default function SpotDetails() {
     const [ checkout, setCheckout ] = useState(tomorrow)
     const history = useHistory()
     const [ errors, setErrors ] = useState({})
-    const [ hasSubmitted, setHasSubmitted ] = useState(false)
 
     //modal functionality
     const [showMenu, setShowMenu] = useState(false)
@@ -105,9 +104,10 @@ export default function SpotDetails() {
 
     const onSubmit = async e => {
         e.preventDefault()
-        setHasSubmitted(true)
-        if (Object.values(errors)) return;
-        const booking = await dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId, cost: total}))
+        if (Object.values(errors).length) return;
+        const bookingData = {startDate: checkin, endDate: checkout, spotId: spotId, cost: total}
+        console.log('--------------------------------', bookingData)
+        const booking = await dispatch(createBookingRequest(bookingData))
         history.push(`/bookings/${booking.id}`)
     }
 

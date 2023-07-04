@@ -37,12 +37,12 @@
 }
 
 .booking-checkin-deets,
-.booking-checkout-deets,
-.booking-spot-name {
+.booking-checkout-deets {
     font-size: 2vmin;
 }
 .checkin-day,
-.checkout-day {
+.checkout-day,
+.booking-spot-name {
     font-size: 2.5vmin;
 }
 .checkin-year,
