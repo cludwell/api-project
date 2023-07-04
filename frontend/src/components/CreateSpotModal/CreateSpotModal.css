@@ -6,7 +6,7 @@
 .create-spot-modal > input {
     margin: min(2vmin, 1rem);
 }
-.create-form {
+.create-spot-modal {
     max-height: 70vh;
 }
 .create-subtitle {
@@ -31,9 +31,7 @@ p.errors, span.errors {
 .create-input {
     width: min(90%, 24rem);
 }
-.create-desc {
-    height: 3rem;
-}
+
 .create-segment {
     display: flex;
     flex-direction: column;

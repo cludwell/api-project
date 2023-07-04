@@ -64,7 +64,10 @@ input[type="date" i] {
     border: none;
 }
 textarea {
-    height: 3rem;
+    height: 5rem;
+}
+hr {
+    min-width: 20rem;
 }
 ::-webkit-scrollbar {
     width: .7rem;
