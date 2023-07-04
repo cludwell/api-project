@@ -60,8 +60,8 @@ export default function PostReviewModal({ spotId }) {
             className='post-review'
             type='text'
             value={review}
-            rows='10'
-            cols={`50`}
+            // rows='10'
+            // cols={`50`}
             placeholder='Leave your review here...'
             onChange={e => setReview(e.target.value)}
             />

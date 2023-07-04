@@ -312,7 +312,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     if (!name || name.length > 50) errors.name = 'Name must be less than 50 characters';
     if (!description) errors.description = 'Description is required'
     if (!price) errors.price = 'Price per day is required'
-    console.log(Object.keys(errors))
+    // console.log(Object.keys(errors))
 
     if (Object.keys(errors).length) {
         return res.status(404).json({

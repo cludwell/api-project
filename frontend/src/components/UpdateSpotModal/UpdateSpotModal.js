@@ -19,7 +19,6 @@ export default function UpdateSpotModal({ spot }) {
     //this will be used when updating images is added
 
     // const spotImgArray = updateSpot.SpotImages.map(img => img.url)
-    // console.log(spotImgArray)
     // const spotImage2 = spotImgArray[1] ? spotImgArray[1] : ''
     // const spotImage3 = spotImgArray[2] ? spotImgArray[2] : ''
     // const spotImage4 = spotImgArray[3] ? spotImgArray[3] : ''

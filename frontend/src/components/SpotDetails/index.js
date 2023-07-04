@@ -104,7 +104,7 @@ export default function SpotDetails() {
     const onSubmit = async e => {
         e.preventDefault()
         setHasSubmitted(true)
-        console.log('ERRORS===========================', errors)
+        // console.log('ERRORS===========================', errors)
         if (Object.values(errors)) return;
         const booking = await dispatch(createBookingRequest({startDate: checkin, endDate: checkout, spotId: spotId, cost: total}))
         history.push(`/bookings/${booking.id}`)
@@ -236,7 +236,7 @@ export default function SpotDetails() {
 
                 </div>
 
-                <button className='reserve-button' disabled={user ? false : true}>Reserve</button>
+                <button className='reserve-button' >Reserve</button>
               </form>
                 <p className='reserve-grey-text'>{hasSubmitted && errors.user ? (
                     <span className='errors'>Please Login to Reserve</span>

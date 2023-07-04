@@ -17,7 +17,6 @@ export default function DeleteSpotModal({ spotId }) {
 
     const handleDeletion = async e => {
         e.preventDefault();
-        // console.log('HANDLE DELETION', spotId)
         await dispatch(deleteSpotById(spotId))
         .then(closeModal())
         .then(dispatch(initialSpots()))

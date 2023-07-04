@@ -67,11 +67,9 @@ input[type="date" i] {
     padding: 0px;
     border: none;
 }
-/* input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-    -webkit-appearance: none;
-} */
+textarea {
+    height: 3rem;
+}
 ::-webkit-scrollbar {
     width: .7rem;
 }
