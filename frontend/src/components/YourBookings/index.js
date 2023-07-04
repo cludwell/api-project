@@ -3,9 +3,8 @@ import './YourBookings.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { userBookingsRequest } from '../../store/bookings'
 import LoadingIcon from '../LoadingIcon'
-import BookingMap from './BookingMap.js'
-import { NavLink } from 'react-router-dom'
 import Bookings from './Bookings'
+
 export default function YourBookings() {
     const dispatch = useDispatch()
     const [ hasLoaded, setHasLoaded ] = useState(false)
