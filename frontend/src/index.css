@@ -67,7 +67,7 @@ textarea {
     height: 5rem;
 }
 hr {
-    min-width: 20rem;
+    min-width: 10rem;
 }
 ::-webkit-scrollbar {
     width: .7rem;
