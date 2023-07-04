@@ -1,6 +1,4 @@
 .create-spot-modal{
-    height: 85vh;
-    width: 80vw;
     overflow: auto;
     margin: min(2vmin, 1rem);
     margin-bottom: 2rem;
@@ -16,11 +14,7 @@
     margin: 0rem;
     text-align: left;
 }
-/* textarea {
-    align-items: center;
-    height: min(15vmin, 8rem);
-    font-family: 'Montserrat', sans-serif;
-} */
+
 input {
     font-family: 'Montserrat', sans-serif;
 }

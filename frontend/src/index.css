@@ -22,10 +22,6 @@ h5 {
 body {
     font-family: 'Montserrat', sans-serif;
 }
-/* body {
-    margin: 0rem;
-    padding: 0rem;
-} */
 .fa-star {
     font-size: min(3vmin, 1rem);
 }
@@ -59,7 +55,7 @@ p.errors, span.errors {
 }
 input[type="date" i] {
     font-family: 'Montserrat', sans-serif;
-    padding-inline-start: 1px;
+    padding-inline-start: 2px;
     cursor: default;
     align-items: center;
     display: inline-flex;
@@ -75,7 +71,6 @@ textarea {
 }
 ::-webkit-scrollbar-track {
     background-color: #ceafed;
-    margin-block: 3vmin;
     border-radius: 2vmin;
 
 }

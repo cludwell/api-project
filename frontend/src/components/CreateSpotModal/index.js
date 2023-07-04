@@ -164,10 +164,9 @@ export default function CreateSpotModal() {
                 Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.
             </label>
                 <textarea
-                // className='create-input create-desc'
+                className='create-input create-desc'
                 type='text'
                 value={description}
-                rows={7}
                 placeholder='Please write at least 30 characters'
                 onChange={e => setDesc(e.target.value)}
                 ></textarea>
