@@ -66,6 +66,8 @@ export default function SpotDetails() {
     const spotReviews = useSelector(state => state.reviews)
     const user = useSelector(store => store.session.user)
     const averageRating = spotReviews.length >= 1 ? spotReviews.reduce((acc, ele) => acc + ele.stars, 0) / spotReviews.length : 'New!'
+
+    //reservation handling
     const staySeconds = (Date.parse(checkout) - Date.parse(checkin))
     let stayDuration = Math.floor(staySeconds/ (3600*24)) / 1000
     const baseCost = (singleSpot.price * stayDuration).toFixed(0)
@@ -235,9 +237,10 @@ export default function SpotDetails() {
 
                 </div>
 
-                <button className='reserve-button' >Reserve</button>
+                <button className='reserve-button'
+                disabled={user ? false : true}>Reserve</button>
               </form>
-                <p className='reserve-grey-text'>{hasSubmitted && errors.user ? (
+                <p className='reserve-grey-text'>{!user ? (
                     <span className='errors'>Please Login to Reserve</span>
                 ) : (
                     <>You won't be charged yet</>
