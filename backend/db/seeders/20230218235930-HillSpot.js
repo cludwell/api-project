@@ -20,6 +20,7 @@ module.exports = {
 
       Only a small part of the town survives, preserved in a state of "arrested decay." Interiors remain as they were left and stocked with goods. Designated as a National Historic Site and a State Historic Park in 1962, the remains of Bodie are being preserved in a state of "arrested decay". Today this once thriving mining camp is visited by tourists, howling winds and an occasional ghost. Given it's history it's no surprise there's many reports of supernatural activity here. There are stories of ghost sightings and music playing in the long shuttered bars of the town`,
       price: 8.00,
+      categories: 'ghost town, cabin, national park, historical, country side'
     },
     { ownerId: 2,
       address: '9518 Cahaba Road',
@@ -33,6 +34,7 @@ module.exports = {
 
       Nature has reclaimed much of Old Cahawba, but historians and archaeologists from the Alabama Historical Commission are working hard to uncover Cahawba's historic past and to create a full time interpretive park.Given it's history it's no surprise there's many reports of supernatural activity here`,
       price: 10.00,
+      categories: 'ghost town, cabin, national park, historical, country side'
     },
     { ownerId: 5,
       address: '75 Prospect Ave',
@@ -44,6 +46,8 @@ module.exports = {
       name: 'Crescent Hotel & Spa',
       description: `Perched high above the Victorian Village of Eureka Springs, Arkansas is the 1886 Crescent Hotel & Spa, a palatial structure and landmark hotel known widely in the Ozark Mountains as the "symbol of hospitality" for the State of Arkansas and brought to life year round. An Icon for Eureka Springs lodging, guests enjoy the resort activities, hot tub, swimming pool, New Moon Spa & Salon, Crystal Dining Room, SkyBar Gourmet Pizza, resort host and bellman service, and 15 acres of manicured gardens with hiking, biking, and walking trails that loop through the city and pass the city dog park, skate park, and city playground. The now-operating Crescent Hotel is said to be haunted by at least eight ghosts, ranging from a five-year-old girl to a bearded man wearing Victorian clothing.`,
       price: 348.00,
+      categories: 'mansions, luxe, amazing views, country side'
+
     },
     { ownerId: 5,
       address: '100 N San Francisco St',
@@ -57,6 +61,8 @@ module.exports = {
 
       Flagstaff's Hotel Monte Vista has its fair share of paranormal guests who have truly overstayed their welcome, including a long-term boarder who had a habit of hanging raw meat from the chandelier in Room 210; and two women who were thrown from the third floor and now attempt to asphyxiate male guests in their sleep. There's also reportedly an infant whose disturbing cries have sent staff members running upstairs from the basement. (Actor John Wayne even once had a paranormal encounter here.)`,
       price: 115.00,
+      categories: 'luxe, bed and breakfast, trending, historical'
+
     },
     { ownerId: 6,
       address: '135 Church St',
@@ -68,6 +74,8 @@ module.exports = {
       name: 'Dock St Theatre',
       description: `One of the oldest theaters in America, this site in downtown Charleston has racked up a lot of tumult and history over the years. After a fire burned down the original theater, the Planters Inn was built on the spot; it was converted back to a theater in the 1930s. The most flamboyant ghost here is Nettie Dickerson, who, legend has it, was struck by lightning while standing on the balcony of the hotel. Her shadow has been reported gliding along the second floor of the theater, dressed in a red gown. Also in otherworldly attendance: Junius Brutus Booth, a renowned 19th-century actor (and the father of Lincoln assassin John Wilkes) who used to frequent the inn.`,
       price: 44.00,
+      categories: 'luxe, historical, trending'
+
     },
     { ownerId: 6,
       address: '401 Baltimore St',
@@ -80,6 +88,8 @@ module.exports = {
       description: `The famous Civil War battle at Gettysburg was one of the bloodiest in its four-year history. Farnsworth House, named for Brigadier General Elon J. Farnsworth, was home to Confederate sharpshooters during the conflict and acquired at least 100 bullet holes as a result.
       It later operated as a makeshift hospital, and currently functions as a 10-room bed and breakfast. Fourteen ghosts are rumored to haunt the premises, including a midwife called Mary who likes to comfort guests by sitting on their beds.`,
       price: 145.00,
+      categories: 'bed and breakfast, amazing views, historical'
+
     },
     { ownerId: 3,
       address: '525 S Winchester Blvd',
@@ -91,6 +101,8 @@ module.exports = {
       name: 'Winchester House',
       description: `It's as if original owner Sarah Winchester wanted her home to be haunted. The eccentric widow of William Winchester, founder of Winchester rifles, held nightly seances to gain guidance from spirits and her dead husband for the home's design. The end result? A maze-like structure that took 38 years to build and includes twisting and turning hallways, dead ends, secret panels, a window built into a floor, staircases leading to nowhere, doors that open to walls, upside-down columns and rooms built, then intentionally closed off  — all to ward off and confuse evil spirits.`,
       price: 45.00,
+      categories: 'luxe, mansions, castles, historical'
+
     },
     { ownerId: 7,
       address: '1126 Queens Hwy',
@@ -106,6 +118,8 @@ module.exports = {
       Among the ghosts reportedly still hanging around is an engineer in the ship's engine room, a "lady in white," and various children located throughout the ship including the 1st Class Pool (the tour stops at the entrance doors to the swimming pool, but does not go inside the pool area due to ongoing restoration projects).
       Haunted Encounters is offered only during the day...but when the sun goes down, the spirits aboard the Queen Mary come out to play. Explore the legendary ship with a series of twilight tours and séances that explore the haunted past and paranormal activity that the Queen Mary is known for. We also offerTours at Night - including Dining With the Spirits, Paranormal Investigation and Paranormal Ship Walk.`,
       price: 134.00,
+      categories: 'luxe, mansions, amazing views, boats'
+
     },
    ])
   },

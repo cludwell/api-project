@@ -15,7 +15,7 @@ export default function SpotCard({ spot }) {
             {spot.name}</div>
             <CardCarousel spot={spot} chosenImage={chosenImage} setChosenImage={setChosenImage} />
             {/* <img src={`${spot.previewImage}`} alt='preview' className="spot-image"/> */}
-            <NavLink to={`/spotsfe/${spot.id}`} style={{"textDecoration": "none"}}spotId={spot.id}>
+            <NavLink to={`/spotsfe/${spot.id}`} style={{"textDecoration": "none"}}>
             <div className="top-line">
                 <span className="spot-card-city">{spot.city}, {spot.state}</span>
                 <span className="spot-card-rating"><i className="fa-solid fa-star star"></i>{spot.avgRating}</span>

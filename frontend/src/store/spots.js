@@ -37,8 +37,9 @@ export const userSpots = current => {
     }
 }
 //spots thunks
-export const initialSpots = () => async dispatch => {
-    const response = await fetch('/api/spots');
+export const initialSpots = query => async dispatch => {
+    const queryParameters = query ? `?categories=${query}` : ''
+    const response = await fetch(`/api/spots${queryParameters}`);
     if (response.ok) {
         const spotData = await response.json();
         dispatch(populateSpots(spotData));
@@ -88,9 +89,12 @@ const initialState = {}
 export default function spotsReducer(state = initialState, action) {
     switch (action.type) {
         case POPULATE_SPOTS:
-            const newState = {allSpots: {}, ...state }
-            action.spotData.Spots.forEach(s=> newState.allSpots[s.id] = s)
-        return newState;
+        return {
+                allSpots: action.spotData.Spots.reduce((acc, spot) => {
+                  acc[spot.id] = spot;
+                  return acc;
+                }, {}),
+              };
         case CREATE_SPOT:
         return { ...state, allSpots: { [action.spotData.id]: action.spotData} }
         case DELETE_SPOT:

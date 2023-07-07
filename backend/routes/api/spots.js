@@ -414,7 +414,7 @@ router.get('/:id', async (req, res, next) => {
 
 //Get all Spots
 router.get('/', async (req, res, next) => {
-    let {page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng} = req.query
+    let {page, size, minPrice, maxPrice, minLat, maxLat, minLng, maxLng, categories} = req.query
     const where = {}, errors = {}, pagination = {}
 
     size = !size || parseInt(size) > 20 ? size = 20
@@ -449,6 +449,8 @@ router.get('/', async (req, res, next) => {
 
     if (maxLng <= 180 || maxLng <= -180) where.lng = { [Op.lte]: maxPrice }
     if (maxLng > 180 || maxLng < -180 || maxLng <= minLng) errors.maxLng = "Minimum longitude is invalid"
+
+    if (categories) where.categories = { [Op.like]: `%${categories}%` };
 
     const Spots = []
     const spotsData = await Spot.findAll( {
