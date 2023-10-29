@@ -1,7 +1,7 @@
 import "./Header.css";
 import logo from "../../images/board.png";
 import { Link } from "react-router-dom";
-import { Switch } from "react-router-dom";
+// import { Switch } from "react-router-dom";
 import Navigation from "../Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";

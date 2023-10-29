@@ -8,7 +8,6 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import SpotCard from "../SpotCard";
 import UpdateSpotModal from "../UpdateSpotModal/UpdateSpotModal";
 import "./ManageSpots.css";
-import YourBookings from "../YourBookings";
 import LoadingIcon from "../LoadingIcon";
 
 export default function ManageSpots() {
