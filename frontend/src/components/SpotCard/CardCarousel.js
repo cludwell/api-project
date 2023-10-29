@@ -24,6 +24,16 @@ export default function CardCarousel({ spot, chosenImage, setChosenImage }) {
     setCurrent(chosenImage ? chosenImage : chosenImage === 0 ? 0 : current);
   }, [chosenImage, current]);
 
+  useEffect(() => {
+    // Preload images with alt text and classNames
+    spot.images.forEach((image, i) => {
+      const img = new Image();
+      img.src = image.url;
+      img.alt = image.altText; // Set the alt text based on your data structure
+      img.className = `slider-images spot-image ${i === current ? "loaded" : ""}`;
+    });
+  }, [spot.images, current]);
+
   return (
     <div className="card-carousel">
       <div
