@@ -1,3 +1,6 @@
+.landing {
+    min-height: 100vh;
+}
 .spot-cards,
 .manage-spots {
     display: grid;

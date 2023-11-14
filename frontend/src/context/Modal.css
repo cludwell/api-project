@@ -15,18 +15,46 @@
   top: 0;
   right: 0;
   left: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: ease-in-out;
+  transition-duration: 300ms;
 }
 
-  #modal-content {
-    border-radius: 1rem;
-    position: absolute;
-    background-color:white;
-    font-family: 'Montserrat', sans-serif;
-  }
-  #modal-content > h1 h2 h3 h4 {
-    min-width: 20rem;
-    max-width: 50rem;
-    font-family: 'Mulish', sans-serif;
-  }
+#modal-content {
+  border-radius: 1rem;
+  position: absolute;
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+  transition: ease-in-out;
+  transition-duration: 300ms;
+  transition-property: all;
+  margin: 0 1rem;
+  width: fit;
+}
+
+#modal-content > h1 h2 h3 h4 {
+  min-width: 20rem;
+  max-width: 50rem;
+  font-family: "Mulish", sans-serif;
+}
+
+
+.scale-100 {
+  transform: scale(1);
+}
+.scale-0 {
+  transform: scale(0);
+}
+.opacity-100 {
+  opacity: 1;
+}
+.opacity-0 {
+  opacity: 0;
+}
+.backdrop-mounting {
+  opacity: 1;
+}
+.backdrop-dismounting {
+  opacity: 0;
+}

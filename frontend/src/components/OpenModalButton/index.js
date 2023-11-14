@@ -7,12 +7,15 @@ function OpenModalButton({
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
   onModalClose, // optional: callback function that will be called once the modal is closed
 }) {
-  const { setModalContent, setOnModalClose } = useModal();
+  const { setModalContent, setOnModalClose, setOpen } = useModal();
 
   const onClick = () => {
-    if (typeof onButtonClick === "function") onButtonClick();
-    if (typeof onModalClose === "function") setOnModalClose(onModalClose);
-    setModalContent(modalComponent);
+    setTimeout(() => {
+      setOpen(true);
+      if (onModalClose) setOnModalClose(onModalClose);
+      setModalContent(modalComponent);
+      if (onButtonClick) onButtonClick();
+    }, 300);
   };
 
   return (
