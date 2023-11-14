@@ -11,10 +11,10 @@ function OpenModalMenuItem({
   const { setModalContent, setOnModalClose, setOpen } = useModal();
 
   const onClick = () => {
+    if (onModalClose) setOnModalClose(onModalClose);
+    setModalContent(modalComponent);
+    if (onButtonClick) onButtonClick();
     setTimeout(() => {
-      if (onModalClose) setOnModalClose(onModalClose);
-      setModalContent(modalComponent);
-      if (onButtonClick) onButtonClick();
       setOpen(true);
     }, 300);
   };

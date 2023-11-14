@@ -53,7 +53,7 @@ export function Modal() {
       <div
         id="modal-background"
         onClick={closeModal}
-        className={`${open ? "backdrop-mounting" : "backdrop-dismounting"}`}
+        className={`${open ? "opacity-100" : "opacity-0"}`}
       />
       <div
         id="modal-content"

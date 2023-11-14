@@ -69,7 +69,7 @@ textarea {
 hr {
     min-width: 10rem;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: .7rem;
 }
 ::-webkit-scrollbar-track {
@@ -88,4 +88,4 @@ hr {
         scrollbar-color: #4a2173 #ceafed;
         scrollbar-width: auto;
     }
-}
+} */
