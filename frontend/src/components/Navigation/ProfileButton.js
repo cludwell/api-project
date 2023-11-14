@@ -56,7 +56,7 @@ function ProfileButton({ user }) {
           <i className="fas fa-user-circle" />
         </button>
       </div>
-      <div className={ulClassName} ref={ulRef}>
+      <div className={`profile-dropdown ${showMenu ? "scale-100 opacity-100": "scale-0 opacity-0"}`} ref={ulRef}>
         {user ? (
           <>
             <p>Hello, {user.firstName}.</p>
