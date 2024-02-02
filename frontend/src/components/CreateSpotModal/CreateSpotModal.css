@@ -1,78 +1,80 @@
-.create-spot-modal{
-    overflow: auto;
-    margin: min(2vmin, 1rem);
-    margin-bottom: 2rem;
+.create-spot-modal {
+  overflow: auto;
+  margin: min(2vmin, 1rem);
+  margin-bottom: 2rem;
 }
 .create-spot-modal > input {
-    margin: min(2vmin, 1rem);
+  margin: min(2vmin, 1rem);
 }
 .create-spot-modal {
-    max-height: 70vh;
-    width: fit-content;
+  max-height: 70vh;
+  width: fit-content;
 }
 .create-subtitle {
-    display: flex;
-    margin: 0rem;
-    text-align: left;
+  display: flex;
+  margin: 0rem;
+  text-align: left;
 }
 
 input {
-    font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 label {
-    font-size: min(2vmin, .8rem);
+  font-size: min(2vmin, 0.8rem);
 }
-p.errors, span.errors {
-    display: block;
-    text-align: left;
-    font-size: min(2vmin, .8rem);
-    margin: .2rem;
-    color: red
+p.errors,
+span.errors {
+  display: block;
+  text-align: left;
+  font-size: min(2vmin, 0.8rem);
+  margin: 0.2rem;
+  color: red;
 }
 .create-input {
-    width: min(90%, 24rem);
+  width: min(90%, 24rem);
 }
 
 .create-segment {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: row;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1vmin;
-    width: min(90%, 24rem);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: row;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1vmin;
+  width: min(90%, 24rem);
 }
 .create-segment input {
-    width: 98%;
+  width: 98%;
 }
-.create-country, .create-address {
-    display: flex;
-    flex-direction: column;
+.create-country,
+.create-address {
+  display: flex;
+  flex-direction: column;
 }
 
 .create-label {
-    width: min(90%, 24rem);
-    text-align: left;
+  width: min(90%, 24rem);
+  text-align: left;
 }
 .create-half {
-    width: 5rem
+  width: 5rem;
 }
 
 .guests {
-    color: black;
-    max-width: 25rem;
+  color: black;
+  max-width: 25rem;
 }
 .submit-button {
-    border: none;
-    border-radius: 0rem;
-    width: 15rem;
-    height: 2rem;
-    color:white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
-    justify-content: center;
-    margin: 1rem;
+  border: none;
+  border-radius: 0rem;
+  width: 15rem;
+  height: 2rem;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  justify-content: center;
+  margin: 1rem;
 }
 .aws-upload {
-    height: 2rem;
+  height: 2rem;
 }
